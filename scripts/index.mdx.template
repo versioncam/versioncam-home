@@ -49,4 +49,4 @@ The broken clip names what it looked for, the second it gave up and the frame, a
   </div>
 </dl>
 
-<p class="colophon">versioncam <span class="vc-num">{{version}}</span> on npm · <a href="/about/licence/">FSL-1.1-ALv2</a> · The engine's source is closed. This site and <a href="https://github.com/petbul/versioncam-home/issues">its issue tracker</a> are public.</p>
+<p class="colophon">versioncam <span class="vc-num">{{version}}</span> on npm · <a href="/about/licence/">FSL-1.1-ALv2</a> · The engine's source is closed. This site and <a href="https://github.com/versioncam/versioncam-home/issues">its issue tracker</a> are public.</p>

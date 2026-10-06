@@ -100,7 +100,7 @@ export default defineConfig({
         {
           icon: "github",
           label: "GitHub",
-          href: "https://github.com/petbul/versioncam-home",
+          href: "https://github.com/versioncam/versioncam-home",
         },
       ],
       customCss: ["./src/styles/site.css"],
