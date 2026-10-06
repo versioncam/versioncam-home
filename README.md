@@ -31,9 +31,11 @@ npm run dev
 release is out. `CLIPS_BASE=<url>` points the front page's clips somewhere
 other than `clips.version.cam`.
 
-A Cloudflare Worker serves `dist/` at version.cam (`wrangler.jsonc`). The *Site*
-workflow deploys every push to `main`, and once a day, so a new release of
-versioncam is in the docs by the next morning; `npm run deploy` does the same
+A Cloudflare Worker serves `dist/` at version.cam (`wrangler.jsonc`).
+Cloudflare's Workers Builds builds and deploys every push to `main`, and
+version.cam's cloud asks it for a build each morning, so a new release of
+versioncam is in the docs by the next morning. The *Site* workflow builds every
+push and pull request as a check, and deploys nothing. `npm run deploy` deploys
 from a machine logged in to the account.
 
 ## Licence

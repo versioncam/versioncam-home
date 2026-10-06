@@ -9,8 +9,10 @@ nothing from it belongs here.
   reason: nothing in it is ever committed.
 - Never commit a token, a key, an account id, or a path under anyone's home
   directory.
-- `npm run build` must pass before a push; the *Site* workflow runs it, then
-  deploys `dist/` to version.cam as a Cloudflare Worker (`wrangler.jsonc`).
+- `npm run build` must pass before a push; the *Site* workflow runs it on
+  every push and pull request, and deploys nothing. Cloudflare's Workers
+  Builds builds and deploys every push to `main` as the Worker in
+  `wrangler.jsonc`, so this repository holds no Cloudflare credential.
 - Commits here are public: author and committer are petbul's GitHub noreply
   address, never a personal one.
 - Astro's own guidance: https://docs.astro.build — `astro dev --background`
