@@ -4,7 +4,7 @@
   "scripts": {
     "import-docs": "node scripts/import-docs.mjs",
     "dev": "npm run import-docs && astro dev",
-    "build": "npm run import-docs && astro build",
+    "build": "npm run import-docs && astro build && node scripts/llms-full.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "deploy": "npm run build && wrangler deploy"
