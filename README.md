@@ -7,13 +7,15 @@ the clip — instead of quietly producing a video that is wrong.
 
 - **Website and docs:** [version.cam](https://version.cam)
 - **Install:** `npm i -D versioncam` — [the package on npm](https://www.npmjs.com/package/versioncam)
-- **A bug, a question, an app it cannot record:** [issues](https://github.com/versioncam/versioncam-home/issues)
+- **Source:** [github.com/versioncam/versioncam](https://github.com/versioncam/versioncam), the recorder and the example app its CI records
+- **A bug, a question, an app it cannot record:** [issues](https://github.com/versioncam/versioncam/issues)
 
 ## What this repository is
 
-The home of Versioncam: this website's source and the public issue tracker.
-The engine is closed-source; it is published on npm under the Functional
-Source License (`FSL-1.1-ALv2`). Everything the docs say comes from the
+This website's source. The recorder's source is public too, at
+[versioncam/versioncam](https://github.com/versioncam/versioncam), under the
+Functional Source License (`FSL-1.1-ALv2`), and that is also where issues go;
+the package is published on npm from there. Everything the docs say comes from the
 package as published — its `README.md`, `dsl.md`, the skill's README and the
 changelog, read out of the npm tarball at build time — so the site never
 describes a version you cannot install.
