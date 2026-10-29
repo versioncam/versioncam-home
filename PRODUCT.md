@@ -88,12 +88,16 @@ paid plans tells the team when a clip breaks.
   to action for it is "Sign in with GitHub" at app.version.cam, which tells
   people who are not in.
 - Plans, as planned and marked planned, never as final (prices are
-  confirmed against the first bill, which does not exist): Free, $0, three
-  projects of which one private, 10 clips per project, 30 days of history,
-  1 GB, clips to 60 s, pull request check for public repositories. Pro, $39
-  per project per month or $390 a year: unlimited history, 100 clips,
-  private repositories, notifications by email, Slack or a GitHub issue.
-  Max, $149 a month for ten projects. Per project, never per seat.
+  confirmed against the first bill, which does not exist). Decided
+  2026-10-29: Free is for public repositories only, since a public clip is
+  the product's advertisement and a private one is not; private
+  repositories are Pro. Free, $0: three projects, 10 clips per project, 30
+  days of history, 1 GB, clips to 60 s, the pull request check and the
+  badge. Pro, $39 per project per month or $390 a year: private
+  repositories, unlimited history, 100 clips, notifications by email, Slack
+  or a GitHub issue. Max, $149 a month for ten projects, named in the docs,
+  not on the front page. Per project, never per seat. The service's own
+  limits still grant Free one private project until the next cloud release.
 
 ## Brand Commitments
 
