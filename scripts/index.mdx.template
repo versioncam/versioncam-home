@@ -4,31 +4,39 @@ description: {{tagline}}
 template: splash
 install: {{install}}
 ask: {{ask}}
+clips: "{{clips}}"
 hero:
-  tagline: Product demos written as scripts and re-recorded by CI on every push. When your app changes under a clip, the build fails instead of the demo going quietly wrong.
+  tagline: A clip is a script in your repository. On every push, CI starts your app, records the clip again and renders the video. When the app only looks different, you get a new video. When a control the clip needs is gone, the build fails and names it.
   actions:
     - text: Get started
       link: /start/install/
       icon: right-arrow
-    - text: Read the DSL
-      link: /reference/dsl/
+    - text: The source
+      link: https://github.com/versioncam/versioncam
       variant: minimal
 ---
 
 import Take from "../../components/Take.astro";
 import Runs from "../../components/Runs.astro";
+import Ledger from "../../components/Ledger.astro";
+import Hosted from "../../components/Hosted.astro";
+import Setup from "../../components/Setup.astro";
+
+## The script is the clip
+
+Each clip is a TypeScript file in the repository. The video beside it is what CI recorded from that file on the last push to `main`, and the lit line is the one running.
 
 <Take base="{{clips}}" />
 
-## When the app changes, the build fails
+## What happens when you change the app
 
-Every push to `main` runs `npx versioncam check` against the example app. Here is what the last run printed, and the same check run once for this page, after renaming one button's test id in the app.
+<Ledger />
+
+Every push to `main` runs `npx versioncam check` against the example app. On the left, the last run. On the right, the same check run once for this page, after one button's test id was renamed and nothing else.
 
 <Runs base="{{clips}}" />
 
-The broken clip names what it looked for, the second it gave up and the frame, and keeps a picture of the page at that moment. It renders nothing: a video of the wreckage would help nobody.
-
-## What makes a take repeat
+## Why a take repeats
 
 <dl class="vc-facts not-content">
   <div>
@@ -49,4 +57,16 @@ The broken clip names what it looked for, the second it gave up and the frame, a
   </div>
 </dl>
 
-<p class="colophon">versioncam <span class="vc-num">{{version}}</span> on npm · <a href="/about/licence/">FSL-1.1-ALv2</a> · The engine's source is closed. This site and <a href="https://github.com/versioncam/versioncam-home/issues">its issue tracker</a> are public.</p>
+## After CI: version.cam
+
+The recorder and the GitHub Action are free and run in your CI, which already has your app and your secrets. version.cam is what happens to a recording after CI has made it.
+
+<Hosted />
+
+## Set up
+
+Three commands and one sentence. The first run of the skill writes the config from what it finds in the repository, proves the app records the same way twice, and writes the first clip. On the example app that took [six to twelve minutes and one or two review rounds](/start/authoring/).
+
+<Setup />
+
+<p class="colophon">versioncam <span class="vc-num">{{version}}</span> on npm · <a href="/about/licence/">FSL-1.1-ALv2</a> · The source is public at <a href="https://github.com/versioncam/versioncam">github.com/versioncam/versioncam</a>, and so is <a href="https://github.com/versioncam/versioncam-home">this site's</a>.</p>

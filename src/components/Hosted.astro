@@ -1,0 +1,109 @@
+---
+// After CI: what version.cam adds to a recording, what it is planned to
+// cost, and the door. Two ruled columns in the page's own grammar, no
+// cards: on the left what it adds, on the right the plans as rows, each
+// with its planned price in the machine's amber numerals and the word
+// planned beside it, so a reader who never reaches the note still reads
+// the price as a plan. The one picture is live: the badge of the recorder's
+// own repository, so it is a receipt and not an illustration.
+import { LinkButton } from '@astrojs/starlight/components';
+
+const BADGE =
+	'https://img.shields.io/endpoint?url=https%3A%2F%2Fapi.version.cam%2Fv1%2Fbadge%2Fversioncam%2Fversioncam&cacheSeconds=300';
+---
+
+<div class="vc-hosted not-content">
+	<section class="vc-hosted-col">
+		<h3>What it adds</h3>
+		<dl class="vc-hosted-what">
+			<div>
+				<dt>One address that only plays what passed</dt>
+				<dd>
+					<code>clips.version.cam/&lt;owner&gt;/&lt;repo&gt;/&lt;clip&gt;</code> plays the newest
+					version from your default branch whose check passed. A broken clip keeps playing the last
+					one that did, and the dashboard says so.
+				</dd>
+			</div>
+			<div>
+				<dt>Plays where the README is</dt>
+				<dd>
+					An embed and oEmbed, so a pasted address unfurls in Notion and Slack; a GIF for the README;
+					a screenshot of any beat, on request.
+				</dd>
+			</div>
+			<div>
+				<dt>The pull request sees the clips</dt>
+				<dd>
+					A check on the commit, and one comment, edited as the branch moves, with a picture of each
+					clip that looks different or failed.
+				</dd>
+			</div>
+			<div>
+				<dt>A badge that cannot lie</dt>
+				<dd>
+					<a class="vc-badge" href="https://clips.version.cam/versioncam/versioncam"
+						><img
+							src={BADGE}
+							alt="demo verified, the commit and how long ago, for the recorder's own repository"
+							height="20"
+						/></a
+					>
+					<span
+						>The commit it names is the one whose CI run published the recordings. This one is the
+						recorder's own, live.</span
+					>
+				</dd>
+			</div>
+			<div>
+				<dt>Told when it breaks</dt>
+				<dd>
+					On Pro, by email, in Slack or as a GitHub issue: two days after a clip broke, then weekly,
+					until it passes again or someone acknowledges it.
+				</dd>
+			</div>
+			<div>
+				<dt>Private repositories</dt>
+				<dd>
+					A private repository's clips play only for people GitHub lets read it, through short-lived
+					signed addresses. Recordings live in Cloudflare's EU jurisdiction.
+				</dd>
+			</div>
+		</dl>
+	</section>
+
+	<section class="vc-hosted-col is-plans">
+		<h3>The plans, as planned</h3>
+		<dl class="vc-plans">
+			<div>
+				<dt>Free <span class="vc-num">$0</span></dt>
+				<dd>
+					Three projects, one of them private. Ten clips a project, thirty days of history, clips to
+					sixty seconds, 1 GB. The pull request check, for public repositories.
+				</dd>
+			</div>
+			<div>
+				<dt>Pro <span class="vc-num">$39</span> a project, a month <span class="vc-planned">planned</span></dt>
+				<dd>
+					Unlimited history and a hundred clips a project. Private repositories, by GitHub's own
+					permissions. Told by email, Slack or an issue when a clip breaks. $390 a year.
+				</dd>
+			</div>
+			<div>
+				<dt>Max <span class="vc-num">$149</span> a month <span class="vc-planned">planned</span></dt>
+				<dd>Ten projects, with everything Pro has.</dd>
+			</div>
+		</dl>
+		<p class="vc-plans-note">
+			Per project, never per seat. Planned means the final prices follow the first bill. The recorder
+			and the Action are free whatever you choose.
+		</p>
+		<div class="vc-door">
+			<LinkButton href="https://app.version.cam/" icon="right-arrow">Sign in with GitHub</LinkButton>
+			<p>
+				The beta is private for now; signing in tells you whether you are in. <a
+					href="/more/version-cam/">How version.cam works</a
+				> says the rest.
+			</p>
+		</div>
+	</section>
+</div>

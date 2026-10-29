@@ -1,0 +1,83 @@
+---
+// The first screen's viewfinder: the stitched film of the example app's
+// clips, as CI rendered it on the last push to main, playing muted and
+// looping beside the three sentences that say what it is. Its display reads
+// from the manifest CI published with it, the version in amber and the
+// commit, so nothing on the frame is a guess. The display is a band under
+// the picture rather than chips over it: the app's own title sits where a
+// chip would, and a first screen should hide none of its subject. The take
+// further down plays the clips one at a time with their scripts; this is the
+// whole piece.
+import { loadManifest, timecode } from '../lib/take';
+
+interface Props {
+	/** Where CI publishes the example's takes, without a trailing slash. */
+	base: string;
+}
+const { base } = Astro.props;
+
+let commit: string | null = null;
+let recorder = '';
+let poster = '';
+try {
+	const manifest = await loadManifest(base);
+	commit = manifest.commit;
+	recorder = manifest.recorder;
+	const first = manifest.clips[0]?.id;
+	poster = first ? `${base}/${first}-poster.png` : '';
+} catch (error) {
+	console.warn(`film: ${(error as Error).message}; the frame plays without its display`);
+}
+---
+
+<figure class="vc-viewfinder vc-film not-content" data-film>
+	<video
+		src={`${base}/sequence.mp4`}
+		poster={poster || undefined}
+		muted
+		loop
+		playsinline
+		autoplay
+		preload="metadata"
+		aria-label="The example app's three clips, stitched: a shipment created, found and cancelled, as CI recorded them"></video>
+	<div class="vc-film-osd" aria-hidden="true">
+		<span class="vc-film-rec"><i></i>REC</span>
+		<span class="vc-film-ver">{recorder ? `v${recorder}` : ''}</span>
+		<span class="vc-film-commit">{commit ? `main@${commit}` : ''}</span>
+		<span class="vc-film-tc" data-tc>{timecode(0, 60)}</span>
+	</div>
+</figure>
+
+<script>
+	import { timecode } from '../lib/take';
+
+	const film = document.querySelector<HTMLElement>('[data-film]');
+	const video = film?.querySelector('video');
+	const tc = film?.querySelector<HTMLElement>('[data-tc]');
+	if (film && video && tc) {
+		// Stillness when the visitor asked for it: the frame holds its poster.
+		if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			video.removeAttribute('autoplay');
+			video.pause();
+		}
+		const show = (seconds: number) => {
+			tc.textContent = timecode(Math.floor(seconds * 60), 60);
+		};
+		if ('requestVideoFrameCallback' in video) {
+			const watch = () =>
+				video.requestVideoFrameCallback((_, shown) => {
+					show(shown.mediaTime);
+					watch();
+				});
+			watch();
+		} else {
+			video.addEventListener('timeupdate', () => show(video.currentTime));
+		}
+		video.addEventListener('play', () => film.setAttribute('data-playing', ''));
+		video.addEventListener('pause', () => film.removeAttribute('data-playing'));
+		video.addEventListener('click', () => {
+			if (video.paused) video.play().catch(() => {});
+			else video.pause();
+		});
+	}
+</script>

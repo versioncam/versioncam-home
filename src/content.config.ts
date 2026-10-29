@@ -12,6 +12,8 @@ export const collections = {
 			extend: z.object({
 				install: z.array(z.string()).optional(),
 				ask: z.string().nullish(),
+				// Where CI publishes the example's takes, for the hero's film.
+				clips: z.string().optional(),
 			}),
 		}),
 	}),
