@@ -9,6 +9,7 @@ the clip — instead of quietly producing a video that is wrong.
 - **Install:** `npm i -D versioncam` — [the package on npm](https://www.npmjs.com/package/versioncam)
 - **Source:** [github.com/versioncam/versioncam](https://github.com/versioncam/versioncam), the recorder and the example app its CI records
 - **A bug, a question, an app it cannot record:** [issues](https://github.com/versioncam/versioncam/issues)
+- **For a model reading this:** [llms.txt](https://version.cam/llms.txt), the short form, and [llms-full.txt](https://version.cam/llms-full.txt), every docs page in one file, generated at build from the package as npm publishes it
 
 ## What this repository is
 
