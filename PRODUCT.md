@@ -83,21 +83,26 @@ paid plans tells the team when a clip breaks.
   states it as six to twelve minutes and one or two rounds, under Authoring,
   "What it costs"; about three seconds per clip for `check` on a
   GitHub runner; `versioncam install` fetches 190 MB since 0.5.2.
-- Hosted layer status, confirmed 2026-10-29: the service runs; sign-up is
-  not open; a private beta comes first; no public date is given. The call
-  to action for it is "Sign in with GitHub" at app.version.cam, which tells
-  people who are not in.
+- Hosted layer status, confirmed 2026-10-30: the service runs, and a
+  private beta is running. Nothing is sold yet and no card is asked for:
+  Free works for public repositories for anyone who signs in, and the
+  first ten accounts that write to hello@version.cam have Pro free until
+  the beta ends (an operator's override; Stripe is not live). No public
+  date is given. The call to action is "Sign in with GitHub" at
+  app.version.cam.
 - Plans, as planned and marked planned, never as final (prices are
   confirmed against the first bill, which does not exist). Decided
   2026-10-29: Free is for public repositories only, since a public clip is
   the product's advertisement and a private one is not; private
   repositories are Pro. Free, $0: three projects, 10 clips per project, 30
   days of history, 1 GB, clips to 60 s, the pull request check and the
-  badge. Pro, $39 per project per month or $390 a year: private
+  badge. Pro, $35 per project per month or $350 a year: private
   repositories, unlimited history, 100 clips, notifications by email, Slack
-  or a GitHub issue. Max, $149 a month for ten projects, named in the docs,
-  not on the front page. Per project, never per seat. The service's own
-  limits still grant Free one private project until the next cloud release.
+  or a GitHub issue. Max, $145 a month for ten projects, named in the docs,
+  not on the front page. Prices lost their nines on 2026-10-30 ($39 and
+  $149 before). An account from the beta pays 20% less for twelve months
+  (the FOUNDING code). Per project, never per seat. The service's limits
+  match since cloud-v1.5.0: Free stores no private project.
 
 ## Brand Commitments
 
