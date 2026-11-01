@@ -1,0 +1,61 @@
+---
+// The provider's identity, where the law wants it found: ZEPT 5. člen (the
+// firma and seat, an e-mail address, the register and registration number,
+// the VAT identification of an identified provider) on the imprint, and GDPR
+// Art 13(1)(a), the controller at the top of the privacy policy. Every value
+// comes from src/data/entity.json through lib/entity.ts, and
+// scripts/check-entity.mjs keeps that the only place they are written. The
+// VAT number is never printed bare: to a Slovenian reader a bare ID za DDV
+// says "charges VAT", and this provider does not on supplies at home.
+import { addressLine, entity } from '../lib/entity';
+
+interface Props {
+	/** What the first row calls the firma on this page: "Provider", or "Controller" on the privacy page. */
+	role?: string;
+}
+const { role = 'Provider' } = Astro.props;
+const oneAddress = entity.privacyEmail === entity.contactEmail;
+---
+
+<dl class="vc-provider not-content">
+	<div>
+		<dt>{role}</dt>
+		<dd>{entity.name}</dd>
+	</div>
+	<div>
+		<dt>Owner</dt>
+		<dd>{entity.owner}, sole proprietor (samostojni podjetnik)</dd>
+	</div>
+	<div>
+		<dt>Registered office</dt>
+		<dd>{addressLine}</dd>
+	</div>
+	<div>
+		<dt>Register</dt>
+		<dd>{entity.register}; registration number (matična številka) {entity.registrationNumber}</dd>
+	</div>
+	<div>
+		<dt>Tax number</dt>
+		<dd>{entity.taxId} (davčna številka)</dd>
+	</div>
+	<div>
+		<dt>VAT</dt>
+		<dd>{entity.vatLine}</dd>
+	</div>
+	<div>
+		<dt>Contact</dt>
+		<dd>
+			<a href={`mailto:${entity.contactEmail}`}>{entity.contactEmail}</a>{oneAddress ? ', for anything, requests about your personal data included' : ''}
+		</dd>
+	</div>
+	{
+		!oneAddress && (
+			<div>
+				<dt>Data protection</dt>
+				<dd>
+					<a href={`mailto:${entity.privacyEmail}`}>{entity.privacyEmail}</a>
+				</dd>
+			</div>
+		)
+	}
+</dl>

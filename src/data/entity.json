@@ -1,1 +1,15 @@
-{ "name": null, "address": null, "registration": null, "vat": null, "email": null }
+{
+	"name": "RMTR studio, Peter Bulovec s.p.",
+	"owner": "Peter Bulovec",
+	"street": "Smokuč 15a",
+	"postalCode": "4274",
+	"city": "Žirovnica",
+	"country": "Slovenia",
+	"registrationNumber": "7021135000",
+	"register": "Poslovni register Slovenije (AJPES), the Slovenian Business Register",
+	"taxId": "42258723",
+	"vatId": "SI42258723",
+	"vatLine": "SI42258723. Identified for VAT for cross-border services under Article 78(4) of the Slovenian VAT Act (ZDDV-1); no VAT is charged on supplies in Slovenia (Article 94 ZDDV-1).",
+	"contactEmail": "hello@version.cam",
+	"privacyEmail": "hello@version.cam"
+}

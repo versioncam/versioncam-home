@@ -1534,3 +1534,62 @@ button.vc-src:focus-visible {
 .vc-footer-links a {
   color: var(--vc-dim);
 }
+
+/* ---- Who runs it, and what is kept: the lists a legal page sets in rows -- */
+/* The provider block (Provider.astro) and the privacy page's inventory: one
+   hairline a row, the label in the machine's voice, the fact in the person's.
+   Both are `not-content`, so Starlight's prose spacing leaves the rows alone. */
+.sl-markdown-content .vc-provider,
+.sl-markdown-content .vc-kept {
+  margin: 1.75rem 0 0;
+  border-top: 1px solid var(--vc-line);
+}
+.vc-provider > div,
+.vc-kept > div {
+  padding-block: 0.75rem;
+  border-bottom: 1px solid var(--vc-line);
+}
+@media (min-width: 40rem) {
+  .vc-provider > div {
+    display: grid;
+    grid-template-columns: 10rem minmax(0, 1fr);
+    column-gap: 2rem;
+    align-items: baseline;
+  }
+}
+.vc-provider dt,
+.vc-kept dt {
+  font-family: var(--vc-font-machine);
+  font-size: 11px;
+  line-height: 22px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--vc-white);
+}
+.vc-provider dd,
+.vc-kept dd {
+  margin: 0;
+  line-height: 1.65;
+  color: var(--sl-color-gray-2);
+}
+.vc-kept dd {
+  margin-top: 0.25rem;
+  max-width: 62ch;
+}
+.vc-kept dd + dd {
+  margin-top: 0.5rem;
+}
+.vc-provider a,
+.vc-kept a {
+  color: var(--vc-white);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+/* Beside each kept item: the legal basis and how long, as a readout. */
+.vc-kept .vc-meta {
+  font-family: var(--vc-font-machine);
+  font-size: 11px;
+  line-height: 22px;
+  letter-spacing: 0.04em;
+  color: var(--vc-dim);
+}

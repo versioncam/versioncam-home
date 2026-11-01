@@ -1,13 +1,13 @@
 ---
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 import Draft from '../../components/Draft.astro';
-import { address, company, email } from '../../lib/entity';
+import { addressLine, entity } from '../../lib/entity';
 ---
 
 <StarlightPage frontmatter={{ title: 'Privacy', description: 'What version.cam keeps about you, where, and for how long.' }}>
 	<Draft />
 	<p>
-		{company}, {address}, is the controller of the personal data described here. This page covers the hosted
+		{entity.name}, {addressLine}, is the controller of the personal data described here. This page covers the hosted
 		service; the versioncam package runs on your machines and in your CI, and sends us nothing unless you run{' '}
 		<code>versioncam publish</code>.
 	</p>
@@ -59,7 +59,7 @@ import { address, company, email } from '../../lib/entity';
 	<h2>Your rights</h2>
 	<p>
 		You may ask for a copy of your data, its correction, its deletion, or its transfer, and object to how we use
-		it: write to {email}. You may also complain to the Information Commissioner of the Republic of Slovenia, or
+		it: write to {entity.contactEmail}. You may also complain to the Information Commissioner of the Republic of Slovenia, or
 		to the authority where you live.
 	</p>
 </StarlightPage>

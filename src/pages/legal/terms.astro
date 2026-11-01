@@ -1,13 +1,13 @@
 ---
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 import Draft from '../../components/Draft.astro';
-import { address, company, email, registration } from '../../lib/entity';
+import { addressLine, entity } from '../../lib/entity';
 ---
 
 <StarlightPage frontmatter={{ title: 'Terms of service', description: 'The terms version.cam is provided under.' }}>
 	<Draft />
 	<p>
-		version.cam is provided by {company}, {address}, registration {registration} ("we"). These terms apply to
+		version.cam is provided by {entity.name}, {addressLine}, registration number {entity.registrationNumber} ("we"). These terms apply to
 		anyone who uses the hosted service at version.cam, app.version.cam, api.version.cam and clips.version.cam
 		("you"). The versioncam package on npm is under its own licence, the Functional Source License, and these
 		terms do not change it.
@@ -93,5 +93,5 @@ import { address, company, email, registration } from '../../lib/entity';
 		email; the version in force is always this page.
 	</p>
 
-	<p>Questions: {email}.</p>
+	<p>Questions: {entity.contactEmail}.</p>
 </StarlightPage>
