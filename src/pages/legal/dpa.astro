@@ -1,22 +1,70 @@
 ---
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 import Draft from '../../components/Draft.astro';
-import { entity } from '../../lib/entity';
+import { addressLine, entity } from '../../lib/entity';
 ---
 
-<StarlightPage frontmatter={{ title: 'Data processing', description: 'How version.cam processes the personal data your recordings may show.' }}>
+<StarlightPage
+	frontmatter={{ title: 'Data processing', description: 'How version.cam processes the personal data your recordings may show.' }}
+>
 	<Draft />
-	<p>
+	<p class="vc-lead">
 		When your recordings show personal data, you are its controller and version.cam processes it for you. These
-		are the terms of that processing, and they are part of the <a href="/legal/terms/">terms of service</a>. A
-		signed copy is available on request from {entity.contactEmail}.
+		are the terms of that processing, as Article 28 of the GDPR asks for them. They are part of the
+		<a href="/legal/terms/">terms of service</a>, and where the two differ about personal data, these apply. A
+		signed copy is available on request from <a href={`mailto:${entity.contactEmail}`}>{entity.contactEmail}</a>.
 	</p>
+
+	<h2>The parties and the processing</h2>
+	<p>
+		The processor is {entity.name}, {addressLine}. The controller is you, the customer whose CI publishes the
+		recordings. The subject of the processing is the storage, rendering and serving of those recordings; its
+		duration is as long as you have a project with us; its nature and purpose are what your project's settings
+		say, and nothing else. The data is whatever your app's screens show at the moment of recording, typically
+		the names, addresses and other details of the test accounts your clips sign in with; the people are whoever
+		those screens show, your users, your staff or the personas of your test data.
+	</p>
+
+	<h2>What we undertake</h2>
 	<ul>
-		<li>We process it only to provide the service, on your instructions, which are your project's settings.</li>
-		<li>It is stored in the EU, and processed by the <a href="/legal/subprocessors/">subprocessors</a> listed, under terms that bind them as these bind us.</li>
-		<li>Access is limited to what running the service needs, and everyone with access is bound to confidentiality.</li>
-		<li>We tell you within 72 hours of learning of a breach that affects your data.</li>
-		<li>We help you answer the people whose data it is, and the authorities.</li>
-		<li>When you delete a project, or your account ends, the data is deleted within an hour, and from backups within 30 days.</li>
+		<li>
+			We process the data only to provide the service and only on your instructions, which are your project's
+			settings: its visibility, how long it keeps versions, and where it sends notifications. We tell you if we
+			believe an instruction breaks the law.
+		</li>
+		<li>
+			It is stored in the European Union, in Cloudflare's EU jurisdiction, and leaves it only through the
+			companies on the <a href="/legal/subprocessors/">subprocessors page</a>, on the basis that page gives for
+			each. Each is bound by terms at least as protective as these. We tell you 30 days before adding one, and
+			you may object as that page says.
+		</li>
+		<li>
+			Access is limited to what running the service needs and to the people who run it, and everyone with access
+			is bound to confidentiality.
+		</li>
+		<li>
+			Security, as Article 32 asks: every address is served over HTTPS; a private project's clips play only for
+			people GitHub lets read its repository, through signed addresses; tokens are stored as hashes; a Slack
+			webhook is encrypted at rest; the request logs lose their query strings before they are written; and the
+			service's security policy is at <a href="/.well-known/security.txt">security.txt</a>.
+		</li>
+		<li>
+			We tell you within 72 hours of learning of a breach that affects your data, with what we know, what it
+			means for the people concerned and what we have done, and we add what we learn as we learn it.
+		</li>
+		<li>
+			We help you answer the people whose data it is and the authorities, within the time the law gives you, and
+			with a data protection impact assessment where you need one.
+		</li>
+		<li>
+			When you delete a project, its records go at once and its files within minutes. When your account ends,
+			the same happens to every project in it. Nothing is kept but what tax law requires us to keep, and the
+			name of a deleted project, so that a CI job cannot quietly bring it back.
+		</li>
+		<li>
+			We answer your written questions about how the processing is done, and give you the records we keep about
+			it (this page, the subprocessors page and our record of processing), within thirty days. An audit on site
+			is by agreement, at most once a year, at your cost, and only where a report has not answered the question.
+		</li>
 	</ul>
 </StarlightPage>

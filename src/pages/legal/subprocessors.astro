@@ -1,40 +1,91 @@
 ---
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 import Draft from '../../components/Draft.astro';
+import { entity } from '../../lib/entity';
+
+// The day each row's transfer basis was last read on the company's own
+// pages (its DPA and its statement of certification under the EU-U.S. Data
+// Privacy Framework). Change it when the rows are checked again.
+const checked = '2026-11-01';
 ---
 
-<StarlightPage frontmatter={{ title: 'Subprocessors', description: 'Who processes data for version.cam, and for what.' }}>
+<StarlightPage
+	frontmatter={{ title: 'Subprocessors', description: 'Who processes data for version.cam, for what, where, and on what basis.' }}
+>
 	<Draft />
-	<p>The providers version.cam uses to run the service. We tell customers by email 30 days before adding one.</p>
+	<p class="vc-lead">
+		The companies that process data for version.cam, what each one does, where, and on what basis personal data
+		may leave the European Union. Last checked on {checked}, against each company's data processing agreement and
+		its own statement of certification under the EU-U.S. Data Privacy Framework (DPF).
+	</p>
 	<table>
 		<thead>
 			<tr>
-				<th>Provider</th>
+				<th>Company</th>
 				<th>What for</th>
 				<th>Where</th>
+				<th>Transfer basis</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td>Cloudflare, Inc.</td>
-				<td>Hosting, the database, storage of recordings and renders, rendering, and Turnstile, the check on the services form</td>
-				<td>Storage in the EU; the network worldwide</td>
+				<td>Cloudflare, Inc., United States</td>
+				<td>
+					Hosting the pages and the API; the database; the storage of recordings and renders; the queues; the
+					containers that render; the request logs; Turnstile on the services form; the routing of our e-mail
+					addresses
+				</td>
+				<td>
+					Storage in Cloudflare's EU jurisdiction; the network worldwide; a render holds a version's screens
+					for the seconds it takes, where its container runs
+				</td>
+				<td>
+					<a href="https://www.cloudflare.com/cloudflare-customer-dpa/">Cloudflare's customer DPA</a>; EU-U.S.
+					DPF, certified; the EU standard contractual clauses in the DPA should the certification lapse
+				</td>
 			</tr>
 			<tr>
-				<td>GitHub, Inc.</td>
-				<td>Signing in, and the App's checks and comments on your repositories</td>
+				<td>GitHub, Inc., United States</td>
+				<td>Signing in; the App's check runs, comments and issues on your repositories</td>
 				<td>United States</td>
+				<td>
+					<a href="https://github.com/customer-terms/github-data-protection-agreement">GitHub's Data Protection
+					Agreement</a>; EU-U.S. DPF, certified; the EU standard contractual clauses otherwise
+				</td>
 			</tr>
 			<tr>
-				<td>Stripe Payments Europe, Ltd.</td>
-				<td>Payments, invoices and tax</td>
-				<td>Ireland, and Stripe's own processors</td>
+				<td>Resend, Inc., United States</td>
+				<td>E-mail: notifications about clips, the beta's and billing's notices, and the services form's messages</td>
+				<td>Sent from Resend's EU region; the company and its logs are in the United States</td>
+				<td>
+					<a href="https://resend.com/legal/dpa">Resend's DPA</a>; EU-U.S. DPF, certified; the EU standard
+					contractual clauses in the DPA
+				</td>
 			</tr>
 			<tr>
-				<td>Resend, Inc.</td>
-				<td>Email: stale clips, billing, and replies to the services form</td>
-				<td>Sent from the EU</td>
+				<td>Stripe Payments Europe, Ltd., Ireland</td>
+				<td>Payments, invoices and tax, once payment opens</td>
+				<td>Ireland, with Stripe's own processors; Stripe, LLC in the United States</td>
+				<td>
+					<a href="https://stripe.com/legal/dpa">Stripe's DPA</a> with its data transfers addendum; EU-U.S. DPF,
+					certified, for the United States
+				</td>
 			</tr>
 		</tbody>
 	</table>
+
+	<h2>Who receives data without processing it for us</h2>
+	<p>
+		GitHub receives the App's check runs, comments and issues on your repositories, on your project's
+		instruction. Slack receives what your project's webhook says, if you gave it one. shields.io receives a
+		visitor's request for the badge on the front page, which it draws from a number our API publishes.
+	</p>
+
+	<h2>Changes</h2>
+	<p>
+		We tell customers by e-mail, to the address we have for the account, 30 days before adding a company to this
+		list or widening what one does. You may object within those 30 days; if we cannot meet the objection, you may
+		end the agreement, and the unused part of a paid period is refunded. Questions:
+		<a href={`mailto:${entity.contactEmail}`}>{entity.contactEmail}</a>.
+	</p>
 </StarlightPage>
