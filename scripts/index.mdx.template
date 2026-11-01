@@ -70,4 +70,4 @@ Three commands and one sentence. The first run of the skill writes the config fr
 
 <Setup />
 
-<p class="colophon">versioncam <span class="vc-num">{{version}}</span> on npm · <a href="/about/licence/">FSL-1.1-ALv2</a> · The source is public at <a href="https://github.com/versioncam/versioncam">github.com/versioncam/versioncam</a>, and so is <a href="https://github.com/versioncam/versioncam-home">this site's</a>.</p>
+<p class="colophon">versioncam <span class="vc-num">{{version}}</span> on npm · <a href="/about/licence/">FSL-1.1-ALv2</a> · <a href="/legal/imprint/">Imprint</a> · The source is public at <a href="https://github.com/versioncam/versioncam">github.com/versioncam/versioncam</a>, and so is <a href="https://github.com/versioncam/versioncam-home">this site's</a>.</p>
