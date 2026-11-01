@@ -1,31 +1,49 @@
 ---
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 import Draft from '../../components/Draft.astro';
-import { addressLine, entity } from '../../lib/entity';
+import Provider from '../../components/Provider.astro';
+import { entity } from '../../lib/entity';
+
+const changed = '2026-11-01';
 ---
 
 <StarlightPage frontmatter={{ title: 'Terms of service', description: 'The terms version.cam is provided under.' }}>
 	<Draft />
+	<p class="vc-lead">
+		These terms apply to anyone who uses the hosted service at version.cam, app.version.cam, api.version.cam and
+		clips.version.cam ("you"). The versioncam package on npm and the GitHub Action are under their own licence,
+		the Functional Source License, and these terms do not change it. The service is provided by:
+	</p>
+	<Provider />
+
+	<h2>Who may sign up</h2>
 	<p>
-		version.cam is provided by {entity.name}, {addressLine}, registration number {entity.registrationNumber} ("we"). These terms apply to
-		anyone who uses the hosted service at version.cam, app.version.cam, api.version.cam and clips.version.cam
-		("you"). The versioncam package on npm is under its own licence, the Functional Source License, and these
-		terms do not change it.
+		You sign up through a GitHub account, as a business or as a person who is at least 18 years old. If you sign
+		up for an organisation, you confirm that you may bind it. The service is made for businesses; where you use
+		it as a consumer, the law of your country gives you rights these terms do not take away.
 	</p>
 
 	<h2>The service</h2>
 	<p>
-		The service stores the recordings your CI publishes with <code>versioncam publish</code>, renders them,
-		serves them at addresses that play the latest version, tells you when a clip stops matching your app, and
-		reports on your pull requests through the Versioncam GitHub App. It never records your app itself: your CI
-		does, with your own credentials, which never reach us.
+		The service stores the recordings your CI publishes with <code>versioncam publish</code>, renders them, serves
+		them at addresses that play the latest version, tells you when a clip stops matching your app, and reports on
+		your pull requests through the Versioncam GitHub App. It never records your app itself: your CI does, with
+		your own credentials, which never reach us.
+	</p>
+
+	<h2>The beta</h2>
+	<p>
+		While the beta is private, nothing is sold: Pro is given by hand to the accounts that ask, as the
+		<a href="/#after-ci-versioncam">front page</a> says, and these terms apply to a plan that was given exactly as
+		they apply to one that is paid for.
 	</p>
 
 	<h2>Your account</h2>
 	<p>
-		You sign in with GitHub. Who may see and manage a project follows from GitHub: the members of the account
-		where the Versioncam App is installed. You are responsible for who has access to your GitHub accounts and to
-		any project token you make.
+		You sign in with GitHub. Who may see and manage a project follows from GitHub: whoever may read a repository
+		where the Versioncam App is installed sees its project, whoever administers the repository changes it. You are
+		responsible for who has access to your GitHub accounts, and for any project token or command-line token you
+		make.
 	</p>
 
 	<h2>Your content</h2>
@@ -33,43 +51,65 @@ import { addressLine, entity } from '../../lib/entity';
 		The recordings, their screens and the files rendered from them are yours. You give us the right to store,
 		render and show them as your project's settings say (public, unlisted or private) and for no other purpose.
 		You confirm that you may record and publish what your recordings show; if they show personal data, you are
-		its controller and we process it for you under the data processing terms, which are part of these terms.
+		its controller and we process it for you under the <a href="/legal/dpa/">data processing terms</a>, which
+		are part of these terms.
 	</p>
 
-	<h2>What you may not do</h2>
+	<h2 id="not-allowed">What may not be hosted</h2>
 	<p>
-		Use the service for anything unlawful; publish recordings you have no right to; try to reach other
-		customers' data; overload the service on purpose; or use it to host files that are not recordings of your
-		own product.
+		The service is for recordings of software you may record and publish. Not allowed on clips.version.cam or
+		anywhere in the service: content that is illegal under the law of Slovenia or of the European Union; content
+		that infringes someone else's rights, such as copyright, a trade mark or their privacy; recordings that show
+		people you have no right to show; malware, or links to it; and files that are not recordings of your own
+		product. Also not allowed: reaching for other customers' data, overloading the service on purpose, and
+		getting around its limits. We decide what to remove by hand, never by an automated system.
+	</p>
+
+	<h2 id="reporting">Reporting a clip</h2>
+	<p>
+		If you believe a clip on clips.version.cam is illegal or breaks the rule above, write to
+		<a href={`mailto:${entity.contactEmail}`}>{entity.contactEmail}</a> with: the clip's address; why you believe
+		it is illegal or breaks the rule, naming the law or the right you rely on where you can; your name and e-mail
+		address, unless the content concerns a sexual-abuse offence, where you may stay anonymous; and a sentence
+		saying you believe in good faith that your report is accurate and complete. We confirm that it arrived, look
+		at the clip, decide without undue delay and in any case within fourteen days, and tell you what we decided and
+		why (Regulation (EU) 2022/2065, Article 16).
+	</p>
+	<p>
+		If we remove or restrict a clip, we tell the project's owner what was removed, why, which rule or law it broke,
+		and how to object: by writing to the same address, where we answer the objection the same way (Article 17).
 	</p>
 
 	<h2>Plans and payment</h2>
 	<p>
-		Paid plans are billed in advance, monthly or yearly, through Stripe; prices exclude VAT, which is added
-		where it applies. A subscription renews until you cancel it; cancelling takes effect at the end of the paid
+		The plans, what each one stores and sends, and their prices are on the <a href="/#after-ci-versioncam">front
+		page</a> and in <a href="/more/version-cam/">the docs</a>; the price at checkout is the price. Paid plans are
+		billed in advance, monthly or yearly, through Stripe; prices exclude VAT, which is added where it applies. A
+		subscription renews until you cancel it in the billing portal; cancelling takes effect at the end of the paid
 		period. We tell you at least 30 days before a price changes, and a change never applies to a period you have
 		already paid for. Refunds follow the <a href="/legal/refunds/">refund policy</a>.
 	</p>
 
 	<h2>When a plan ends</h2>
 	<p>
-		Your clips keep playing where they are embedded. What a lapsed plan no longer covers is described on the
-		<a href="/pricing/">pricing page</a>: new recordings of private projects beyond the free one are not stored,
-		and versions older than the free plan keeps are removed sixty days after the plan ended.
+		Your clips keep playing where they are embedded. What a lapsed plan no longer covers is what the plans say:
+		new recordings of private projects beyond the free one are not stored, and versions older than the free plan
+		keeps are kept for sixty more days, with two reminders, and then removed.
 	</p>
 
 	<h2>Deleting</h2>
 	<p>
-		Deleting a project in the dashboard removes its recordings, renders and history from the service within an
-		hour. Copies may remain in our providers' backups for up to 30 days, after which they are gone too. You can
-		download any version's files before you delete it.
+		Deleting a project in its settings removes its recordings, renders and history at once, and its files within
+		minutes. The database keeps thirty days of point-in-time history, so a record deleted by mistake can be
+		restored on request within thirty days; a deleted file cannot. You can download any version as a zip before
+		you delete it.
 	</p>
 
 	<h2>Availability</h2>
 	<p>
-		We work to keep the service available and your data safe, but we do not promise it will never be
-		interrupted, except where a separate agreement says so. Your recordings also remain in your own CI, so the
-		service is never the only copy of your work.
+		We work to keep the service available and your data safe, but we do not promise it will never be interrupted,
+		except where a separate agreement says so. Your recordings also remain in your own CI, so the service is never
+		the only copy of your work.
 	</p>
 
 	<h2>Liability</h2>
@@ -83,15 +123,16 @@ import { addressLine, entity } from '../../lib/entity';
 	<h2>Ending the agreement</h2>
 	<p>
 		You may stop using the service and delete your projects at any time. We may suspend an account that breaks
-		these terms, telling you why, and end it if the breach is not put right.
+		these terms, telling you why and how to object, and end it if the breach is not put right.
 	</p>
 
-	<h2>Law</h2>
+	<h2>Law, and changes</h2>
 	<p>
 		These terms are governed by the law of Slovenia, and its courts decide disputes, except that a consumer may
-		also rely on the law and the courts of their own country. We may change these terms with 30 days' notice by
-		email; the version in force is always this page.
+		also rely on the law and the courts of their own country. We may change these terms with 30 days' notice to
+		the e-mail address we have for your account; the version in force is always this page, last changed on
+		{changed}.
 	</p>
 
-	<p>Questions: {entity.contactEmail}.</p>
+	<p>Questions: <a href={`mailto:${entity.contactEmail}`}>{entity.contactEmail}</a>.</p>
 </StarlightPage>
