@@ -77,6 +77,7 @@ export default defineConfig({
         SocialIcons: "./src/components/SocialIcons.astro",
         ThemeProvider: "./src/components/DarkOnly.astro",
         ThemeSelect: "./src/components/NoThemeSelect.astro",
+        Footer: "./src/components/Footer.astro",
       },
       expressiveCode: {
         themes: [viewfinder],

@@ -1,0 +1,102 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+
+// The form's Cloudflare Turnstile widget. The site key is public by design:
+// the secret that checks a token lives with the service that receives the
+// form, and the service accepts a token only if it was solved on
+// version.cam, for this action.
+const TURNSTILE_SITE_KEY = '0x4AAAAAAFO-_0XMcTm6CbCa';
+const TURNSTILE_ACTION = 'contact';
+---
+
+<StarlightPage
+	frontmatter={{
+		title: 'Living demos, set up for you',
+		description: 'A config, the clips that matter, the check in your CI, and the clips on your pages. A fixed price.',
+	}}
+>
+	<p class="vc-lead">
+		A week, a fixed price per application, and at the end your product records its own demos: a config that
+		knows how to start and sign in to your app, five to eight clips of the flows that matter, the check running
+		in your CI on every pull request, and the clips on the pages where they belong, your docs, your README, your
+		landing page.
+	</p>
+	<p>From €3,000 per application, agreed before anything starts. After it, the clips are yours: they live in your repository, and they keep themselves true.</p>
+
+	<form class="vc-form" id="contact" method="post" action="https://api.version.cam/v1/contact">
+		<label>Your name <input name="name" required maxlength="120" autocomplete="name" /></label>
+		<label>An address to reply to <input name="email" type="email" required maxlength="200" autocomplete="email" /></label>
+		<label>Company <input name="company" maxlength="200" autocomplete="organization" /></label>
+		<label>
+			What it is about
+			<select name="topic">
+				<option value="setup">Set up for me: a week, from €3,000 per application</option>
+				<option value="max">Max, or more than ten projects</option>
+				<option value="other">Something else</option>
+			</select>
+		</label>
+		<label>
+			The app, and what it should show
+			<textarea name="message" required minlength="10" maxlength="4000" rows="6"></textarea>
+		</label>
+		<label class="vc-trap" aria-hidden="true">Leave this empty <input name="website" tabindex="-1" autocomplete="off" /></label>
+		<div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-action={TURNSTILE_ACTION}></div>
+		<button type="submit">Send</button>
+		<p class="vc-form-status" role="status" aria-live="polite"></p>
+	</form>
+	<p class="vc-form-note">
+		What you write here becomes one e-mail to us, with your address as the reply-to, and nothing else is kept:
+		the <a href="/legal/privacy/">privacy page</a> says so in full.
+	</p>
+	<noscript><p>The form needs JavaScript to send.</p></noscript>
+</StarlightPage>
+
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<script>
+	// The widget adds its token to the form as `cf-turnstile-response`, so it
+	// travels with the other fields. A token is good for one check only, so the
+	// widget is reset after every attempt, sent or not, and the next attempt
+	// carries a fresh one.
+	type Turnstile = { reset(): void };
+	const turnstile = () => (window as Window & { turnstile?: Turnstile }).turnstile;
+
+	const form = document.getElementById('contact') as HTMLFormElement | null;
+	const status = form?.querySelector('.vc-form-status');
+
+	// A link may arrive with the topic chosen (`/services/?topic=max` from a
+	// "talk to us" line), so the select starts there; any other value leaves
+	// it on the first option.
+	const topic = new URLSearchParams(location.search).get('topic');
+	const select = form?.querySelector('select[name="topic"]') as HTMLSelectElement | null;
+	if (select && topic && Array.from(select.options).some((option) => option.value === topic)) select.value = topic;
+
+	form?.addEventListener('submit', async (event) => {
+		event.preventDefault();
+		if (!status) return;
+		const fields = Object.fromEntries(new FormData(form).entries());
+		if (!fields['cf-turnstile-response']) {
+			status.textContent = 'One moment: the check that a person is sending this is still running.';
+			return;
+		}
+		status.textContent = 'Sending.';
+		try {
+			const response = await fetch(form.action, {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify(fields),
+			});
+			const answer = (await response.json()) as { ok: boolean; error?: string };
+			if (answer.ok) {
+				form.reset();
+				status.textContent = 'Sent. You will hear back within two working days.';
+			} else {
+				status.textContent = answer.error ?? 'It did not send. Try again in a minute.';
+			}
+		} catch {
+			status.textContent = 'It did not send. Try again in a minute.';
+		} finally {
+			turnstile()?.reset();
+		}
+	});
+</script>

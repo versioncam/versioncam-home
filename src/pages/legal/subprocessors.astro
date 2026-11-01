@@ -1,0 +1,40 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import Draft from '../../components/Draft.astro';
+---
+
+<StarlightPage frontmatter={{ title: 'Subprocessors', description: 'Who processes data for version.cam, and for what.' }}>
+	<Draft />
+	<p>The providers version.cam uses to run the service. We tell customers by email 30 days before adding one.</p>
+	<table>
+		<thead>
+			<tr>
+				<th>Provider</th>
+				<th>What for</th>
+				<th>Where</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Cloudflare, Inc.</td>
+				<td>Hosting, the database, storage of recordings and renders, rendering, and Turnstile, the check on the services form</td>
+				<td>Storage in the EU; the network worldwide</td>
+			</tr>
+			<tr>
+				<td>GitHub, Inc.</td>
+				<td>Signing in, and the App's checks and comments on your repositories</td>
+				<td>United States</td>
+			</tr>
+			<tr>
+				<td>Stripe Payments Europe, Ltd.</td>
+				<td>Payments, invoices and tax</td>
+				<td>Ireland, and Stripe's own processors</td>
+			</tr>
+			<tr>
+				<td>Resend, Inc.</td>
+				<td>Email: stale clips, billing, and replies to the services form</td>
+				<td>Sent from the EU</td>
+			</tr>
+		</tbody>
+	</table>
+</StarlightPage>

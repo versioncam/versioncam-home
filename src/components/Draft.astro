@@ -1,0 +1,14 @@
+---
+// The legal pages are drafts until the company that sells version.cam is
+// named in src/data/entity.json; until then each says so, at the top, where
+// nobody can miss it.
+import entity from '../data/entity.json';
+---
+
+{
+	!entity.name && (
+		<p class="vc-draft" role="note">
+			A draft. It becomes binding once the company that runs version.cam is named here.
+		</p>
+	)
+}

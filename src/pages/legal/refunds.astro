@@ -1,0 +1,21 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import Draft from '../../components/Draft.astro';
+import { email } from '../../lib/entity';
+---
+
+<StarlightPage frontmatter={{ title: 'Refunds', description: 'Fourteen days, no questions.' }}>
+	<Draft />
+	<p>
+		Within 14 days of any payment, including a renewal, ask for a refund of that payment and you get it, without
+		having to say why. Write to {email} from the address on the account, or reply to the receipt.
+	</p>
+	<p>
+		The refund goes back to the card that paid, usually within ten days. The plan ends when it is refunded;
+		your clips keep playing, as they do whenever a plan ends.
+	</p>
+	<p>
+		If you buy as a consumer in the EU or the UK, you also have the statutory right to withdraw within 14 days.
+		This policy gives you at least that, whatever you used in the meantime.
+	</p>
+</StarlightPage>

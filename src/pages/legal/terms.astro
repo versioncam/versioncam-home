@@ -1,0 +1,97 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import Draft from '../../components/Draft.astro';
+import { address, company, email, registration } from '../../lib/entity';
+---
+
+<StarlightPage frontmatter={{ title: 'Terms of service', description: 'The terms version.cam is provided under.' }}>
+	<Draft />
+	<p>
+		version.cam is provided by {company}, {address}, registration {registration} ("we"). These terms apply to
+		anyone who uses the hosted service at version.cam, app.version.cam, api.version.cam and clips.version.cam
+		("you"). The versioncam package on npm is under its own licence, the Functional Source License, and these
+		terms do not change it.
+	</p>
+
+	<h2>The service</h2>
+	<p>
+		The service stores the recordings your CI publishes with <code>versioncam publish</code>, renders them,
+		serves them at addresses that play the latest version, tells you when a clip stops matching your app, and
+		reports on your pull requests through the Versioncam GitHub App. It never records your app itself: your CI
+		does, with your own credentials, which never reach us.
+	</p>
+
+	<h2>Your account</h2>
+	<p>
+		You sign in with GitHub. Who may see and manage a project follows from GitHub: the members of the account
+		where the Versioncam App is installed. You are responsible for who has access to your GitHub accounts and to
+		any project token you make.
+	</p>
+
+	<h2>Your content</h2>
+	<p>
+		The recordings, their screens and the files rendered from them are yours. You give us the right to store,
+		render and show them as your project's settings say (public, unlisted or private) and for no other purpose.
+		You confirm that you may record and publish what your recordings show; if they show personal data, you are
+		its controller and we process it for you under the data processing terms, which are part of these terms.
+	</p>
+
+	<h2>What you may not do</h2>
+	<p>
+		Use the service for anything unlawful; publish recordings you have no right to; try to reach other
+		customers' data; overload the service on purpose; or use it to host files that are not recordings of your
+		own product.
+	</p>
+
+	<h2>Plans and payment</h2>
+	<p>
+		Paid plans are billed in advance, monthly or yearly, through Stripe; prices exclude VAT, which is added
+		where it applies. A subscription renews until you cancel it; cancelling takes effect at the end of the paid
+		period. We tell you at least 30 days before a price changes, and a change never applies to a period you have
+		already paid for. Refunds follow the <a href="/legal/refunds/">refund policy</a>.
+	</p>
+
+	<h2>When a plan ends</h2>
+	<p>
+		Your clips keep playing where they are embedded. What a lapsed plan no longer covers is described on the
+		<a href="/pricing/">pricing page</a>: new recordings of private projects beyond the free one are not stored,
+		and versions older than the free plan keeps are removed sixty days after the plan ended.
+	</p>
+
+	<h2>Deleting</h2>
+	<p>
+		Deleting a project in the dashboard removes its recordings, renders and history from the service within an
+		hour. Copies may remain in our providers' backups for up to 30 days, after which they are gone too. You can
+		download any version's files before you delete it.
+	</p>
+
+	<h2>Availability</h2>
+	<p>
+		We work to keep the service available and your data safe, but we do not promise it will never be
+		interrupted, except where a separate agreement says so. Your recordings also remain in your own CI, so the
+		service is never the only copy of your work.
+	</p>
+
+	<h2>Liability</h2>
+	<p>
+		The service is provided as it is. To the extent the law allows, we are not liable for indirect or
+		consequential losses, and our total liability is limited to what you paid us in the twelve months before the
+		claim. Nothing in these terms limits liability that the law does not allow to be limited, or the rights a
+		consumer has under the law of their country.
+	</p>
+
+	<h2>Ending the agreement</h2>
+	<p>
+		You may stop using the service and delete your projects at any time. We may suspend an account that breaks
+		these terms, telling you why, and end it if the breach is not put right.
+	</p>
+
+	<h2>Law</h2>
+	<p>
+		These terms are governed by the law of Slovenia, and its courts decide disputes, except that a consumer may
+		also rely on the law and the courts of their own country. We may change these terms with 30 days' notice by
+		email; the version in force is always this page.
+	</p>
+
+	<p>Questions: {email}.</p>
+</StarlightPage>

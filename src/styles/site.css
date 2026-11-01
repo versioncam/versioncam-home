@@ -1462,3 +1462,75 @@ button.vc-src:focus-visible {
 .sl-markdown-content > p.colophon {
   margin-top: 5rem;
 }
+
+/* ---- The services form and the legal pages ------------------------------ */
+/* The same viewfinder, in the person's voice: no frames around the text,
+   hairlines where a list of facts needs rows, and one red border on the
+   draft mark, which shows only while src/data/entity.json names nobody. */
+.vc-lead {
+  font-size: 1.125rem;
+  color: var(--sl-color-gray-1);
+}
+.vc-note {
+  border-left: 2px solid var(--vc-line);
+  padding-left: 1rem;
+  color: var(--sl-color-gray-2);
+}
+.vc-draft {
+  border: 1px solid var(--vc-rec);
+  color: var(--vc-white);
+  padding: 0.6rem 0.9rem;
+}
+.vc-form {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 34rem;
+  margin: 2rem 0;
+}
+.vc-form label {
+  display: grid;
+  gap: 0.3rem;
+  color: var(--sl-color-gray-2);
+}
+.vc-form input,
+.vc-form textarea,
+.vc-form select {
+  background: var(--sl-color-gray-6);
+  border: 1px solid var(--vc-line);
+  color: var(--vc-white);
+  padding: 0.5rem 0.6rem;
+  font: inherit;
+}
+/* The button in the readout voice, as the front page's door is. */
+.vc-form button {
+  justify-self: start;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--vc-white);
+  background: var(--vc-white);
+  color: var(--vc-black);
+  font: 11px/11px var(--vc-font-machine);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.vc-form-note {
+  font-size: 0.875rem;
+  color: var(--vc-dim);
+}
+.vc-form-note a {
+  color: var(--vc-white);
+}
+.vc-trap {
+  position: absolute;
+  left: -10000px;
+}
+.vc-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+}
+.vc-footer-links a {
+  color: var(--vc-dim);
+}

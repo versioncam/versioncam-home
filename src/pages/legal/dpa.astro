@@ -1,0 +1,22 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import Draft from '../../components/Draft.astro';
+import { email } from '../../lib/entity';
+---
+
+<StarlightPage frontmatter={{ title: 'Data processing', description: 'How version.cam processes the personal data your recordings may show.' }}>
+	<Draft />
+	<p>
+		When your recordings show personal data, you are its controller and version.cam processes it for you. These
+		are the terms of that processing, and they are part of the <a href="/legal/terms/">terms of service</a>. A
+		signed copy is available on request from {email}.
+	</p>
+	<ul>
+		<li>We process it only to provide the service, on your instructions, which are your project's settings.</li>
+		<li>It is stored in the EU, and processed by the <a href="/legal/subprocessors/">subprocessors</a> listed, under terms that bind them as these bind us.</li>
+		<li>Access is limited to what running the service needs, and everyone with access is bound to confidentiality.</li>
+		<li>We tell you within 72 hours of learning of a breach that affects your data.</li>
+		<li>We help you answer the people whose data it is, and the authorities.</li>
+		<li>When you delete a project, or your account ends, the data is deleted within an hour, and from backups within 30 days.</li>
+	</ul>
+</StarlightPage>

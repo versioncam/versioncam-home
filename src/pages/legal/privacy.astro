@@ -1,0 +1,65 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import Draft from '../../components/Draft.astro';
+import { address, company, email } from '../../lib/entity';
+---
+
+<StarlightPage frontmatter={{ title: 'Privacy', description: 'What version.cam keeps about you, where, and for how long.' }}>
+	<Draft />
+	<p>
+		{company}, {address}, is the controller of the personal data described here. This page covers the hosted
+		service; the versioncam package runs on your machines and in your CI, and sends us nothing unless you run{' '}
+		<code>versioncam publish</code>.
+	</p>
+
+	<h2>What we keep, and why</h2>
+	<ul>
+		<li>
+			<strong>Your GitHub identity</strong>: your GitHub id, login and, if GitHub shares it, your email address,
+			and which accounts you belong to. To sign you in and to show you your projects.
+		</li>
+		<li>
+			<strong>What your CI publishes</strong>: recordings (the timeline and the screens of your app), the files
+			rendered from them, and the commit, branch and run they came from. To provide the service. If your screens
+			show personal data, you are its controller and we process it for you only.
+		</li>
+		<li>
+			<strong>Billing</strong>: your plan, your billing email and address, and your VAT number if you give one.
+			Stripe takes your card; we never see it.
+		</li>
+		<li>
+			<strong>What keeps the service running</strong>: counts of publishes and renders, and the IP addresses of
+			requests to our forms, kept for an hour to stop abuse. The services form is checked by Cloudflare
+			Turnstile, which looks at your browser, never at what you type, to tell a person from a bot; we learn only
+			whether the check passed.
+		</li>
+	</ul>
+
+	<h2>Where</h2>
+	<p>
+		Recordings, renders and our database are stored in the European Union, in Cloudflare's EU jurisdiction.
+		Rendering runs on Cloudflare's network, which may process a recording outside the EU for the seconds a
+		render takes. Our providers are listed on the <a href="/legal/subprocessors/">subprocessors</a> page.
+	</p>
+
+	<h2>How long</h2>
+	<p>
+		Recordings are kept as your plan and your project's settings say, and removed within an hour of your
+		deleting them, with copies in backups gone within 30 days. Account data is kept while you have an account;
+		invoices are kept for as long as tax law requires.
+	</p>
+
+	<h2>Cookies</h2>
+	<p>
+		One cookie, which keeps you signed in, and one that lasts the ten minutes of signing in with GitHub. No
+		tracking and no analytics cookies. The services page runs Cloudflare Turnstile, under Cloudflare's{' '}
+		<a href="https://www.cloudflare.com/turnstile-privacy-policy/">Turnstile privacy addendum</a>.
+	</p>
+
+	<h2>Your rights</h2>
+	<p>
+		You may ask for a copy of your data, its correction, its deletion, or its transfer, and object to how we use
+		it: write to {email}. You may also complain to the Information Commissioner of the Republic of Slovenia, or
+		to the authority where you live.
+	</p>
+</StarlightPage>
