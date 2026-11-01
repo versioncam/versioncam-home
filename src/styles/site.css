@@ -247,7 +247,26 @@ h1#_top {
   color: var(--vc-dim);
 }
 
-/* ---- Chrome: sidebar, contents, pagination -------------------------------- */
+/* ---- Chrome: header, sidebar, contents, pagination ------------------------ */
+
+/* "Sign in", beside the GitHub mark (SocialIcons.astro): a control, so it
+   speaks in the machine's voice, framed in the hairline that a pagination
+   link wears, and lit white when it is pointed at. */
+.vc-signin {
+  font-family: var(--vc-font-machine);
+  font-size: 11px;
+  line-height: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--vc-white);
+  text-decoration: none;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--vc-line);
+}
+.vc-signin:hover {
+  border-color: var(--vc-white);
+}
 
 /* The sidebar's group labels, as an on-screen display would set them. */
 .sidebar-content .group-label .large {

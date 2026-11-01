@@ -1,0 +1,13 @@
+---
+// Starlight's social links, and "Sign in" after them: version.cam's
+// dashboard, where a project is managed, which only the door at the foot of
+// the front page linked to. Starlight's `social` option draws icons only,
+// its label being for screen readers, so the words are this component's and
+// the GitHub mark is still Starlight's own. The header and the mobile menu
+// both draw this component, so the link is in both; the front page has no
+// menu, so there the hero's note carries the link on a phone.
+import Default from '@astrojs/starlight/components/SocialIcons.astro';
+---
+
+<Default />
+<a class="vc-signin" href="https://app.version.cam">Sign in</a>

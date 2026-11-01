@@ -74,6 +74,7 @@ export default defineConfig({
       ],
       components: {
         Hero: "./src/components/Hero.astro",
+        SocialIcons: "./src/components/SocialIcons.astro",
         ThemeProvider: "./src/components/DarkOnly.astro",
         ThemeSelect: "./src/components/NoThemeSelect.astro",
       },
