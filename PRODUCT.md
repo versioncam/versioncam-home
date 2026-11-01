@@ -89,7 +89,11 @@ paid plans tells the team when a clip breaks.
   first ten accounts that write to hello@version.cam have Pro free until
   the beta ends (an operator's override; Stripe is not live). No public
   date is given. The call to action is "Sign in with GitHub" at
-  app.version.cam.
+  app.version.cam, which since 2026-11-01 every page's header also links
+  as "Sign in", and which the front page's hero names under its actions,
+  in a note that says the beta is private and what the first ten accounts
+  that ask are given. Before that, the door at the foot of the front page
+  was the only link to the app.
 - Plans, as planned and marked planned, never as final (prices are
   confirmed against the first bill, which does not exist). Decided
   2026-10-29: Free is for public repositories only, since a public clip is

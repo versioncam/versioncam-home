@@ -14,6 +14,10 @@ export const collections = {
 				ask: z.string().nullish(),
 				// Where CI publishes the example's takes, for the hero's film.
 				clips: z.string().optional(),
+				// One line under the hero's actions, in HTML: what is true of the
+				// service today (a beta, an offer) and where to sign in, so a reader
+				// who came for that need not scroll to the door.
+				note: z.string().optional(),
 			}),
 		}),
 	}),

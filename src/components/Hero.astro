@@ -8,6 +8,7 @@ import Film from './Film.astro';
 
 const { data } = Astro.locals.starlightRoute.entry;
 const clips = data.clips;
+const note = data.note;
 const { title = data.title, tagline, actions = [] } = data.hero ?? {};
 ---
 
@@ -24,6 +25,7 @@ const { title = data.title, tagline, actions = [] } = data.hero ?? {};
 						</LinkButton>
 					))}
 				</div>
+				{note && <p class="vc-hero-note" set:html={note} />}
 			</div>
 			<Film base={clips} />
 		</div>
