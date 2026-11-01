@@ -9,8 +9,9 @@
 // own repository, so it is a receipt and not an illustration.
 import { LinkButton } from '@astrojs/starlight/components';
 
-const BADGE =
-	'https://img.shields.io/endpoint?url=https%3A%2F%2Fapi.version.cam%2Fv1%2Fbadge%2Fversioncam%2Fversioncam&cacheSeconds=300';
+// Drawn by version.cam's own API, so no visitor's request leaves the site
+// for a third party; a README may still let shields.io draw the same JSON.
+const BADGE = 'https://api.version.cam/v1/badge/versioncam/versioncam/svg';
 ---
 
 <div class="vc-hosted not-content">
