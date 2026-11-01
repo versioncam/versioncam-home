@@ -1,65 +1,248 @@
 ---
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 import Draft from '../../components/Draft.astro';
-import { addressLine, entity } from '../../lib/entity';
+import Provider from '../../components/Provider.astro';
+import { entity } from '../../lib/entity';
+
+// Every item below is a row of the service's schema or a line of its code,
+// with the real figures: the sweep's days, the cookies' lives, the logs'
+// retention as Cloudflare states it. A sentence that cannot be traced to one
+// does not go on this page.
+const changed = '2026-11-01';
 ---
 
-<StarlightPage frontmatter={{ title: 'Privacy', description: 'What version.cam keeps about you, where, and for how long.' }}>
+<StarlightPage
+	frontmatter={{ title: 'Privacy', description: 'What version.cam keeps about you, where, for how long, and why.' }}
+>
 	<Draft />
+	<p class="vc-lead">
+		This page says what the hosted service keeps about you, item by item, where it is, how long it stays and
+		why it is allowed to. It covers version.cam, app.version.cam, api.version.cam and clips.version.cam. The
+		controller of the personal data it describes is:
+	</p>
+	<Provider role="Controller" />
 	<p>
-		{entity.name}, {addressLine}, is the controller of the personal data described here. This page covers the hosted
-		service; the versioncam package runs on your machines and in your CI, and sends us nothing unless you run{' '}
-		<code>versioncam publish</code>.
+		The versioncam package and the GitHub Action are a different matter: they run in your own CI and on your own
+		machines, with your app and your secrets, and send nothing to us until <code>versioncam publish</code> runs.
+		Then they send the recordings described below, and nothing else.
 	</p>
 
 	<h2>What we keep, and why</h2>
-	<ul>
-		<li>
-			<strong>Your GitHub identity</strong>: your GitHub id, login and, if GitHub shares it, your email address,
-			and which accounts you belong to. To sign you in and to show you your projects.
-		</li>
-		<li>
-			<strong>What your CI publishes</strong>: recordings (the timeline and the screens of your app), the files
-			rendered from them, and the commit, branch and run they came from. To provide the service. If your screens
-			show personal data, you are its controller and we process it for you only.
-		</li>
-		<li>
-			<strong>Billing</strong>: your plan, your billing email and address, and your VAT number if you give one.
-			Stripe takes your card; we never see it.
-		</li>
-		<li>
-			<strong>What keeps the service running</strong>: counts of publishes and renders, and the IP addresses of
-			requests to our forms, kept for an hour to stop abuse. The services form is checked by Cloudflare
-			Turnstile, which looks at your browser, never at what you type, to tell a person from a bot; we learn only
-			whether the check passed.
-		</li>
-	</ul>
+	<p>
+		Each item names its legal basis in the words of the GDPR: <em>contract</em> is Article 6(1)(b), the service you
+		asked for; <em>legitimate interest</em> is Article 6(1)(f), running and securing the service; <em>legal
+		obligation</em> is Article 6(1)(c), tax law. "Kept" is how long, and what removes it.
+	</p>
+	<dl class="vc-kept not-content">
+		<div>
+			<dt>Your GitHub identity</dt>
+			<dd>
+				Your GitHub id, your login and, if GitHub shares one, your public e-mail address (usually none). The
+				sign-in asks GitHub for no scope: it learns who you are and nothing you have written. To sign you in and
+				to name your account.
+			</dd>
+			<dd class="vc-meta">Contract · while your account exists</dd>
+		</div>
+		<div>
+			<dt>What you may reach</dt>
+			<dd>
+				Which GitHub accounts you belong to where the Versioncam App is installed and, for each of their
+				repositories, whether you may read it or administer it, as GitHub lists them. Read at every sign-in and
+				replaced whole, so what GitHub no longer grants goes with it. This decides who sees a project and who
+				may change it.
+			</dd>
+			<dd class="vc-meta">Contract and security · replaced at each sign-in</dd>
+		</div>
+		<div>
+			<dt>Your session</dt>
+			<dd>
+				A session record and the cookie that names it, <code>__Host-vc_session</code>, for seven days. While
+				you sign in, a second cookie, <code>__Host-vc_oauth</code>, and the page to return to, for ten minutes.
+				Signing out ends the session at once; "sign out everywhere" ends every session and every command-line
+				token of yours.
+			</dd>
+			<dd class="vc-meta">Contract · seven days; the sign-in's state ten minutes</dd>
+		</div>
+		<div>
+			<dt>Command-line tokens</dt>
+			<dd>
+				A token <code>versioncam cloud login</code> makes once you approve its code in the browser, kept as a
+				hash: the service recognises the token and cannot reproduce it.
+			</dd>
+			<dd class="vc-meta">
+				Contract · until you revoke it or sign out everywhere; an expired one is removed thirty days later
+			</dd>
+		</div>
+		<div>
+			<dt>Your account</dt>
+			<dd>
+				The account's login, its plan, a plan given by hand and when it ends, whether it is suspended and why,
+				and once payment opens, the billing e-mail address and Stripe's id for the customer.
+			</dd>
+			<dd class="vc-meta">
+				Contract · while the account exists; invoices ten years after the end of the year they belong to
+				(ZDDV-1, Article 86)
+			</dd>
+		</div>
+		<div>
+			<dt>Projects</dt>
+			<dd>
+				A project's repository, its visibility (public, unlisted or private), how many days of versions it
+				keeps, the address that gets its notifications, the Slack webhook you give it, and whether it opens
+				GitHub issues. A notification address is held as pending until its owner clicks the link we send, and
+				we keep when the link went out and when it was confirmed; mail goes only to a confirmed address. The
+				Slack webhook is encrypted at rest.
+			</dd>
+			<dd class="vc-meta">Contract · while the project exists</dd>
+		</div>
+		<div>
+			<dt>Project tokens</dt>
+			<dd>
+				For a CI outside GitHub Actions, which has no GitHub token to publish with: kept as a hash, like the
+				command line's.
+			</dd>
+			<dd class="vc-meta">Contract · until revoked</dd>
+		</div>
+		<div>
+			<dt>Recordings</dt>
+			<dd>
+				What <code>versioncam publish</code> sends from your CI: each clip's timeline and the pictures of your
+				app's screens it was recorded from; the commit, branch, run id and recorder version; the check's result
+				and, when a clip broke, one picture of the page where it did. If the screens show personal data, you
+				are its controller and we process it for you under the
+				<a href="/legal/dpa/">data processing terms</a>.
+			</dd>
+			<dd class="vc-meta">
+				Contract; for what the screens show, your instructions · as your plan and the project's retention say:
+				the daily sweep removes versions past them, and a branch's versions thirty days after its last publish
+				(the default branch keeps its). Deleting a project removes its records at once and its files within
+				minutes; the project's name stays as a tombstone, so a CI job cannot quietly bring it back
+			</dd>
+		</div>
+		<div>
+			<dt>Renders</dt>
+			<dd>The videos and posters made from a recording.</dd>
+			<dd class="vc-meta">Contract · with their version</dd>
+		</div>
+		<div>
+			<dt>The record of the service</dt>
+			<dd>
+				Each publish's own record, for two hours; per account and month, counts of publishes, render seconds
+				and bytes; and an event log per account: what kind of thing happened, when, and a line about it (a
+				project's name, the reason for a suspension). For the plan's limits, the dashboard, support, and
+				noticing abuse.
+			</dd>
+			<dd class="vc-meta">Contract and legitimate interest · usage by month; events 400 days, removed by the daily sweep</dd>
+		</div>
+		<div>
+			<dt>Pull requests</dt>
+			<dd>The number and head commit of each pull request the App reports on, for its check and its comment.</dd>
+			<dd class="vc-meta">Contract · with the project</dd>
+		</div>
+		<div>
+			<dt>Request logs</dt>
+			<dd>
+				Cloudflare's log of each request to the service: method, address with its query string removed before
+				it is written, status, timing and the country it came from. For operating and securing the service.
+			</dd>
+			<dd class="vc-meta">Legitimate interest · seven days (Cloudflare Workers Logs on the Workers Paid plan, checked {changed})</dd>
+		</div>
+		<div>
+			<dt>The services form</dt>
+			<dd>
+				Your name, an address to reply to, a company if you give one, what it is about and your message become
+				one e-mail to us through Resend, with your address as the reply-to; the service stores none of it. Your
+				IP address is counted for an hour (five messages an hour from one address), and everyone's messages
+				together for a day (fifty).
+			</dd>
+			<dd class="vc-meta">
+				Steps before a contract · the e-mail in our mailbox and in Resend's log; the hourly count an hour; the
+				daily count 31 days
+			</dd>
+		</div>
+		<div>
+			<dt>Turnstile</dt>
+			<dd>
+				On the services form, Cloudflare judges whether a person is sending it. We learn pass or fail; what
+				Cloudflare looks at in your browser is in its
+				<a href="https://www.cloudflare.com/turnstile-privacy-policy/">Turnstile privacy addendum</a>.
+			</dd>
+			<dd class="vc-meta">Legitimate interest · the verdict is not kept</dd>
+		</div>
+		<div>
+			<dt>Notification counts</dt>
+			<dd>How many notification e-mails each project sent on each day, for the cap per project.</dd>
+			<dd class="vc-meta">Legitimate interest · 31 days</dd>
+		</div>
+		<div>
+			<dt>Billing, once payment opens</dt>
+			<dd>
+				Your name, billing address and VAT number, given to Stripe at checkout, and the invoices Stripe makes.
+				Your card goes to Stripe only and never reaches us.
+			</dd>
+			<dd class="vc-meta">Contract and legal obligation · invoices ten years</dd>
+		</div>
+	</dl>
 
 	<h2>Where</h2>
 	<p>
-		Recordings, renders and our database are stored in the European Union, in Cloudflare's EU jurisdiction.
-		Rendering runs on Cloudflare's network, which may process a recording outside the EU for the seconds a
-		render takes. Our providers are listed on the <a href="/legal/subprocessors/">subprocessors</a> page.
+		Recordings, renders and the database are stored in Cloudflare's European Union jurisdiction. The pages and
+		the API are served by Cloudflare's network, which answers from the location nearest you. A render holds a
+		version's screens for the seconds it takes, where its container runs. E-mail is sent from Resend's EU
+		region. GitHub is in the United States. Each company, what it does for us, and the basis on which personal
+		data may leave the EU are on the <a href="/legal/subprocessors/">subprocessors page</a>.
 	</p>
 
-	<h2>How long</h2>
+	<h2>Who else sees what</h2>
 	<p>
-		Recordings are kept as your plan and your project's settings say, and removed within an hour of your
-		deleting them, with copies in backups gone within 30 days. Account data is kept while you have an account;
-		invoices are kept for as long as tax law requires.
+		GitHub receives the App's check runs, comments and issues on your repositories, on your project's
+		instruction. Slack receives what your project's webhook says, if you gave it one. Nobody else: nothing is
+		sold, shared or used for advertising, and there is no profiling.
+	</p>
+
+	<h2>On this website</h2>
+	<p>
+		No analytics, no tracking, and no third-party script, except Cloudflare's Turnstile on the services page.
+		Fonts and clips come from version.cam's own hosts. One request leaves: the badge on the front page is drawn
+		by img.shields.io from a number our API publishes, so your browser asks shields.io for the image and shields.io
+		sees your IP address, as any image host does. We mean to serve that badge ourselves.
 	</p>
 
 	<h2>Cookies</h2>
 	<p>
-		One cookie, which keeps you signed in, and one that lasts the ten minutes of signing in with GitHub. No
-		tracking and no analytics cookies. The services page runs Cloudflare Turnstile, under Cloudflare's{' '}
-		<a href="https://www.cloudflare.com/turnstile-privacy-policy/">Turnstile privacy addendum</a>.
+		Two, both set by app.version.cam and readable by it alone: <code>__Host-vc_session</code> keeps you signed in
+		for seven days, and <code>__Host-vc_oauth</code> lasts the ten minutes of signing in with GitHub. Both are
+		strictly necessary (they are the sign-in), so no consent is asked and no banner is shown; the ePrivacy rules,
+		as ZEKom-2 carries them in Slovenia, exempt storage a service cannot work without. version.cam sets no other
+		cookie. The Turnstile widget on the services page is Cloudflare's, and its addendum says what it does in your
+		browser.
 	</p>
 
 	<h2>Your rights</h2>
 	<p>
-		You may ask for a copy of your data, its correction, its deletion, or its transfer, and object to how we use
-		it: write to {entity.contactEmail}. You may also complain to the Information Commissioner of the Republic of Slovenia, or
-		to the authority where you live.
+		You may ask for a copy of your data, its correction, its deletion, a limit on its use, or its transfer to you
+		in a usable form, and you may object to what we do on the basis of legitimate interest (GDPR, Articles 15 to
+		21). Write to <a href={`mailto:${entity.privacyEmail}`}>{entity.privacyEmail}</a> from the e-mail address
+		GitHub has for you, or from a confirmed notification address, so we know it is you. We answer within thirty
+		days.
+	</p>
+	<p>
+		Until the dashboard has a button for it, deleting your account is a request to the same address. We remove
+		your sessions, your command-line tokens, your memberships and access records, and your user record; an
+		account that holds no projects, no subscription and no customer record goes with it, and one that does stays
+		as the customer's and you are removed from it. A project you administer you delete yourself, in its settings,
+		and you may download any version as a zip first.
+	</p>
+	<p>
+		You may complain to the Information Commissioner of the Republic of Slovenia (Informacijski pooblaščenec,
+		Dunajska cesta 22, 1000 Ljubljana, <a href="https://www.ip-rs.si/">ip-rs.si</a>), or to the authority where
+		you live.
+	</p>
+
+	<h2>Changes</h2>
+	<p>
+		This page was last changed on {changed}. A change that narrows what you may expect from us is sent to the
+		e-mail address we have for your account thirty days before it applies. The version in force is always this
+		page.
 	</p>
 </StarlightPage>
