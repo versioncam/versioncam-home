@@ -2,8 +2,8 @@
  * Versioncam's brand on Starlight.
  *
  * A viewfinder: black ground, white on-screen text. Two signal colours with
- * one job each — red means recording, amber means a number you can trust
- * (a version, a timecode) — and neither is ever decoration, which is why
+ * one job each: red means recording, amber means a number you can trust
+ * (a version, a timecode), and neither is ever decoration, which is why
  * Starlight's own accent, aside and badge colours are all taken back to
  * greys below. Departure Mono is the machine's voice (wordmark, headings, the
  * on-screen display, commands); Inter is the person's (body copy). Departure
@@ -206,7 +206,7 @@ h1#_top {
 }
 
 /* The section link: a `#`, the way a developer already reads it, set in the
-   machine's face with room before it — Starlight's chain icon was drawn
+   machine's face with room before it; Starlight's chain icon was drawn
    against the last letter. Touch screens, where it cannot hide until
    hovered, leave it out. */
 .sl-markdown-content .sl-heading-wrapper {

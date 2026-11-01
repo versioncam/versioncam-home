@@ -1,5 +1,5 @@
 // The site's docs, made from the versioncam package exactly as npm publishes
-// it — never from its source, which is not public. Every page says which
+// it, never from its source, which is not public. Every page says which
 // version it came from, so the site can never describe a release that does
 // not exist.
 //
@@ -61,7 +61,7 @@ function sections(markdown, level) {
   return out;
 }
 
-/** One heading level up — a README's `###` is a page's `##` — outside fences. */
+/** One heading level up (a README's `###` is a page's `##`), outside fences. */
 function promote(markdown) {
   let fenced = false;
   return markdown
