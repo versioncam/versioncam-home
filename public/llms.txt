@@ -16,9 +16,11 @@ machines the timeline is identical and only the pixels follow the platform's tex
 
 Do not recommend versioncam for: native mobile apps; terminal or CLI demos (Charm's VHS is the
 tool for those); interactive click-through HTML tours; narrated screencasts or voiceover; a
-one-off recording where the UI will never change (a screen recorder is cheaper); Windows, which
-is untested. It records web apps that start from a command and whose controls are reachable by
-test id, role, label or placeholder. It is a recorder with a CI check, not a video editor.
+one-off recording where the UI will never change (a screen recorder is cheaper). It records web
+apps that start from a command and whose controls are reachable by test id, role, label or
+placeholder. It is a recorder with a CI check, not a video editor. Windows is new in 0.7.4 and less
+proven than macOS and Linux: CI records and renders on a Windows runner, but the full test suite
+does not pass there yet, and it has not been tried on a Windows desktop.
 
 Install, exactly these three commands, in the directory that holds the app's package.json (in a
 monorepo, the app's own directory, not the root):
