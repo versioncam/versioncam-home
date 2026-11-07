@@ -11,27 +11,28 @@ const TURNSTILE_ACTION = 'contact';
 
 <StarlightPage
 	frontmatter={{
-		title: 'Living demos, set up for you',
-		description: 'A config, the clips that matter, the check in your CI, and the clips on your pages. A fixed price.',
+		title: 'Demos, set up for you',
+		description: 'We write the config and the clips that matter, set up the check in your CI, and put the clips on your pages, for a fixed price.',
 	}}
 >
 	<p class="vc-lead">
-		A week, a fixed price per application, and at the end your product records its own demos: a config that
-		knows how to start and sign in to your app, five to eight clips of the flows that matter, the check running
-		in your CI on every pull request, and the clips on the pages where they belong, your docs, your README, your
-		landing page.
+		We set up your product so that CI records its demos. It takes one week, for a fixed price per application
+		that we agree before any work starts. You get a
+		config that knows how to start your app and sign in to it, five to eight clips of the flows that matter, the
+		check running in your CI on every pull request, and the clips on your docs, your README and your landing
+		page.
 	</p>
-	<p>From €3,000 per application, agreed before anything starts. After it, the clips are yours: they live in your repository, and they keep themselves true.</p>
+	<p>The price starts at €3,000 per application. When the week is over, the clips are yours. They live in your repository, and CI records them again on every push, so they stay current.</p>
 
 	<form class="vc-form" id="contact" method="post" action="https://api.version.cam/v1/contact">
 		<label>Your name <input name="name" required maxlength="120" autocomplete="name" /></label>
-		<label>An address to reply to <input name="email" type="email" required maxlength="200" autocomplete="email" /></label>
+		<label>Your email <input name="email" type="email" required maxlength="200" autocomplete="email" /></label>
 		<label>Company <input name="company" maxlength="200" autocomplete="organization" /></label>
 		<label>
-			What it is about
+			Topic
 			<select name="topic">
 				<option value="setup">Set up for me: a week, from €3,000 per application</option>
-				<option value="max">Max, or more than ten projects</option>
+				<option value="max">The Max plan (ten projects), or more than ten projects</option>
 				<option value="other">Something else</option>
 			</select>
 		</label>
@@ -45,8 +46,9 @@ const TURNSTILE_ACTION = 'contact';
 		<p class="vc-form-status" role="status" aria-live="polite"></p>
 	</form>
 	<p class="vc-form-note">
-		What you write here becomes one e-mail to us, with your address as the reply-to, and nothing else is kept:
-		the <a href="/legal/privacy/">privacy page</a> says so in full.
+		We receive what you write here as one email, with your address as the reply-to, and we don't store your
+		message anywhere else.
+		The <a href="/legal/privacy/">privacy page</a> has the details.
 	</p>
 	<noscript><p>The form needs JavaScript to send.</p></noscript>
 </StarlightPage>
@@ -76,7 +78,7 @@ const TURNSTILE_ACTION = 'contact';
 		if (!status) return;
 		const fields = Object.fromEntries(new FormData(form).entries());
 		if (!fields['cf-turnstile-response']) {
-			status.textContent = 'One moment: the check that a person is sending this is still running.';
+			status.textContent = 'One moment: the check that you are a person is still running.';
 			return;
 		}
 		status.textContent = 'Sending.';
@@ -89,12 +91,12 @@ const TURNSTILE_ACTION = 'contact';
 			const answer = (await response.json()) as { ok: boolean; error?: string };
 			if (answer.ok) {
 				form.reset();
-				status.textContent = 'Sent. You will hear back within two working days.';
+				status.textContent = 'Sent. We will reply within two working days.';
 			} else {
-				status.textContent = answer.error ?? 'It did not send. Try again in a minute.';
+				status.textContent = answer.error ?? "It didn't send. Try again in a minute.";
 			}
 		} catch {
-			status.textContent = 'It did not send. Try again in a minute.';
+			status.textContent = "It didn't send. Try again in a minute.";
 		} finally {
 			turnstile()?.reset();
 		}
