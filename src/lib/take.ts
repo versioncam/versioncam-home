@@ -82,7 +82,7 @@ export function latestManifest(base: string): Promise<Manifest> {
 
 /**
  * What makes one take's files distinct from the last take's in any cache.
- * Every file but the manifest is asked for with it, so a video and a script
+ * Every file but the manifest is requested with it, so a video and a script
  * from different takes are never shown together.
  */
 export function versionQuery(manifest: Pick<Manifest, "commit" | "recordedAt">): string {

@@ -16,5 +16,7 @@ nothing from it belongs here.
   `wrangler.jsonc`, so this repository holds no Cloudflare credential.
 - Commits here are public: author and committer are petbul's GitHub noreply
   address, never a personal one.
+- Every sentence a visitor reads follows `docs/voice.md`; `scripts/check-voice.mjs`
+  (run by `npm run build`) fails on the phrases it retired.
 - Astro's own guidance: https://docs.astro.build — `astro dev --background`
   runs the dev server in the background (`astro dev stop` to stop it).

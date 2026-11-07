@@ -84,16 +84,16 @@ paid plans tells the team when a clip breaks.
   "What it costs"; about three seconds per clip for `check` on a
   GitHub runner; `versioncam install` fetches 190 MB since 0.5.2.
 - Hosted layer status, confirmed 2026-10-30: the service runs, and a
-  private beta is running. Nothing is sold yet and no card is asked for:
-  Free works for public repositories for anyone who signs in, and the
+  private beta is running. You can't buy a plan yet and we don't ask for a
+  card: Free works for public repositories for anyone who signs in, and the
   first ten accounts that write to hello@version.cam have Pro free until
   the beta ends (an operator's override; Stripe is not live). No public
   date is given. The call to action is "Sign in with GitHub" at
   app.version.cam, which since 2026-11-01 every page's header also links
   as "Sign in", and which the front page's hero names under its actions,
   in a note that says the beta is private and what the first ten accounts
-  that ask are given. Before that, the door at the foot of the front page
-  was the only link to the app.
+  that ask are given. Before that, the sign-in button at the foot of the
+  front page was the only link to the app.
 - Plans, as planned and marked planned, never as final (prices are
   confirmed against the first bill, which does not exist). Decided
   2026-10-29: Free is for public repositories only, since a public clip is

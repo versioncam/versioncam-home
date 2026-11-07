@@ -16,7 +16,7 @@ export const collections = {
 				clips: z.string().optional(),
 				// One line under the hero's actions, in HTML: what is true of the
 				// service today (a beta, an offer) and where to sign in, so a reader
-				// who came for that need not scroll to the door.
+				// who came for that need not scroll to the sign-in button.
 				note: z.string().optional(),
 			}),
 		}),
