@@ -16,8 +16,7 @@ const changed = '2026-11-01';
 >
 	<Draft />
 	<p class="vc-lead">
-		This page says what the hosted service keeps about you, item by item, where it is, how long it stays and
-		why it is allowed to. It covers version.cam, app.version.cam, api.version.cam and clips.version.cam. The
+		This page says what the hosted service keeps about you, item by item, where it is, how long we keep it, and the legal basis that allows us to keep it. It covers version.cam, app.version.cam, api.version.cam and clips.version.cam. The
 		controller of the personal data it describes is:
 	</p>
 	<Provider role="Controller" />
@@ -31,33 +30,31 @@ const changed = '2026-11-01';
 	<p>
 		Each item names its legal basis in the words of the GDPR: <em>contract</em> is Article 6(1)(b), the service you
 		asked for; <em>legitimate interest</em> is Article 6(1)(f), running and securing the service; <em>legal
-		obligation</em> is Article 6(1)(c), tax law. "Kept" is how long, and what removes it.
+		obligation</em> is Article 6(1)(c), tax law. The line under each item gives that basis, then how long we keep it and what removes it.
 	</p>
 	<dl class="vc-kept not-content">
 		<div>
 			<dt>Your GitHub identity</dt>
 			<dd>
-				Your GitHub id, your login and, if GitHub shares one, your public e-mail address (usually none). The
-				sign-in asks GitHub for no scope: it learns who you are and nothing you have written. To sign you in and
-				to name your account.
+				Your GitHub id, your login and, if GitHub shares one, your public e-mail address (usually none). The sign-in asks GitHub for no scope, so we learn who you are and nothing you have written. We use it to sign you in and to name your account.
 			</dd>
 			<dd class="vc-meta">Contract · while your account exists</dd>
 		</div>
 		<div>
 			<dt>What you may reach</dt>
 			<dd>
-				Which GitHub accounts you belong to where the Versioncam App is installed and, for each of their
-				repositories, whether you may read it or administer it, as GitHub lists them. Read at every sign-in and
-				replaced whole, so what GitHub no longer grants goes with it. This decides who sees a project and who
-				may change it.
+				The GitHub accounts you belong to that have the Versioncam App installed and, for each of their repositories,
+				whether GitHub lets you read it or administer it. We read this again at every sign-in and replace the old list, so access GitHub has taken away disappears here
+				too. This decides who
+				sees a project and who may change it.
 			</dd>
 			<dd class="vc-meta">Contract and security · replaced at each sign-in</dd>
 		</div>
 		<div>
 			<dt>Your session</dt>
 			<dd>
-				A session record and the cookie that names it, <code>__Host-vc_session</code>, for seven days. While
-				you sign in, a second cookie, <code>__Host-vc_oauth</code>, and the page to return to, for ten minutes.
+				A session record and the cookie that names it, <code>__Host-vc_session</code>, for seven days. While you sign in, we also keep a second cookie, <code>__Host-vc_oauth</code>, and the page to send you back
+				to, for ten minutes.
 				Signing out ends the session at once; "sign out everywhere" ends every session and every command-line
 				token of yours.
 			</dd>
@@ -66,8 +63,8 @@ const changed = '2026-11-01';
 		<div>
 			<dt>Command-line tokens</dt>
 			<dd>
-				A token <code>versioncam cloud login</code> makes once you approve its code in the browser, kept as a
-				hash: the service recognises the token and cannot reproduce it.
+				The token <code>versioncam cloud login</code> creates once you approve its code in the browser. We keep only a
+				hash of it, so the service recognises the token but cannot recreate it.
 			</dd>
 			<dd class="vc-meta">
 				Contract · until you revoke it or sign out everywhere; an expired one is removed thirty days later
@@ -98,8 +95,8 @@ const changed = '2026-11-01';
 		<div>
 			<dt>Project tokens</dt>
 			<dd>
-				For a CI outside GitHub Actions, which has no GitHub token to publish with: kept as a hash, like the
-				command line's.
+				Tokens that let a CI outside GitHub Actions publish, since it has no GitHub token to publish with. We keep
+				them as a hash, like command-line tokens.
 			</dd>
 			<dd class="vc-meta">Contract · until revoked</dd>
 		</div>
@@ -109,13 +106,13 @@ const changed = '2026-11-01';
 				What <code>versioncam publish</code> sends from your CI: each clip's timeline and the pictures of your
 				app's screens it was recorded from; the commit, branch, run id and recorder version; the check's result
 				and, when a clip broke, one picture of the page where it did. If the screens show personal data, you
-				are its controller and we process it for you under the
+				are its controller and we process it for you under the{' '}
 				<a href="/legal/dpa/">data processing terms</a>.
 			</dd>
 			<dd class="vc-meta">
 				Contract; for what the screens show, your instructions · as your plan and the project's retention say:
-				the daily sweep removes versions past them, and a branch's versions thirty days after its last publish
-				(the default branch keeps its). Deleting a project removes its records at once and its files within
+				the daily sweep removes versions older than that, and removes a branch's versions thirty days after that
+				branch's last publish, except on the default branch. Deleting a project removes its records at once and its files within
 				minutes; the project's name stays as a tombstone, so a CI job cannot quietly bring it back
 			</dd>
 		</div>
@@ -127,10 +124,9 @@ const changed = '2026-11-01';
 		<div>
 			<dt>The record of the service</dt>
 			<dd>
-				Each publish's own record, for two hours; per account and month, counts of publishes, render seconds
+				A record of each publish, kept for two hours; per account and month, counts of publishes, render seconds
 				and bytes; and an event log per account: what kind of thing happened, when, and a line about it (a
-				project's name, the reason for a suspension). For the plan's limits, the dashboard, support, and
-				noticing abuse.
+				project's name, the reason for a suspension). We use it for the plan's limits, the dashboard, support, and noticing abuse.
 			</dd>
 			<dd class="vc-meta">Contract and legitimate interest · usage by month; events 400 days, removed by the daily sweep</dd>
 		</div>
@@ -151,9 +147,8 @@ const changed = '2026-11-01';
 			<dt>The services form</dt>
 			<dd>
 				Your name, an address to reply to, a company if you give one, what it is about and your message become
-				one e-mail to us through Resend, with your address as the reply-to; the service stores none of it. Your
-				IP address is counted for an hour (five messages an hour from one address), and everyone's messages
-				together for a day (fifty).
+				one e-mail to us through Resend, with your address as the reply-to; the service stores none of it. We count messages from your IP address for an hour, to allow at most five an hour from one address, and
+				everyone's messages together for a day, to allow at most fifty a day.
 			</dd>
 			<dd class="vc-meta">
 				Steps before a contract · the e-mail in our mailbox and in Resend's log; the hourly count an hour; the
@@ -164,7 +159,7 @@ const changed = '2026-11-01';
 			<dt>Turnstile</dt>
 			<dd>
 				On the services form, Cloudflare judges whether a person is sending it. We learn pass or fail; what
-				Cloudflare looks at in your browser is in its
+				Cloudflare looks at in your browser is in its{' '}
 				<a href="https://www.cloudflare.com/turnstile-privacy-policy/">Turnstile privacy addendum</a>.
 			</dd>
 			<dd class="vc-meta">Legitimate interest · the verdict is not kept</dd>
@@ -187,8 +182,8 @@ const changed = '2026-11-01';
 	<h2>Where</h2>
 	<p>
 		Recordings, renders and the database are stored in Cloudflare's European Union jurisdiction. The pages and
-		the API are served by Cloudflare's network, which answers from the location nearest you. A render holds a
-		version's screens for the seconds it takes, where its container runs. E-mail is sent from Resend's EU
+		the API are served by Cloudflare's network, which answers from the location nearest you. While a version renders, its screens are held in the rendering container for the seconds the render takes,
+		wherever that container runs. E-mail is sent from Resend's EU
 		region. GitHub is in the United States. Each company, what it does for us, and the basis on which personal
 		data may leave the EU are on the <a href="/legal/subprocessors/">subprocessors page</a>.
 	</p>
@@ -196,8 +191,8 @@ const changed = '2026-11-01';
 	<h2>Who else sees what</h2>
 	<p>
 		GitHub receives the App's check runs, comments and issues on your repositories, on your project's
-		instruction. Slack receives what your project's webhook says, if you gave it one. Nobody else: nothing is
-		sold, shared or used for advertising, and there is no profiling.
+		instruction. Slack receives what your project's webhook says, if you gave it one. Nobody else: we do not
+		sell or share your data or use it for advertising, and we do no profiling.
 	</p>
 
 	<h2>On this website</h2>
@@ -212,7 +207,7 @@ const changed = '2026-11-01';
 		Two, both set by app.version.cam and readable by it alone: <code>__Host-vc_session</code> keeps you signed in
 		for seven days, and <code>__Host-vc_oauth</code> lasts the ten minutes of signing in with GitHub. Both are
 		strictly necessary (they are the sign-in), so no consent is asked and no banner is shown; the ePrivacy rules,
-		as ZEKom-2 carries them in Slovenia, exempt storage a service cannot work without. version.cam sets no other
+		which ZEKom-2 puts into Slovenian law, exempt storage a service cannot work without. version.cam sets no other
 		cookie. The Turnstile widget on the services page is Cloudflare's, and its addendum says what it does in your
 		browser.
 	</p>
@@ -228,10 +223,10 @@ const changed = '2026-11-01';
 	<p>
 		Your own page on app.version.cam, reached from your login in the bar, has the two buttons: "Download my
 		data" gives you everything above as one JSON file, and "Delete my account" removes your sessions, your
-		command-line tokens, your memberships and access records, and your user record at once. An account that
-		holds no projects, no subscription and no customer record goes with it; one that does stays as the
-		customer's, and you are removed from it. A project you administer you delete yourself, in its settings, and
-		you may download any version as a zip first. Either is also a request to the address above.
+		command-line tokens, your memberships and access records, and your user record at once. If the account holds no projects, no subscription and no customer record, we delete the account too; if it
+		holds any of these, the account stays, because it belongs to the customer, and we remove you from it. If you administer a project, you delete it
+		yourself, in its settings, and you may download any version as a zip first. You can also ask for either by
+		writing to the address above.
 	</p>
 	<p>
 		You may complain to the Information Commissioner of the Republic of Slovenia (Informacijski pooblaščenec,
@@ -241,8 +236,8 @@ const changed = '2026-11-01';
 
 	<h2>Changes</h2>
 	<p>
-		This page was last changed on {changed}. A change that narrows what you may expect from us is sent to the
-		e-mail address we have for your account thirty days before it applies. The version in force is always this
+		This page was last changed on {changed}. If a change narrows what you may expect from us, we send it to the e-mail address we have for your account
+		thirty days before it applies. The version in force is always this
 		page.
 	</p>
 </StarlightPage>
