@@ -1,7 +1,7 @@
 ---
 // After CI: what version.cam adds to a recording, what it is planned to
-// cost, and the door, which says the beta is private: nothing is sold yet,
-// and the first ten accounts that ask have Pro free. Two ruled columns in the page's own grammar, no
+// cost, and the sign-in button, which says the beta is private: you can't
+// buy a plan yet, and the first ten people who ask get Pro free. Two ruled columns in the page's own grammar, no
 // cards: on the left what it adds, on the right the plans as rows, each
 // with its planned price in the machine's amber numerals and the word
 // planned beside it, so a reader who never reaches the note still reads
@@ -19,37 +19,39 @@ const BADGE = 'https://api.version.cam/v1/badge/versioncam/versioncam/svg';
 		<h3>What it adds</h3>
 		<dl class="vc-hosted-what">
 			<div>
-				<dt>One address that only plays what passed</dt>
+				<dt>A permanent link that only plays versions that passed their check</dt>
 				<dd>
 					<code>clips.version.cam/&lt;owner&gt;/&lt;repo&gt;/&lt;clip&gt;</code> plays the newest
-					version from your default branch whose check passed. A broken clip keeps playing the last
-					one that did, and the dashboard says so.
+					version from your default branch that passed its check. When a clip breaks, the link keeps
+					playing the last version that passed, and the dashboard shows that the clip is broken.
 				</dd>
 			</div>
 			<div>
-				<dt>Plays where the README is</dt>
+				<dt>Embeds, GIFs and screenshots</dt>
 				<dd>
-					An embed and oEmbed, so a pasted address unfurls in Notion and Slack; a GIF for the README;
-					a screenshot of any beat, on request.
+					You get an embed for your own pages and oEmbed, so a link pasted into Notion or Slack shows
+					the video. You also get a GIF for the README, and a screenshot of any frame or step when you
+					ask for one.
 				</dd>
 			</div>
 			<div>
 				<dt>One link for a phone and a desktop</dt>
 				<dd>
-					Record the clip again at a phone's viewport and name it <code>&lt;clip&gt;-mobile</code>: the
-					clip's page and its embed play the phone video on a narrow screen and the desktop video on a
-					wide one. Two scripts, since the app lays itself out differently on each, joined by the name.
+					Write a second clip at a phone's viewport and name it <code>&lt;clip&gt;-mobile</code>. The
+					clip's page and its embed then play the phone video on a narrow screen and the desktop video
+					on a wide one. You write two scripts because the app lays itself out differently on each;
+					the shared name links them.
 				</dd>
 			</div>
 			<div>
-				<dt>The pull request sees the clips</dt>
+				<dt>Clips on the pull request</dt>
 				<dd>
-					A check on the commit, and one comment, edited as the branch moves, with a picture of each
-					clip that looks different or failed.
+					We add a check to the commit and post one comment on the pull request, which we update as
+					you push to the branch. It shows a picture of each clip that looks different or failed.
 				</dd>
 			</div>
 			<div>
-				<dt>A badge that cannot lie</dt>
+				<dt>A badge that names the commit</dt>
 				<dd>
 					<a class="vc-badge" href="https://clips.version.cam/versioncam/versioncam"
 						><img
@@ -59,61 +61,66 @@ const BADGE = 'https://api.version.cam/v1/badge/versioncam/versioncam/svg';
 						/></a
 					>
 					<span
-						>The commit it names is the one whose CI run published the recordings. This one is the
-						recorder's own, live.</span
+						>The badge names the commit whose CI run published the recordings. The badge on this page is live: it
+						shows the recorder's own repository.</span
 					>
 				</dd>
 			</div>
 			<div>
-				<dt>Told when it breaks</dt>
+				<dt>Alerts when a clip breaks</dt>
 				<dd>
-					On Pro, by email, in Slack or as a GitHub issue: when a clip breaks on your default branch,
-					again two days later, then weekly, until it passes or someone acknowledges it.
+					On Pro, when a clip breaks on your default branch, we email you, post to Slack or open a
+					GitHub issue. We remind you two days later and then weekly, until the clip passes or someone
+					acknowledges it.
 				</dd>
 			</div>
 			<div>
 				<dt>Private repositories, on Pro</dt>
 				<dd>
-					A private repository's clips play only for people GitHub lets read it, through short-lived
-					signed addresses. Recordings live in Cloudflare's EU jurisdiction.
+					Clips from a private repository play only for people who can read that repository on
+					GitHub, through short-lived signed links. We store recordings in Cloudflare's EU
+					jurisdiction.
 				</dd>
 			</div>
 		</dl>
 	</section>
 
 	<section class="vc-hosted-col is-plans">
-		<h3>The plans, as planned</h3>
+		<h3>Planned prices</h3>
 		<dl class="vc-plans">
 			<div>
 				<dt>Free <span class="vc-num">$0</span></dt>
 				<dd>
-					Public repositories. Three projects, ten clips a project, thirty days of history, clips to
-					sixty seconds, 1 GB. The pull request check and the badge.
+					For public repositories. Three projects, ten clips per project, thirty days of history,
+					clips up to sixty seconds long, 1 GB of storage. Includes the pull request check and the
+					badge.
 				</dd>
 			</div>
 			<div>
-				<dt>Pro <span class="vc-num">$35</span> a project, a month <span class="vc-planned">planned</span></dt>
+				<dt>Pro <span class="vc-num">$35</span> per project, per month <span class="vc-planned">planned</span></dt>
 				<dd>
-					Private repositories too, by GitHub's own permissions. Unlimited history and a hundred
-					clips a project. Told by email, Slack or an issue when a clip breaks. $350 a year.
+					Adds private repositories. Their clips play only for people who can read the repository on
+					GitHub. Unlimited history and
+					a hundred clips per project. We email you, post to Slack or open a GitHub issue when a clip
+					breaks. $350 a year.
 				</dd>
 			</div>
 		</dl>
 		<p class="vc-plans-note">
-			Per project, never per seat. Planned means the final prices follow the first bill, and an
-			account from the beta pays 20% less for its first twelve months. Ten projects and more are
-			priced in <a href="/more/version-cam/">the docs</a>. The recorder and the Action are free
-			whatever you choose.
+			Priced per project, not per seat. The prices are marked "planned" because we will confirm them
+			after the first invoices. Accounts from the beta pay 20% less for their first twelve months.
+			Prices for ten or more projects are in <a href="/more/version-cam/">the docs</a>. The recorder
+			and the Action stay free, with or without a plan.
 		</p>
 		<div class="vc-door">
 			<LinkButton href="https://app.version.cam/" icon="right-arrow">Sign in with GitHub</LinkButton>
 			<p>
-				<strong>The beta is private:</strong> nothing is sold yet, and no card is asked for. Free
-				works for public repositories as soon as you sign in. The first ten accounts that ask have
-				Pro free until the beta ends: sign in, then write to
-				<a href="mailto:hello@version.cam">hello@version.cam</a> naming your account. <a
+				<strong>Private beta.</strong> You can't buy a plan yet, and we don't ask for a card. Free
+				works for public repositories as soon as you sign in. The first ten people who ask get Pro
+				free on their account until the beta ends. To ask, sign in, then email{' '}
+				<a href="mailto:hello@version.cam">hello@version.cam</a> with your account name. The details are on the <a
 					href="/more/version-cam/">How version.cam works</a
-				> says the rest.
+				> page.
 			</p>
 		</div>
 	</section>

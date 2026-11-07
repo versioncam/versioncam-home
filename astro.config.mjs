@@ -40,7 +40,7 @@ export default defineConfig({
     starlight({
       title: "Versioncam",
       description:
-        "Record demo clips of a real web app: scripted, deterministic, re-recorded on every push.",
+        "Record demo clips of a real web app from scripts in your repository. A clip records the same way every time, and CI records it again on every push.",
       logo: {
         src: "./src/assets/lockup-dark-bg.svg",
         alt: "Versioncam",

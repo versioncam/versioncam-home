@@ -272,7 +272,7 @@ writeFileSync(
     "pagefind: false",
     "hero:",
     "  title: Nothing was recorded here.",
-    "  tagline: This address has no page. The clips and the docs are one step back.",
+    "  tagline: There is no page at this address. The front page and the docs are one click away.",
     "  image:",
     `    html: '<div class="vc-nosignal" aria-hidden="true"><span class="vc-nosignal-mode">STBY</span><span class="vc-nosignal-text">NO SIGNAL</span><span class="vc-nosignal-tc">--:--:--:--</span></div>'`,
     "  actions:",

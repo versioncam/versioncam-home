@@ -15,21 +15,21 @@
 			<li>Add a field the clip does not touch.</li>
 		</ul>
 		<p>
-			The clip finds its controls by test id or role, never by position. A change in how the app
-			looks never fails a check: CI records the clip again, and the new look is the new video.
+			The clip finds controls by test id or role, not by position. So a change in how the app looks
+			never fails the check: CI records the clip again, and the video shows the new look.
 		</p>
 	</section>
 	<section class="vc-ledger-col is-fail">
-		<h3>The build fails, by name</h3>
+		<h3>The build fails and says why</h3>
 		<ul>
 			<li>Rename the control's test id, or remove it.</li>
 			<li>Move the flow to another page.</li>
-			<li>A spinner that never resolves.</li>
-			<li>An app that will not start.</li>
+			<li>Leave a spinner that never resolves.</li>
+			<li>Break the app so it won't start.</li>
 		</ul>
 		<p>
-			The failing clip names what it looked for and the second it gave up, and keeps a picture of
-			the page at that moment. It renders nothing: a video of the wreckage would help nobody.
+			The failing clip says what it looked for and at which second it gave up, and saves a picture
+			of the page at that moment. It doesn't render a video of the failure: the picture is more useful.
 		</p>
 	</section>
 </div>

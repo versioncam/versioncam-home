@@ -6,7 +6,7 @@ install: {{install}}
 ask: {{ask}}
 clips: "{{clips}}"
 hero:
-  tagline: A clip is a script in your repository. On every push, CI starts your app, records the clip again and renders the video. When the app only looks different, you get a new video. When a control the clip needs is gone, the build fails and names it.
+  tagline: A clip is a script in your repository. On every push, CI starts your app, records the clip again and renders the video. When the app only looks different, you get a new video. When a control the clip needs is gone, the build fails and tells you which one.
   actions:
     - text: Get started
       link: /start/install/
@@ -14,7 +14,7 @@ hero:
     - text: The source
       link: https://github.com/versioncam/versioncam
       variant: minimal
-note: 'version.cam, where the recordings go after CI, is in a private beta: the first ten accounts that ask have Pro free until it ends. <a href="https://app.version.cam/">Sign in with GitHub</a>, or see <a href="#after-ci-versioncam">what it adds</a> first.'
+note: 'version.cam hosts the recordings after CI has made them. It is in private beta, and the first ten people who ask get Pro for free until the beta ends. <a href="https://app.version.cam/">Sign in with GitHub</a>, or first see <a href="#after-ci-versioncam">what version.cam adds</a>.'
 ---
 
 import Take from "../../components/Take.astro";
@@ -25,7 +25,7 @@ import Setup from "../../components/Setup.astro";
 
 ## The script is the clip
 
-Each clip is a TypeScript file in the repository. The video beside it is what CI recorded from that file on the last push to `main`, and the lit line is the one running.
+Each clip is a TypeScript file in the repository. The video beside it is what CI recorded from that file on the last push to `main`, and the highlighted line is the one running.
 
 <Take base="{{clips}}" />
 
@@ -33,40 +33,40 @@ Each clip is a TypeScript file in the repository. The video beside it is what CI
 
 <Ledger />
 
-Every push to `main` runs `npx versioncam check` against the example app. On the left, the last run. On the right, the same check run once for this page, after one button's test id was renamed and nothing else.
+Every push to `main` runs `npx versioncam check` against the example app. The left panel shows the latest run. The right panel shows the same check, which we ran once for this page after we renamed one button's test id and changed nothing else.
 
 <Runs base="{{clips}}" />
 
-## Why a take repeats
+## Why a recording comes out the same every time
 
 <dl class="vc-facts not-content">
   <div>
     <dt>Authored time</dt>
-    <dd>The page's clock moves one frame at a time, and only when the recorder moves it. A slow query or a spinner is waited for off camera and never reaches the video. <a href="/how-it-works/overview/">How it works</a></dd>
+    <dd>The recorder controls the page's clock and moves it one frame at a time. While a query is slow or a spinner is showing, the recorder waits with the clock stopped, so the wait never appears in the video. <a href="/how-it-works/overview/">How it works</a></dd>
   </div>
   <div>
     <dt>Real input</dt>
-    <dd>A real mouse follows a planned, seeded path, so hover and press states fire as they would for a person. The cursor you see is drawn afterwards, at output resolution. <a href="/reference/dsl/">The clip DSL</a></dd>
+    <dd>The recorder moves a real mouse along a planned path, generated from a seed, so hover and press states fire as they would for a person. The cursor you see in the video is drawn afterwards, at the output resolution. <a href="/reference/dsl/">The clip DSL</a></dd>
   </div>
   <div>
     <dt>Same bytes</dt>
-    <dd>Two recordings of a clip on one machine are the same file. <code>versioncam stability</code> proves your app does its part before a clip is written for it. <a href="/how-it-works/determinism/">Determinism</a></dd>
+    <dd>Record a clip twice on one machine and you get the same file, byte for byte. Before the Claude Code skill writes a clip for your app, it runs <code>versioncam stability</code>, which records a three-second clip twice and checks that both come out the same. <a href="/how-it-works/determinism/">Determinism</a></dd>
   </div>
   <div>
-    <dt>One sentence</dt>
-    <dd>In Claude Code, <code>/versioncam "…"</code> writes the clip, records it, and has a fresh reviewer judge the frames. There is no API key: the model is the session you already have. <a href="/start/authoring/">Authoring</a></dd>
+    <dt>Write a clip with one sentence</dt>
+    <dd>In Claude Code, <code>/versioncam "…"</code> writes the clip and records it. Then a separate reviewer agent checks the frames, and each round gets a new reviewer. You don't need an API key: it uses the Claude Code session you already have. <a href="/start/authoring/">Authoring</a></dd>
   </div>
 </dl>
 
 ## After CI: version.cam
 
-The recorder and the GitHub Action are free and run in your CI, which already has your app and your secrets. version.cam is what happens to a recording after CI has made it.
+The recorder and the GitHub Action are free. They run in your CI, which already has your app and your secrets. version.cam is where the recordings go after CI has made them.
 
 <Hosted />
 
 ## Set up
 
-Three commands and one sentence. The first run of the skill writes the config from what it finds in the repository, proves the app records the same way twice, and writes the first clip. On the example app that took [six to twelve minutes and one or two review rounds](/start/authoring/).
+You run three commands, then give Claude Code one sentence. The first time the skill runs, it writes the config from what it finds in the repository, checks that the app records the same way twice, and writes the first clip. On the example app, that first run took [six to twelve minutes and one or two review rounds](/start/authoring/).
 
 <Setup />
 
