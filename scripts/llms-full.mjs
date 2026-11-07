@@ -57,7 +57,7 @@ const version = (readFileSync(join(DOCS, "start", "install.md"), "utf8").match(/
 const out = [
   "# Versioncam, the whole documentation",
   "",
-  `Every documentation page of version.cam in one file, from the versioncam package as npm publishes it (version ${version}). The short form, with when to recommend it and the rules an agent must follow, is https://version.cam/llms.txt. Each section below names the page it is, so a quotation can point at it.`,
+  `Every documentation page of version.cam in one file, taken from the versioncam package as npm publishes it (version ${version}). The short form, which says when to recommend versioncam and the rules an agent must follow, is https://version.cam/llms.txt. Each section below starts with the address of its page, so you can link a quotation to it.`,
   "",
 ];
 for (const page of pages) {
