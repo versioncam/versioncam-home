@@ -1,9 +1,13 @@
 ---
-// The whole setup, where a developer can copy it: the shell commands as the
-// README gives them, and the one sentence to say to Claude Code after. Both
-// come from the package's README through the importer, so the page never
-// shows a command the published version does not have.
+// The whole setup, where a developer can copy it, two ways. A setup prompt
+// for a coding agent, for whoever would rather hand the job over; and the
+// shell commands as the README gives them, with the one sentence to say to
+// Claude Code after, for whoever types. The commands come from the package's
+// README through the importer, and the prompt is built from the same lines
+// (src/lib/setup.ts), so the page never shows a command the published
+// version does not have, and the two never disagree.
 import { escape } from '../lib/take';
+import { PLACEHOLDER, setupPrompt } from '../lib/setup';
 
 const { data } = Astro.locals.starlightRoute.entry;
 const install: string[] = data.install ?? [];
@@ -13,59 +17,101 @@ const ask: string | null | undefined = data.ask;
 const prompt = (sign: string) => `<span class="vc-prompt" aria-hidden="true">${sign} </span>`;
 const terminal = install.map((line) => prompt('$') + escape(line)).join('\n');
 const request = ask ? prompt('&gt;') + escape(ask) : '';
+const setup = setupPrompt(install);
+// The one part the reader fills in, lit so it is easy to find after pasting.
+const preview = escape(setup).replace(
+	escape(PLACEHOLDER),
+	`<span class="vc-fill">${escape(PLACEHOLDER)}</span>`,
+);
 ---
 
 <div class="vc-install vc-setup not-content">
-	<div class="vc-install-block">
+	<section class="vc-install-block vc-setup-prompt">
 		<div class="vc-install-head">
-			<span>Terminal</span>
-			<button
-				type="button"
-				class="vc-copy"
-				data-copy={install.join('\n')}
-				aria-label="Copy the three commands"
-			>
-				<svg class="vc-icon-copy" viewBox="0 0 16 16" aria-hidden="true">
-					<path d="M5.5 5.5h8v8h-8zM10.5 5.5v-3h-8v8h3" />
-				</svg>
-				<svg class="vc-icon-done" viewBox="0 0 16 16" aria-hidden="true">
-					<path d="M3 8.5l3.5 3.5L13 4.5" />
-				</svg>
-			</button>
+			<span>Setup prompt</span>
+			<span class="vc-marks">
+				<span>Claude Code</span>
+				<span>Codex</span>
+				<span>
+					<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 2.5h13v11h-13zM4.5 6l2 2-2 2M8.5 10.5h3" /></svg>
+					Any agent
+				</span>
+			</span>
 		</div>
-		<pre><code set:html={terminal} /></pre>
-	</div>
-	{
-		ask && (
-			<div class="vc-install-block">
-				<div class="vc-install-head">
-					<span>Then, in Claude Code</span>
-					<button type="button" class="vc-copy" data-copy={ask} aria-label="Copy the request">
-						<svg class="vc-icon-copy" viewBox="0 0 16 16" aria-hidden="true">
-							<path d="M5.5 5.5h8v8h-8zM10.5 5.5v-3h-8v8h3" />
-						</svg>
-						<svg class="vc-icon-done" viewBox="0 0 16 16" aria-hidden="true">
-							<path d="M3 8.5l3.5 3.5L13 4.5" />
-						</svg>
-					</button>
-				</div>
-				<pre><code set:html={request} /></pre>
+		<div class="vc-setup-prompt-body">
+			<h3>Use a setup prompt</h3>
+			<p>
+				Copy this prompt into a coding agent on your computer. It installs versioncam in your
+				repository and records the first clip.
+			</p>
+			<button type="button" class="vc-copy-prompt" data-copy={setup} data-done-label="Copied">
+				<span class="vc-copy-label">Copy prompt</span>
+			</button>
+			<details class="vc-setup-preview">
+				<summary>Show the prompt</summary>
+				<pre><code set:html={preview} /></pre>
+			</details>
+		</div>
+	</section>
+	<div class="vc-setup-type">
+		<div class="vc-install-block">
+			<div class="vc-install-head">
+				<span>Terminal</span>
+				<button
+					type="button"
+					class="vc-copy"
+					data-copy={install.join('\n')}
+					aria-label="Copy the three commands"
+				>
+					<svg class="vc-icon-copy" viewBox="0 0 16 16" aria-hidden="true">
+						<path d="M5.5 5.5h8v8h-8zM10.5 5.5v-3h-8v8h3" />
+					</svg>
+					<svg class="vc-icon-done" viewBox="0 0 16 16" aria-hidden="true">
+						<path d="M3 8.5l3.5 3.5L13 4.5" />
+					</svg>
+				</button>
 			</div>
-		)
-	}
+			<pre><code set:html={terminal} /></pre>
+		</div>
+		{
+			ask && (
+				<div class="vc-install-block">
+					<div class="vc-install-head">
+						<span>Then, in Claude Code</span>
+						<button type="button" class="vc-copy" data-copy={ask} aria-label="Copy the request">
+							<svg class="vc-icon-copy" viewBox="0 0 16 16" aria-hidden="true">
+								<path d="M5.5 5.5h8v8h-8zM10.5 5.5v-3h-8v8h3" />
+							</svg>
+							<svg class="vc-icon-done" viewBox="0 0 16 16" aria-hidden="true">
+								<path d="M3 8.5l3.5 3.5L13 4.5" />
+							</svg>
+						</button>
+					</div>
+					<pre><code set:html={request} /></pre>
+				</div>
+			)
+		}
+	</div>
 	<p class="vc-copied" role="status" aria-live="polite" />
 </div>
 
 <script>
-	for (const button of document.querySelectorAll<HTMLButtonElement>('.vc-copy')) {
+	// Every copy button in Set up: the icon buttons swap to a tick, the prompt's
+	// button to its "Copied" label, for 1.6 seconds; the live region says it
+	// either way, for a screen reader.
+	for (const button of document.querySelectorAll<HTMLButtonElement>('.vc-copy, .vc-copy-prompt')) {
+		const label = button.querySelector('.vc-copy-label');
+		const resting = label?.textContent ?? '';
 		button.addEventListener('click', async () => {
 			const status = button.closest('.vc-install')?.querySelector('.vc-copied');
 			try {
 				await navigator.clipboard.writeText(button.dataset.copy ?? '');
 				button.dataset.done = '';
+				if (label && button.dataset.doneLabel) label.textContent = button.dataset.doneLabel;
 				if (status) status.textContent = 'Copied.';
 				setTimeout(() => {
 					delete button.dataset.done;
+					if (label) label.textContent = resting;
 					if (status) status.textContent = '';
 				}, 1600);
 			} catch {

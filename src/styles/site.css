@@ -1706,6 +1706,104 @@ button.vc-src:focus-visible {
     gap: 1.5rem;
   }
 }
+.vc-setup-type {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+/* The setup prompt: an instrument like the terminal beside it, its head
+   naming where it goes (the marks, in the head's own dim label type), its
+   body one heading, one sentence, the copy button and the text to check. */
+.vc-setup-prompt .vc-install-head {
+  flex-wrap: wrap;
+  gap: 0.375rem 1rem;
+}
+.vc-setup-prompt .vc-install-head > span:first-child {
+  white-space: nowrap;
+}
+.vc-marks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.375rem;
+  padding-inline-end: 0.625rem;
+}
+.vc-marks > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.375rem;
+  border: 1px solid var(--vc-line);
+  text-transform: none;
+  letter-spacing: 0.04em;
+}
+.vc-marks svg {
+  width: 11px;
+  height: 11px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: square;
+}
+.vc-setup-prompt-body {
+  padding: 1.25rem 0.875rem 1rem;
+}
+.vc-setup-prompt-body h3 {
+  margin: 0;
+  font-family: var(--vc-font-human);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--vc-white);
+}
+.vc-setup-prompt-body p {
+  margin: 0.5rem 0 1.25rem;
+  max-width: 48ch;
+  line-height: 1.65;
+  color: var(--sl-color-gray-2);
+}
+.vc-copy-prompt {
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--vc-white);
+  background: var(--vc-white);
+  color: var(--vc-black);
+  font: 11px/11px var(--vc-font-machine);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.vc-copy-prompt:hover {
+  background: var(--sl-color-gray-1);
+}
+.vc-setup-preview {
+  margin-top: 1.25rem;
+  border-top: 1px solid var(--vc-line);
+}
+.vc-setup-preview summary {
+  padding-top: 0.875rem;
+  font-family: var(--vc-font-machine);
+  font-size: 11px;
+  line-height: 22px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--vc-dim);
+  cursor: pointer;
+}
+.vc-setup-preview summary:hover {
+  color: var(--vc-white);
+}
+.vc-install .vc-setup-preview pre {
+  padding: 0.75rem 0 0;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.vc-fill {
+  color: var(--vc-white);
+  text-decoration: underline;
+  text-decoration-color: var(--vc-dim);
+  text-underline-offset: 0.2em;
+}
 .sl-markdown-content > p.colophon {
   margin-top: 5rem;
 }
