@@ -61,7 +61,11 @@ export default defineConfig({
         { tag: "meta", attrs: { property: "og:image:height", content: "630" } },
         {
           tag: "meta",
-          attrs: { property: "og:image:alt", content: "version.cam: Your app, recorded from main." },
+          attrs: {
+            property: "og:image:alt",
+            content:
+              "Demo videos of your web app, recorded by CI. Beside the line, a frame of the example app's clip as CI recorded it.",
+          },
         },
         { tag: "meta", attrs: { name: "twitter:card", content: "summary_large_image" } },
         { tag: "meta", attrs: { name: "twitter:image", content: OG } },
