@@ -268,6 +268,36 @@ h1#_top {
   border-color: var(--vc-white);
 }
 
+/* "private beta" beside the lockup (SiteTitle.astro): a label in the
+   machine's voice, dim in a hairline, so it reads as a status and not as a
+   button, with no colour to compete with the amber. White when pointed at,
+   as every link here is. */
+.title-wrapper {
+  align-items: center;
+  gap: 0.75rem;
+}
+.vc-beta {
+  flex: none;
+  font-family: var(--vc-font-machine);
+  font-size: 11px;
+  line-height: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--vc-dim);
+  text-decoration: none;
+  padding: 0.3125rem 0.375rem;
+  border: 1px solid var(--vc-line);
+}
+.vc-beta:hover {
+  color: var(--vc-white);
+  border-color: var(--vc-white);
+}
+/* The note the badge links to, clear of the sticky header when it lands. */
+#private-beta {
+  scroll-margin-top: calc(var(--sl-nav-height) + 1.5rem);
+}
+
 /* The sidebar's group labels, as an on-screen display would set them. */
 .sidebar-content .group-label .large {
   font-family: var(--vc-font-machine);
