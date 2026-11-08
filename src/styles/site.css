@@ -536,6 +536,10 @@ h1#_top {
   grid-template-columns: minmax(0, 1fr);
   gap: 1px;
   background: var(--vc-line);
+  /* Set in from the frame, so the corner brackets (8px in, 2px thick) sit
+     in black and not on the app's own words: the phone picture's title and
+     text run close to its edges. The band below keeps its place. */
+  margin: 12px 12px 0;
 }
 .vc-film video {
   cursor: pointer;
