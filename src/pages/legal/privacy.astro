@@ -8,7 +8,10 @@ import { entity } from '../../lib/entity';
 // with the real figures: the sweep's days, the cookies' lives, the logs'
 // retention as Cloudflare states it. A sentence that cannot be traced to one
 // does not go on this page.
-const changed = '2026-11-01';
+const changed = '2026-11-08';
+// When the Cloudflare log retention below was last read off Cloudflare's own
+// page: its own date, so a wording change to this page cannot move it.
+const logsChecked = '2026-11-01';
 ---
 
 <StarlightPage
@@ -128,7 +131,7 @@ const changed = '2026-11-01';
 				and bytes; and an event log per account: what kind of thing happened, when, and a line about it (a
 				project's name, the reason for a suspension). We use it for the plan's limits, the dashboard, support, and noticing abuse.
 			</dd>
-			<dd class="vc-meta">Contract and legitimate interest · usage by month; events 400 days, removed by the daily sweep</dd>
+			<dd class="vc-meta">Contract and legitimate interest · monthly usage totals for as long as the account exists; events 400 days, removed by the daily sweep</dd>
 		</div>
 		<div>
 			<dt>Pull requests</dt>
@@ -141,7 +144,7 @@ const changed = '2026-11-01';
 				Cloudflare's log of each request to the service: method, address with its query string removed before
 				it is written, status, timing and the country it came from. For operating and securing the service.
 			</dd>
-			<dd class="vc-meta">Legitimate interest · seven days (Cloudflare Workers Logs on the Workers Paid plan, checked {changed})</dd>
+			<dd class="vc-meta">Legitimate interest · seven days (Cloudflare Workers Logs on the Workers Paid plan, checked {logsChecked})</dd>
 		</div>
 		<div>
 			<dt>The services form</dt>
@@ -151,7 +154,7 @@ const changed = '2026-11-01';
 				everyone's messages together for a day, to allow at most fifty a day.
 			</dd>
 			<dd class="vc-meta">
-				Steps before a contract · the e-mail in our mailbox and in Resend's log; the hourly count an hour; the
+				Steps before a contract · the e-mail in our mailbox until we delete it, and in Resend's log for the retention period set on our Resend account; the hourly count an hour; the
 				daily count 31 days
 			</dd>
 		</div>
