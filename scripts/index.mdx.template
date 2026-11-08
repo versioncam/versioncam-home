@@ -2,6 +2,73 @@
 title: Your app, recorded from main.
 description: {{tagline}}
 template: splash
+# What the browser tab and a search result show, and what a link unfurls as:
+# the product's name first, then the title. Starlight would print the title
+# and then the site's name, and call the page an article.
+head:
+  - tag: title
+    content: "Versioncam: your app, recorded from main"
+  - tag: meta
+    attrs: { property: "og:title", content: "Versioncam: your app, recorded from main" }
+  - tag: meta
+    attrs: { property: "og:type", content: website }
+  # What a search engine reads about the product. The prices are the ones on
+  # this page and in the service's plans: Free at 0, Pro at 35 USD per private
+  # project per month.
+  - tag: script
+    attrs: { type: application/ld+json }
+    content: |
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "SoftwareApplication",
+            "name": "Versioncam",
+            "url": "https://version.cam/",
+            "description": {{tagline}},
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "macOS, Linux, Windows",
+            "downloadUrl": "https://www.npmjs.com/package/versioncam",
+            "image": "https://version.cam/og-image.png",
+            "publisher": { "@id": "https://version.cam/#organization" },
+            "offers": [
+              {
+                "@type": "Offer",
+                "name": "Free",
+                "description": "Public repositories, three projects.",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              {
+                "@type": "Offer",
+                "name": "Pro",
+                "description": "Private repositories, per private project, per month.",
+                "price": "35",
+                "priceCurrency": "USD",
+                "priceSpecification": {
+                  "@type": "UnitPriceSpecification",
+                  "price": "35",
+                  "priceCurrency": "USD",
+                  "unitText": "private project per month",
+                  "referenceQuantity": { "@type": "QuantitativeValue", "value": "1", "unitCode": "MON" }
+                }
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://version.cam/#organization",
+            "name": "Versioncam",
+            "url": "https://version.cam/",
+            "logo": "https://version.cam/icon-512.png",
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "customer support",
+              "email": "hello@version.cam"
+            }
+          }
+        ]
+      }
 install: {{install}}
 ask: {{ask}}
 clips: "{{clips}}"
