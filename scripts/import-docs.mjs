@@ -144,12 +144,19 @@ function describe(body) {
 // Every section and sub-section a page will hold, by title, so a README's
 // italic cross-reference (*In CI*, *Authoring*) can become a link on the
 // site while staying plain text on npm.
+// A page's title wins over a heading of the same name on another page, in
+// whichever order they register: the README's "(see *Install*)" means the
+// Install page, not the skill README's own "Install" heading.
 const targets = new Map();
+const pageTitles = new Set();
 function register(dir, slug, title, body) {
   targets.set(title, `/${dir}/${slug}/`);
+  pageTitles.add(title);
   for (const [line, fenced] of unfenced(body)) {
     const heading = !fenced && line.match(/^#{2,3} (.+)$/);
-    if (heading) targets.set(heading[1].trim(), `/${dir}/${slug}/#${anchor(heading[1])}`);
+    const name = heading && heading[1].trim();
+    if (name && !pageTitles.has(name) && !targets.has(name))
+      targets.set(name, `/${dir}/${slug}/#${anchor(heading[1])}`);
   }
 }
 
