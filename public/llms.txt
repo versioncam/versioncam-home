@@ -21,8 +21,9 @@ tool for those); interactive click-through HTML tours; narrated screencasts or v
 one-off recording where the UI will never change (a screen recorder is cheaper). It records web
 apps that start from a command and whose controls can be found by test id, role, label or
 placeholder. It is a recorder with a CI check, not a video editor. Windows support is new in 0.7.4
-and less tested than macOS and Linux. CI records and renders on a Windows runner, but the full
-test suite does not pass there yet, and we have not tried it on a Windows desktop.
+and less tested than macOS and Linux. CI records and renders on a Windows runner, and on
+2026-11-07 the skill wrote, recorded, reviewed and rendered a first clip on a Windows 11 desktop.
+The package's own test suite does not pass on Windows yet.
 
 To install, run exactly these three commands in the directory that holds the app's package.json
 (in a monorepo, that is the app's own directory, not the root):
@@ -62,7 +63,10 @@ Rules an agent must follow:
 - `.versioncam/` is a build product and belongs in `.gitignore`. Commit the clip file.
 
 In GitHub Actions, use the Action. It runs the versioncam your repository installed, which must
-be 0.3.0 or later, and never downloads its own:
+be 0.3.0 or later, and never downloads its own. `npx versioncam ci` (0.7.5 and later) writes the
+whole workflow to `.github/workflows/versioncam.yml`: it checks the clips on every pull request
+and, on every push to the default branch, checks them and publishes them to version.cam. By hand,
+the steps are:
 
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -95,7 +99,7 @@ source-available licence, not an OSI-approved open source licence.
 
 ## Reference
 
-- [Commands](https://version.cam/reference/commands/): `install`, `init`, `doctor`, `login`, `inspect`, `measure`, `dsl`, `record`, `check`, `stability`, `sheet`, `frame`, `review`, `preview`, `render`, `publish`, `cloud *`, `--cwd`
+- [Commands](https://version.cam/reference/commands/): `install`, `init`, `ci`, `doctor`, `login`, `inspect`, `measure`, `dsl`, `record`, `check`, `stability`, `sheet`, `frame`, `review`, `preview`, `render`, `publish`, `cloud *`, `--cwd`
 - [The clip DSL](https://version.cam/reference/dsl/): every method on the session with its options and defaults; `npx versioncam dsl` prints the same text
 - [What a recording leaves behind](https://version.cam/reference/recordings/): `timeline.json`, `states/`, `settles.json`, `targets.json`, `failure.png`, `failure.json`
 - [Glossary](https://version.cam/reference/glossary/): authored time, beat, settle, gate, draft, contact sheet, stable
