@@ -178,7 +178,7 @@ A monochrome instrument panel with two lamps on it.
 ### Neutral
 - **Black** (`black`): the page, the sidebar, the nav, the take's frame. Also text in reverse video.
 - **White** (`white`): headings, body-strong, the active link, the primary button's fill, the caret, selection, focus ring, the lit line's number ground, the scrubber's played portion and thumb, the corner brackets (at 85% alpha). Starlight's accent is white: a link, the page you are on, a button.
-- **Lead** (`text-lead`, Starlight gray-1): the beat's one paragraph under each front-page heading.
+- **Lead** (`text-lead`, Starlight gray-1): the services page's lead paragraph. The front page's beat paragraphs moved to `text-reading` on 2026-11-08, the hero tagline's grey, so no paragraph competes with its heading.
 - **Reading** (`text-reading`, gray-2): body copy in definitions, ledger notes, run output, the hero tagline, strings and numbers in highlighted script.
 - **Dim** (`dim`, gray-3): every label and term the machine prints quietly (sidebar group labels, "On this page", the stamp, panel heads, tabs at rest, prompts, comments in code, the take's hint, the colophon, the section-link `#`). The scrubber's step ticks. The colour Starlight's orange, red, green, blue and purple all collapse to.
 - **Deep Grey** (`deep-grey`, gray-4): Starlight's own subdued tier; not used by the front page directly.
@@ -206,7 +206,7 @@ A monochrome instrument panel with two lamps on it.
 - **Display** (Departure Mono 400, 44px/55px at 40rem and up, 33px/44px below, on an 11ch measure so it breaks into the same three lines at every width): the front page's title only. It stopped at 44 on 2026-11-08; at 55 it outweighed the film beside it. Starlight's 404 hero steps 44/33/22 by width.
 - **Headline** (Departure Mono 400, 33px/44px on the front page at 40rem and up; 22px/33px in the docs and on phones): every `h2`, and the docs' page title (`h1` at 33/44). Always one step under the title at the same width. Letter-spacing 0, `text-wrap: balance`.
 - **Title** (Inter 500, 18px/1.4, white): docs `h3`. Rank and size agree: the third level leaves the machine's face so it cannot be mistaken for a section.
-- **Lead** (Inter 400, 18px/1.65): the one paragraph under each front-page heading (`text-lead`) and the hero's tagline (`text-reading`) and the ledger's list items (white). Measures: 62ch for the paragraph, 36rem for the tagline.
+- **Lead** (Inter 400, 18px/1.65 at 40rem and up, 16px below): the one paragraph under each front-page heading and the hero's tagline (both `text-reading`), and the ledger's list items (white). Measures: 62ch for the paragraph, 36rem for the tagline.
 - **Body** (Inter 400, 16px/1.65): docs prose on a 52ch measure, front-page prose on 62ch; definitions at 48 to 52ch; ledger notes at 44ch. `text-wrap: pretty` on paragraphs.
 - **Small** (Inter 400, 14px/1.6, `dim`): the take's hint, the plans note, the colophon.
 - **Label** (Departure Mono 400, 11px, line-height 22px in flow or 11px in a chip, tracking 0.08em, uppercase, `dim` or white): sidebar group labels, "On this page", the stamp, code-frame titles, panel heads, facts and definition terms, ledger and hosted sub-heads, the two link buttons.
@@ -224,7 +224,7 @@ A monochrome instrument panel with two lamps on it.
 
 One column of Starlight content on black, 50rem wide in the docs and 76rem on the front page (`data-has-hero`). Prose keeps its measure (52ch docs, 62ch front page) while code, tables, figures and every front-page receipt take the full column (`max-inline-size: none` on `.vc-facts`, `.vc-ledger`, `.vc-hosted`, `.vc-setup`, and the `h2` wrapper, so the rule above a heading is the receipt's width, not the paragraph's).
 
-**The beat.** Every front-page `h2` wrapper carries `border-top: 1px solid hairline`, `margin-top: 4rem; padding-top: 2.5rem` (6rem and 3.5rem at 64rem and up). The first beat after the hero drops its top margin to 1rem (1.5rem wide) so it follows the hero's own air. The paragraph under the heading is the lead: `margin: 1.25rem 0 2.25rem`. A component follows at `margin-top: 2.25rem`. A paragraph after the ledger takes 3.5rem above and 1.75rem below. The colophon sits 5rem under the last beat.
+**The beat.** Every front-page `h2` wrapper carries `border-top: 1px solid hairline`, `margin-top: 3.5rem; padding-top: 2rem` (5rem and 3rem at 64rem and up). The first beat after the hero drops its top margin to 1rem (1.5rem wide) so it follows the hero's own air. The paragraph under the heading is the lead: `margin: 1.25rem 0 2.25rem`. The ledger, which has no paragraph above it, starts 1rem under its heading. A component follows at `margin-top: 2.25rem`. A paragraph after the ledger takes 3.5rem above and 1.75rem below. The colophon sits 5rem under the last beat.
 
 **The hero.** One column on a phone with the film first (`order: -1`), then title, tagline, actions. At 64rem two equal columns, centred to each other, `gap: 4.5rem`, `min-height: min(72vh, 42rem)`; at 80rem the copy column widens to 1.05fr and the gap to 5.5rem. Actions wrap with `gap: 0.75rem 1.5rem` and sit 2rem (2.5rem wide) under the tagline. A note may follow the actions at 1.5rem: `small` type in `dim` on the tagline's 36rem measure, its links white, saying what is true of the service today and where to sign in.
 
@@ -287,7 +287,7 @@ A hairline box with three rows: file tabs (readout type in `dim`, `padding: 0.81
 The hero's viewfinder with its display as a band under the picture: hairline above, `padding: 0.625rem 1rem 0.6875rem`, `gap: 1.25rem`, readout type in white; the red square and REC first, then the amber version, then `main@commit` (hidden under 30rem), then the amber tabular timecode pushed to the end. Plays muted and looping; holds its poster under `prefers-reduced-motion`; the red square blinks only while playing.
 
 ### The Beat (signature)
-Rule, air, heading, one paragraph, one receipt. The rule is the width of the receipt. The heading is Departure Mono 33/44 (22/33 on a phone). The paragraph is Inter 18px/1.65 in `text-lead` on 62ch. The receipt is one of: a take, a ruled two-column list, two run panels, a facts grid, two install blocks. No beat has two paragraphs or two receipts.
+Rule, air, heading, one paragraph, one receipt. The rule is the width of the receipt. The heading is Departure Mono 33/44 (22/33 on a phone). The paragraph is Inter 18px/1.65 (16px on a phone) in `text-reading` on 62ch. The receipt is one of: a take, a ruled two-column list, two run panels, a facts grid, two install blocks. No beat has two paragraphs or two receipts.
 
 ## Do's and Don'ts
 

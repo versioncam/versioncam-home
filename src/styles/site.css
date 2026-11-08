@@ -381,14 +381,16 @@ h1#_top {
    heading would otherwise inherit. */
 :root[data-has-hero] .sl-markdown-content .sl-heading-wrapper.level-h2 {
   max-inline-size: none;
-  margin-top: 4rem;
-  padding-top: 2.5rem;
+  margin-top: 3.5rem;
+  padding-top: 2rem;
   border-top: 1px solid var(--vc-line);
 }
+/* Air enough to tell one beat from the next, and no more: at 6rem and 3.5rem
+   every boundary was a 152px band of black, and the page read as slabs. */
 @media (min-width: 64rem) {
   :root[data-has-hero] .sl-markdown-content .sl-heading-wrapper.level-h2 {
-    margin-top: 6rem;
-    padding-top: 3.5rem;
+    margin-top: 5rem;
+    padding-top: 3rem;
   }
 }
 /* The first beat follows the hero's own air, not a full interval on top of it. */
@@ -400,15 +402,23 @@ h1#_top {
     margin-top: 1.5rem;
   }
 }
-/* The sentence under a heading: the beat's one paragraph, a step up. */
+/* The sentence under a heading: the beat's one paragraph, a step up from
+   40rem, in the hero tagline's grey. Near-white, it was brighter than the
+   tagline and competed with the heading above it. On a phone it is body
+   size: at 18px on a 358px column every paragraph ran twice as long. */
 :root[data-has-hero] .sl-markdown-content .sl-heading-wrapper.level-h2 + p {
   margin-top: 1.25rem;
   margin-bottom: 2.25rem;
   max-inline-size: 62ch;
-  font-size: 1.125rem;
+  font-size: 1rem;
   line-height: 1.65;
-  color: var(--sl-color-gray-1);
+  color: var(--sl-color-gray-2);
   text-wrap: pretty;
+}
+@media (min-width: 40rem) {
+  :root[data-has-hero] .sl-markdown-content .sl-heading-wrapper.level-h2 + p {
+    font-size: 1.125rem;
+  }
 }
 :root[data-has-hero] .sl-markdown-content .vc-ledger + p {
   margin-top: 3.5rem;
@@ -457,10 +467,15 @@ h1#_top {
 .vc-hero-tagline {
   margin: 1.25rem 0 0;
   max-width: 36rem;
-  font-size: 1.125rem;
+  font-size: 1rem;
   line-height: 1.65;
   color: var(--sl-color-gray-2);
   text-wrap: pretty;
+}
+@media (min-width: 40rem) {
+  .vc-hero-tagline {
+    font-size: 1.125rem;
+  }
 }
 .vc-hero-actions {
   display: flex;
@@ -1302,10 +1317,13 @@ button.vc-src:focus-visible {
 .sl-markdown-content > .vc-ledger {
   max-inline-size: none;
 }
+/* The ledger follows its heading directly, with no paragraph between, so it
+   comes closer than a receipt under a paragraph would: with the column's own
+   padding that is 2.75rem from the heading to the first label. */
 .vc-ledger {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  margin-top: 2.25rem;
+  margin-top: 1rem;
 }
 @media (min-width: 50rem) {
   .vc-ledger {
@@ -1351,10 +1369,15 @@ button.vc-src:focus-visible {
 .vc-ledger li {
   padding: 0.6875rem 0;
   border-top: 1px solid var(--vc-line);
-  font-size: 1.125rem;
+  font-size: 1rem;
   line-height: 1.5;
   color: var(--vc-white);
   text-wrap: pretty;
+}
+@media (min-width: 40rem) {
+  .vc-ledger li {
+    font-size: 1.125rem;
+  }
 }
 .vc-ledger li:first-child {
   border-top: 0;
