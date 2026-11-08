@@ -64,7 +64,7 @@ export default defineConfig({
           attrs: {
             property: "og:image:alt",
             content:
-              "Demo videos of your web app, recorded by CI. Beside the line, a frame of the example app's clip as CI recorded it.",
+              "Demo videos of your web app, recorded by CI. On the right, a frame of the example app's clip, as CI recorded it.",
           },
         },
         { tag: "meta", attrs: { name: "twitter:card", content: "summary_large_image" } },
