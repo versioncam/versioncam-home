@@ -1,0 +1,182 @@
+---
+// How it works, before any detail: four steps that are the same for every
+// repository, then a switch between what happens next in a public one and in
+// a private one, because that is where a reader's path splits (Free covers
+// public repositories only). The install line is the importer's, as in Set up,
+// so this section can never name a command the published version lacks.
+//
+// The icons live here and nowhere else: one per step, drawn on the site's
+// 16-unit grid in the same square-ended 1.5 stroke as the copy and play
+// icons, to say what the step does rather than to decorate it.
+//
+// The switch works without JavaScript: both panels show, each under its own
+// label, side by side where there is room. The script turns the two labels
+// into tabs and shows one panel at a time.
+
+const { data } = Astro.locals.starlightRoute.entry;
+const install: string[] = data.install ?? [];
+
+const ICONS = {
+	// A terminal: the frame and a prompt.
+	install: 'M1.5 2.5h13v11h-13zM4.5 6l2 2-2 2M8.5 10.5h3',
+	// A page being written: the script.
+	write: 'M3.5 1.5h6l3 3v10h-9zM9.5 1.5v3h3M5.5 8.5h5M5.5 11h3',
+	// Up and out of the repository: the push that publishes.
+	publish: 'M8 11V2.5M4.5 6L8 2.5 11.5 6M2.5 10v3.5h11V10',
+	// Again and again: every push.
+	every: 'M13 8a5 5 0 1 1-1.46-3.54M13.5 1.5v3h-3',
+};
+
+const steps = [
+	{
+		icon: ICONS.install,
+		label: 'Install',
+		text: "Run three commands in the directory that holds your app's package.json.",
+		code: install,
+	},
+	{
+		icon: ICONS.write,
+		label: 'Write a clip',
+		text: 'Tell your coding agent in one sentence what the clip should show. It writes the clip, records it and has a reviewer check the frames.',
+	},
+	{
+		icon: ICONS.publish,
+		label: 'Put it on version.cam',
+		text: 'When you want the clip hosted, run <code>npx versioncam ci</code>. It writes the GitHub workflow; you commit it and push.',
+	},
+	{
+		icon: ICONS.every,
+		label: 'Every push',
+		text: 'CI records the clips again on every push. When a clip no longer matches the app, the build fails.',
+	},
+];
+---
+
+<div class="vc-how not-content">
+	<ol class="vc-how-steps">
+		{
+			steps.map((step, i) => (
+				<li>
+					<div class="vc-how-rail" aria-hidden="true">
+						<svg viewBox="0 0 16 16">
+							<path d={step.icon} />
+						</svg>
+					</div>
+					<div class="vc-how-body">
+						<p class="vc-how-label">
+							<span class="vc-how-num">{String(i + 1).padStart(2, '0')}</span>
+							{step.label}
+						</p>
+						<p class="vc-how-text" set:html={step.text} />
+						{step.code && step.code.length > 0 && (
+							<pre class="vc-how-code"><code>{step.code.join('\n')}</code></pre>
+						)}
+					</div>
+				</li>
+			))
+		}
+	</ol>
+
+	<div class="vc-switch" data-switch>
+		<div class="vc-switch-tabs" hidden>
+			<button type="button" class="vc-take-tab" id="vc-switch-public" data-for="vc-panel-public">
+				Public repository
+			</button>
+			<button type="button" class="vc-take-tab" id="vc-switch-private" data-for="vc-panel-private">
+				Private repository
+			</button>
+		</div>
+		<div class="vc-switch-panels">
+			<section class="vc-switch-panel" id="vc-panel-public">
+				<h3 class="vc-switch-head">Public repository</h3>
+				<dl>
+					<div>
+						<dt>After the first push</dt>
+						<dd>
+							Each clip gets a permanent link at{' '}
+							<code>clips.version.cam/&lt;owner&gt;/&lt;repo&gt;/&lt;clip&gt;</code> after the first
+							push to your default branch. Public repositories are free.
+						</dd>
+					</div>
+					<div>
+						<dt>Sign in</dt>
+						<dd>
+							Sign in at <a href="https://app.version.cam/">app.version.cam</a> with GitHub to see the
+							project and change its settings.
+						</dd>
+					</div>
+				</dl>
+			</section>
+			<section class="vc-switch-panel" id="vc-panel-private">
+				<h3 class="vc-switch-head">Private repository</h3>
+				<dl>
+					<div>
+						<dt>On any plan</dt>
+						<dd>
+							CI checks the clips on every pull request, on Free too. version.cam stores the clips and
+							gives them links on Pro.
+						</dd>
+					</div>
+					<div>
+						<dt>Ask for Pro</dt>
+						<dd>
+							During the private beta, sign in with <code>npx versioncam cloud login</code>, then email{' '}
+							<a href="mailto:hello@version.cam">hello@version.cam</a> with your account name. We
+							switch Pro on for the first ten people who ask. After the beta, this step is the upgrade
+							page.
+						</dd>
+					</div>
+					<div>
+						<dt>Install the App</dt>
+						<dd>
+							Install the <a href="https://github.com/apps/versioncam">Versioncam GitHub App</a> on the
+							repository, then push. The App tells us who can read the repository, and only those
+							people can see its clips.
+						</dd>
+					</div>
+				</dl>
+			</section>
+		</div>
+	</div>
+</div>
+
+<script>
+	// Tabs, once there is a script to switch them: the labels become a
+	// tablist, each panel loses its own heading, and one panel shows at a time.
+	// Arrow keys move between the two tabs, as a tablist's should.
+	for (const root of document.querySelectorAll<HTMLElement>('[data-switch]')) {
+		const bar = root.querySelector<HTMLElement>('.vc-switch-tabs');
+		const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('.vc-switch-tabs button'));
+		if (!bar || tabs.length === 0) continue;
+		const panelOf = (tab: HTMLButtonElement) => document.getElementById(tab.dataset.for ?? '');
+		bar.hidden = false;
+		bar.setAttribute('role', 'tablist');
+		bar.setAttribute('aria-label', 'Your repository');
+		root.dataset.tabbed = '';
+		const select = (chosen: HTMLButtonElement, focus = false) => {
+			for (const tab of tabs) {
+				const on = tab === chosen;
+				tab.setAttribute('aria-selected', String(on));
+				tab.tabIndex = on ? 0 : -1;
+				const panel = panelOf(tab);
+				if (panel) panel.hidden = !on;
+			}
+			if (focus) chosen.focus();
+		};
+		for (const tab of tabs) {
+			const panel = panelOf(tab);
+			tab.setAttribute('role', 'tab');
+			tab.setAttribute('aria-controls', tab.dataset.for ?? '');
+			panel?.setAttribute('role', 'tabpanel');
+			panel?.setAttribute('aria-labelledby', tab.id);
+			tab.addEventListener('click', () => select(tab));
+			tab.addEventListener('keydown', (event) => {
+				const step = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
+				if (!step) return;
+				event.preventDefault();
+				select(tabs[(tabs.indexOf(tab) + step + tabs.length) % tabs.length], true);
+			});
+		}
+		select(tabs[0]);
+	}
+</script>

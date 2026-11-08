@@ -22,6 +22,13 @@ import Runs from "../../components/Runs.astro";
 import Ledger from "../../components/Ledger.astro";
 import Hosted from "../../components/Hosted.astro";
 import Setup from "../../components/Setup.astro";
+import HowItWorks from "../../components/HowItWorks.astro";
+
+## How it works
+
+The first four steps are the same for every repository. What happens after your first push depends on whether the repository is public or private.
+
+<HowItWorks />
 
 ## The script is the clip
 

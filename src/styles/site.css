@@ -1445,6 +1445,223 @@ button.vc-src:focus-visible {
   color: var(--vc-white);
 }
 
+/* ---- How it works: four steps, then the switch ---------------------------
+   The steps are a rail, the way a timeline in an editor is: each step's icon
+   sits on a hairline that runs on to the next step, across on a wide screen
+   and down on a phone. The step's number is amber, the label the machine's,
+   the sentence the person's. The switch is the take's tab bar over two ruled
+   lists; without a script both lists show, each under its own label. */
+.sl-markdown-content > .vc-how {
+  max-inline-size: none;
+}
+.vc-how-steps {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.vc-how-steps > li {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  align-content: start;
+  margin: 0;
+}
+.vc-how-rail {
+  position: relative;
+  color: var(--vc-white);
+}
+/* The rail on a phone: down from under the icon to the next step. */
+.vc-how-rail::after {
+  content: "";
+  position: absolute;
+  top: 2.25rem;
+  bottom: 0;
+  left: 11px;
+  border-left: 1px solid var(--vc-line);
+}
+.vc-how-steps > li:last-child .vc-how-rail::after {
+  display: none;
+}
+.vc-how-rail svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+.vc-how-body {
+  padding-bottom: 2rem;
+  min-width: 0;
+}
+.vc-how-label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin: 0;
+  font-family: var(--vc-font-machine);
+  font-size: 11px;
+  line-height: 22px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--vc-white);
+}
+.vc-how-num {
+  font-size: 22px;
+  line-height: 22px;
+  letter-spacing: 0;
+  color: var(--vc-amber);
+  font-variant-numeric: tabular-nums;
+}
+.vc-how-text {
+  margin: 0.75rem 0 0;
+  max-width: 34ch;
+  line-height: 1.65;
+  color: var(--sl-color-gray-2);
+  text-wrap: pretty;
+}
+.vc-how-text code,
+.vc-switch code {
+  font-family: var(--sl-font-mono);
+  font-size: 0.875em;
+  padding: 0.1em 0.35em;
+  color: var(--vc-white);
+  background: var(--sl-color-bg-inline-code);
+}
+.vc-how-code {
+  margin: 0.875rem 0 0;
+  padding: 0.625rem 0.75rem;
+  font-family: var(--sl-font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: #e6e8eb;
+  white-space: pre;
+  overflow-x: auto;
+  background: var(--sl-color-gray-6);
+  border: 1px solid var(--vc-line);
+}
+@media (min-width: 64rem) {
+  .vc-how-steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 2rem;
+  }
+  .vc-how-steps > li {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 1.25rem;
+  }
+  /* The rail on a wide screen: across from the icon to the next column. */
+  .vc-how-rail::after {
+    top: 11px;
+    bottom: auto;
+    left: 2.25rem;
+    right: -2rem;
+    border-left: 0;
+    border-top: 1px solid var(--vc-line);
+  }
+  .vc-how-steps > li:last-child .vc-how-rail::after {
+    display: block;
+    right: 0;
+  }
+}
+
+.vc-switch {
+  margin-top: 1.5rem;
+  border: 1px solid var(--vc-line);
+}
+.vc-switch-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--vc-line);
+}
+.vc-switch-tabs[hidden] {
+  display: none;
+}
+.vc-switch-tabs .vc-take-tab {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.vc-switch-panels {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 64rem) {
+  .vc-switch:not([data-tabbed]) .vc-switch-panels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .vc-switch:not([data-tabbed]) .vc-switch-panel + .vc-switch-panel {
+    border-left: 1px solid var(--vc-line);
+  }
+}
+.vc-switch:not([data-tabbed]) .vc-switch-panel + .vc-switch-panel {
+  border-top: 1px solid var(--vc-line);
+}
+@media (min-width: 64rem) {
+  .vc-switch:not([data-tabbed]) .vc-switch-panel + .vc-switch-panel {
+    border-top: 0;
+  }
+}
+.vc-switch-panel[hidden] {
+  display: none;
+}
+.vc-switch-panel {
+  padding: 0.25rem 1rem 0.5rem;
+  background: var(--sl-color-gray-6);
+}
+.vc-switch .vc-switch-head {
+  margin: 0.75rem 0 0;
+  font-family: var(--vc-font-machine);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--vc-dim);
+}
+.vc-switch[data-tabbed] .vc-switch-panel .vc-switch-head {
+  display: none;
+}
+.vc-switch dl {
+  margin: 0;
+}
+.vc-switch dl > div {
+  padding-block: 1rem;
+  border-bottom: 1px solid var(--vc-line);
+}
+.vc-switch dl > div:last-child {
+  border-bottom: 0;
+}
+@media (min-width: 50rem) {
+  .vc-switch[data-tabbed] dl > div {
+    display: grid;
+    grid-template-columns: 12rem minmax(0, 1fr);
+    column-gap: 2rem;
+    align-items: baseline;
+  }
+}
+.vc-switch dt {
+  font-family: var(--vc-font-machine);
+  font-size: 11px;
+  line-height: 22px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--vc-white);
+}
+.vc-switch dd {
+  margin: 0.25rem 0 0;
+  max-width: 62ch;
+  line-height: 1.65;
+  color: var(--sl-color-gray-2);
+  text-wrap: pretty;
+}
+.vc-switch a {
+  color: var(--vc-white);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
 /* ---- Set up: the two blocks side by side where there is room ----------- */
 .sl-markdown-content > .vc-setup {
   max-inline-size: none;
