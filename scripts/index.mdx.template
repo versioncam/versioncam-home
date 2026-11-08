@@ -40,7 +40,7 @@ Each clip is a TypeScript file in the repository. The video beside it is what CI
 
 <Ledger />
 
-Every push to `main` runs `npx versioncam check` against the example app. The left panel shows the latest run. The right panel shows the same check, which we ran once for this page after we renamed one button's test id and changed nothing else.
+Every push to `main` runs `npx versioncam check` against the example app. The left panel shows the latest run. For the right panel, we renamed one button's test id, changed nothing else, and ran the same check once.
 
 <Runs base="{{clips}}" />
 
@@ -61,7 +61,7 @@ Every push to `main` runs `npx versioncam check` against the example app. The le
   </div>
   <div>
     <dt>Write a clip with one sentence</dt>
-    <dd>In Claude Code, <code>/versioncam "…"</code> writes the clip and records it. Then a separate reviewer agent checks the frames, and each round gets a new reviewer. You don't need an API key: it uses the Claude Code session you already have. <a href="/start/authoring/">Authoring</a></dd>
+    <dd>In Claude Code, <code>/versioncam "…"</code> writes the clip and records it. Then a separate reviewer agent checks the frames. When the clip needs another try, a new reviewer checks it. You don't need an API key: it uses the Claude Code session you already have. <a href="/start/authoring/">Authoring</a></dd>
   </div>
 </dl>
 
