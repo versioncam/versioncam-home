@@ -525,8 +525,31 @@ h1#_top {
     order: 0;
   }
 }
+.vc-film-frame {
+  margin: 0;
+}
+/* The desktop picture and the phone picture, split by the hairline: the
+   container's ground shows through a 1px gap, so both keep their exact
+   aspect and stand the same height. */
+.vc-film-pictures {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  background: var(--vc-line);
+}
 .vc-film video {
   cursor: pointer;
+}
+/* The line under the pair, in the take hint's small dim type. */
+.vc-film-caption {
+  margin: 0.75rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--vc-dim);
+  text-wrap: pretty;
+}
+.vc-film-caption a {
+  color: var(--vc-white);
 }
 .vc-film-osd {
   display: flex;

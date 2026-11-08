@@ -7,11 +7,13 @@
 // on. The version in amber and the commit are read from the recording too,
 // so nothing in the viewfinder is a guess.
 import {
+	heroPhone,
 	highlight,
 	lineFrames,
 	loadManifest,
 	loadTake,
 	running,
+	scriptManifest,
 	timecode,
 	versionQuery,
 	type Take,
@@ -26,9 +28,16 @@ const { base } = Astro.props;
 // The take as it stood when the site was built. The browser asks for the
 // manifest again before it loads a video, and swaps in a newer take if CI has
 // published one since.
+// The desktop clips only: the phone clip plays on the first screen. When
+// there is no phone clip to pair with the first clip, the first screen plays
+// the first clip alone and this section starts at the second (Film.astro,
+// take.ts's heroPhone and scriptManifest).
 let take: Take | null = null;
+let withoutFirst = false;
 try {
-	take = await loadTake(base, await loadManifest(base));
+	const manifest = await loadManifest(base);
+	withoutFirst = !(await heroPhone(base, manifest));
+	take = await loadTake(base, scriptManifest(manifest, withoutFirst));
 } catch (error) {
 	console.warn(`take: ${(error as Error).message}; the browser will load it`);
 }
@@ -43,7 +52,13 @@ const at = (frame: number) => (clip ? (frame / Math.max(1, clip.frames - 1)) * 1
 const data = JSON.stringify(take).replace(/</g, '\\u003c');
 ---
 
-<section class="vc-take not-content" data-take data-base={base} data-state={take ? 'ready' : 'standby'}>
+<section
+	class="vc-take not-content"
+	data-take
+	data-base={base}
+	data-without-first={withoutFirst ? '' : undefined}
+	data-state={take ? 'ready' : 'standby'}
+>
 	<div class="vc-take-tabs" role="tablist" aria-label="The example app's clips" data-tabs>
 		{
 			take?.clips.map((each, i) => (
@@ -188,6 +203,7 @@ const data = JSON.stringify(take).replace(/</g, '\\u003c');
 		latestManifest,
 		lineFrames,
 		loadTake,
+		scriptManifest,
 		running,
 		timecode,
 		versionQuery,
@@ -444,7 +460,8 @@ const data = JSON.stringify(take).replace(/</g, '\\u003c');
 			.then(async (manifest) => {
 				if (!take || manifest.commit !== take.commit || manifest.recordedAt !== take.recordedAt) {
 					const keep = clip?.id;
-					take = await loadTake(base, manifest);
+					// The same clips the page was built to show, from the newer take.
+					take = await loadTake(base, scriptManifest(manifest, root.dataset.withoutFirst !== undefined));
 					render(Math.max(0, take.clips.findIndex((each) => each.id === keep)));
 				}
 			})

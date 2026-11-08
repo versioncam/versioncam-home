@@ -89,6 +89,124 @@ export function versionQuery(manifest: Pick<Manifest, "commit" | "recordedAt">):
   return `?v=${encodeURIComponent(manifest.commit ?? manifest.recordedAt)}`;
 }
 
+// ---- Which clip plays where ------------------------------------------------
+
+type ManifestClip = Manifest["clips"][number];
+
+/** A clip recorded at a phone's viewport, named after its desktop clip. */
+export const isPhone = (id: string): boolean => id.endsWith("-mobile");
+
+/**
+ * What the first screen plays: the first desktop clip and, when the take has
+ * one, the phone clip recorded beside it (`<id>-mobile`, the name that pairs
+ * them on version.cam too).
+ */
+export function heroClips(
+  manifest: Manifest,
+): { desktop: ManifestClip; phone: ManifestClip | null } | null {
+  const desktop = manifest.clips.find((clip) => !isPhone(clip.id));
+  if (!desktop) return null;
+  return {
+    desktop,
+    phone: manifest.clips.find((clip) => clip.id === `${desktop.id}-mobile`) ?? null,
+  };
+}
+
+/**
+ * The take the script section shows: the desktop clips, each beside its
+ * script. When the first screen plays the first clip alone, because the take
+ * has no phone clip to pair it with, the section shows the others, so the
+ * page never plays the same footage twice.
+ */
+export function scriptManifest(manifest: Manifest, withoutFirst: boolean): Manifest {
+  const desktop = manifest.clips.filter((clip) => !isPhone(clip.id));
+  return { ...manifest, clips: withoutFirst ? desktop.slice(1) : desktop };
+}
+
+/** What version.cam says about one published clip (`<clip>?format=json`). */
+type Published = {
+  commit: string;
+  recorder: string;
+  check: string;
+  draft: boolean;
+  width: number;
+  height: number;
+  files: { mp4: string; poster: string };
+  mobileOf: { url: string } | null;
+};
+
+/**
+ * A phone clip as version.cam published it, when the take has none of its
+ * own: CI publishes the example's clips to version.cam in the same run that
+ * records the take, but the take lists desktop clips only. It is used only
+ * when version.cam recorded it from the take's own commit and it passed, so
+ * the band under it (the take's version and commit) is true of it too. The
+ * files are the version's own addresses, which never change.
+ */
+export async function publishedPhone(
+  project: string,
+  id: string,
+  commit: string | null,
+): Promise<{ src: string; poster: string; ratio: number; page: string } | null> {
+  if (!commit) return null;
+  try {
+    const clip = (await (await get(`${project}/${id}?format=json`)).json()) as Published;
+    if (!clip.commit.startsWith(commit) || clip.check !== "pass" || clip.draft) return null;
+    return {
+      src: clip.files.mp4,
+      poster: clip.files.poster,
+      ratio: clip.width / clip.height,
+      page: clip.mobileOf?.url ?? `${project}/${id}`,
+    };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * The recorder repository's project on version.cam, where CI publishes the
+ * example's clips in the same run that records the take.
+ */
+export const PUBLISHED_PROJECT = "https://clips.version.cam/versioncam/versioncam";
+
+export type Phone = { src: string; poster: string; ratio: number; page: string };
+
+/**
+ * The phone clip the first screen plays beside the first desktop clip: the
+ * take's own when it has one, otherwise the one version.cam published from
+ * the same commit. Null means the first screen plays the desktop clip alone.
+ * Film.astro and Take.astro both ask, so they agree on which clips each
+ * shows.
+ */
+export async function heroPhone(base: string, manifest: Manifest): Promise<Phone | null> {
+  const hero = heroClips(manifest);
+  if (!hero) return null;
+  const page = `${PUBLISHED_PROJECT}/${hero.desktop.id}`;
+  if (hero.phone) {
+    const v = versionQuery(manifest);
+    return {
+      src: `${base}/${hero.phone.id}.mp4${v}`,
+      poster: `${base}/${hero.phone.id}-poster.png${v}`,
+      ratio: (await aspect(base, manifest, hero.phone.id)) ?? 390 / 844,
+      page,
+    };
+  }
+  return publishedPhone(PUBLISHED_PROJECT, `${hero.desktop.id}-mobile`, manifest.commit);
+}
+
+/** A clip's viewport as width over height, read from its timeline. */
+export async function aspect(base: string, manifest: Manifest, id: string): Promise<number | null> {
+  try {
+    const timeline = (await (await get(`${base}/${id}.timeline.json${versionQuery(manifest)}`)).json()) as {
+      viewport?: { width: number; height: number };
+    };
+    const size = timeline.viewport;
+    return size && size.width > 0 && size.height > 0 ? size.width / size.height : null;
+  } catch {
+    return null;
+  }
+}
+
 /** Every clip in the take the manifest names, with its steps bound to lines. */
 export async function loadTake(base: string, manifest: Manifest): Promise<Take> {
   const v = versionQuery(manifest);

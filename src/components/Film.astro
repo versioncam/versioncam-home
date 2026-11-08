@@ -1,14 +1,25 @@
 ---
-// The first screen's viewfinder: the stitched film of the example app's
-// clips, as CI rendered it on the last push to main, playing muted and
-// looping beside the three sentences that say what it is. Its display reads
-// from the manifest CI published with it, the version in amber and the
-// commit, so nothing on the frame is a guess. The display is a band under
-// the picture rather than chips over it: the app's own title sits where a
-// chip would, and a first screen should hide none of its subject. The take
-// further down plays the clips one at a time with their scripts; this is the
-// whole piece.
-import { loadManifest, timecode } from '../lib/take';
+// The first screen's viewfinder: the example app's first clip as CI recorded
+// it on the last push to main, and beside it the same clip recorded at a
+// phone's viewport, both playing muted and looping. The pair is what a
+// version.cam link does that nothing else on the page shows: one link, and
+// the phone clip plays on a phone and the desktop clip on a desktop. The
+// line under them links to that page. The script section further down plays
+// the desktop clips with their scripts.
+//
+// The phone clip is the take's own when it has one; the take CI publishes
+// lists desktop clips only, so it is otherwise the one CI published to
+// version.cam from the same commit (take.ts, heroPhone). Both pictures stand
+// the same height: the grid's columns are in proportion to the two
+// viewports. The display is a band under the pictures rather than chips over
+// them: the app's own title sits where a chip would, and a first screen
+// should hide none of its subject. It reads from the take's manifest, the
+// version in amber and the commit, so nothing on the frame is a guess.
+//
+// Without a phone clip from the same commit, the first screen plays the
+// first clip alone and the script section shows the other clips, so the two
+// never play the same footage.
+import { aspect, heroClips, heroPhone, loadManifest, timecode, versionQuery } from '../lib/take';
 
 interface Props {
 	/** Where CI publishes the example's takes, without a trailing slash. */
@@ -16,68 +27,149 @@ interface Props {
 }
 const { base } = Astro.props;
 
+type Picture = { src: string; poster: string; ratio: number; label: string };
+
 let commit: string | null = null;
 let recorder = '';
-let poster = '';
+let page = '';
+const pictures: Picture[] = [];
 try {
 	const manifest = await loadManifest(base);
 	commit = manifest.commit;
 	recorder = manifest.recorder;
-	const first = manifest.clips[0]?.id;
-	poster = first ? `${base}/${first}-poster.png` : '';
+	const hero = heroClips(manifest);
+	if (hero) {
+		const v = versionQuery(manifest);
+		pictures.push({
+			src: `${base}/${hero.desktop.id}.mp4${v}`,
+			poster: `${base}/${hero.desktop.id}-poster.png${v}`,
+			ratio: (await aspect(base, manifest, hero.desktop.id)) ?? 16 / 10,
+			label: `${hero.desktop.title}, the example app's first clip, as CI recorded it at a desktop's size`,
+		});
+		const phone = await heroPhone(base, manifest);
+		if (phone) {
+			page = phone.page;
+			pictures.push({
+				src: phone.src,
+				poster: phone.poster,
+				ratio: phone.ratio,
+				label: `The same clip, recorded at a phone's size`,
+			});
+		}
+	}
 } catch (error) {
-	console.warn(`film: ${(error as Error).message}; the frame plays without its display`);
+	console.warn(`film: ${(error as Error).message}; the frame shows no take`);
 }
+const pair = pictures.length === 2;
+// Each column as wide as its picture is at a shared height.
+const columns = pictures.map((p) => `minmax(0, ${(p.ratio * 1000).toFixed(0)}fr)`).join(' ');
 ---
 
-<figure class="vc-viewfinder vc-film not-content" data-film>
-	<video
-		src={`${base}/sequence.mp4`}
-		poster={poster || undefined}
-		muted
-		loop
-		playsinline
-		autoplay
-		preload="metadata"
-		aria-label="The example app's three clips, stitched: a shipment created, found and cancelled, as CI recorded them"></video>
-	<div class="vc-film-osd" aria-hidden="true">
-		<span class="vc-film-rec"><i></i>REC</span>
-		<span class="vc-film-ver">{recorder ? `v${recorder}` : ''}</span>
-		<span class="vc-film-commit">{commit ? `main@${commit}` : ''}</span>
-		<span class="vc-film-tc" data-tc>{timecode(0, 60)}</span>
-	</div>
-</figure>
+<div class="vc-film" data-film data-base={base} data-built={commit ?? undefined}>
+	<figure class="vc-viewfinder vc-film-frame not-content">
+		<div class="vc-film-pictures" style={pair ? `grid-template-columns: ${columns}` : undefined}>
+			{
+				pictures.map((p, i) => (
+					<video
+						src={p.src}
+						poster={p.poster}
+						style={`aspect-ratio: ${p.ratio}`}
+						data-main={i === 0 ? '' : undefined}
+						data-phone={i === 1 ? '' : undefined}
+						muted
+						loop
+						playsinline
+						autoplay
+						preload="metadata"
+						aria-label={p.label}
+					/>
+				))
+			}
+		</div>
+		<div class="vc-film-osd" aria-hidden="true">
+			<span class="vc-film-rec"><i></i>REC</span>
+			<span class="vc-film-ver" data-ver>{recorder ? `v${recorder}` : ''}</span>
+			<span class="vc-film-commit" data-commit>{commit ? `main@${commit}` : ''}</span>
+			<span class="vc-film-tc" data-tc>{timecode(0, 60)}</span>
+		</div>
+	</figure>
+	{
+		pair && (
+			<p class="vc-film-caption" data-caption>
+				<a href={page}>One version.cam link</a> shows the phone clip on a phone and the desktop clip on a
+				desktop.
+			</p>
+		)
+	}
+</div>
 
 <script>
-	import { timecode } from '../lib/take';
+	import { heroPhone, latestManifest, timecode } from '../lib/take';
 
 	const film = document.querySelector<HTMLElement>('[data-film]');
-	const video = film?.querySelector('video');
+	const videos = [...(film?.querySelectorAll('video') ?? [])];
+	const main = film?.querySelector<HTMLVideoElement>('video[data-main]');
 	const tc = film?.querySelector<HTMLElement>('[data-tc]');
-	if (film && video && tc) {
-		// Stillness when the visitor asked for it: the frame holds its poster.
+	if (film && main && tc) {
+		// Stillness when the visitor asked for it: the frames hold their posters.
 		if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-			video.removeAttribute('autoplay');
-			video.pause();
+			for (const video of videos) {
+				video.removeAttribute('autoplay');
+				video.pause();
+			}
 		}
+		// The band's timecode is the desktop clip's.
 		const show = (seconds: number) => {
 			tc.textContent = timecode(Math.floor(seconds * 60), 60);
 		};
-		if ('requestVideoFrameCallback' in video) {
+		if ('requestVideoFrameCallback' in main) {
 			const watch = () =>
-				video.requestVideoFrameCallback((_, shown) => {
+				main.requestVideoFrameCallback((_, shown) => {
 					show(shown.mediaTime);
 					watch();
 				});
 			watch();
 		} else {
-			video.addEventListener('timeupdate', () => show(video.currentTime));
+			main.addEventListener('timeupdate', () => show(main.currentTime));
 		}
-		video.addEventListener('play', () => film.setAttribute('data-playing', ''));
-		video.addEventListener('pause', () => film.removeAttribute('data-playing'));
-		video.addEventListener('click', () => {
-			if (video.paused) video.play().catch(() => {});
-			else video.pause();
-		});
+		main.addEventListener('play', () => film.setAttribute('data-playing', ''));
+		main.addEventListener('pause', () => film.removeAttribute('data-playing'));
+		// One click plays or pauses both pictures.
+		for (const video of videos) {
+			video.addEventListener('click', () => {
+				const play = main.paused;
+				for (const each of videos) {
+					if (play) each.play().catch(() => {});
+					else each.pause();
+				}
+			});
+		}
+
+		// The page was built from one take; CI may have published another since.
+		// The band follows the newest, and so does the phone picture: the phone
+		// clip from the new commit, or none if version.cam has not published one
+		// from it, rather than a phone clip the band is not true of.
+		const base = film.dataset.base!;
+		latestManifest(base)
+			.then(async (manifest) => {
+				if (manifest.commit === (film.dataset.built ?? null)) return;
+				const ver = film.querySelector('[data-ver]');
+				const commit = film.querySelector('[data-commit]');
+				if (ver) ver.textContent = manifest.recorder ? `v${manifest.recorder}` : '';
+				if (commit) commit.textContent = manifest.commit ? `main@${manifest.commit}` : '';
+				const video = film.querySelector<HTMLVideoElement>('video[data-phone]');
+				if (!video) return;
+				const phone = await heroPhone(base, manifest);
+				if (phone) {
+					video.poster = phone.poster;
+					video.src = phone.src;
+					if (!main.paused) video.play().catch(() => {});
+				} else {
+					video.remove();
+					film.querySelector('[data-caption]')?.remove();
+					film.querySelector<HTMLElement>('.vc-film-pictures')!.style.gridTemplateColumns = '';
+				}
+			})
+			.catch(() => {});
 	}
 </script>
