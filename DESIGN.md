@@ -17,9 +17,9 @@ colors:
 typography:
   display:
     fontFamily: "Departure Mono, ui-monospace, Menlo, monospace"
-    fontSize: "55px"
+    fontSize: "44px"
     fontWeight: 400
-    lineHeight: "66px"
+    lineHeight: "55px"
     letterSpacing: "0"
   headline:
     fontFamily: "Departure Mono, ui-monospace, Menlo, monospace"
@@ -203,7 +203,7 @@ A monochrome instrument panel with two lamps on it.
 **Character:** A pixel face that speaks in readouts beside a plain humanist sans that reads like a sentence. The pair never blends: a word is either the machine's or the person's, and the face says which. The heading scale is the machine's grid times 2, 3, 4 and 5; the body scale is Inter's ordinary 16/18 with generous leading because light type on black needs it.
 
 ### Hierarchy
-- **Display** (Departure Mono 400, 55px/66px at 80rem and up, 44px/55px at 40rem and up, 33px/44px below): the front page's title only. Starlight's 404 hero steps 44/33/22 by width.
+- **Display** (Departure Mono 400, 44px/55px at 40rem and up, 33px/44px below, on an 11ch measure so it breaks into the same three lines at every width): the front page's title only. It stopped at 44 on 2026-11-08; at 55 it outweighed the film beside it. Starlight's 404 hero steps 44/33/22 by width.
 - **Headline** (Departure Mono 400, 33px/44px on the front page at 40rem and up; 22px/33px in the docs and on phones): every `h2`, and the docs' page title (`h1` at 33/44). Always one step under the title at the same width. Letter-spacing 0, `text-wrap: balance`.
 - **Title** (Inter 500, 18px/1.4, white): docs `h3`. Rank and size agree: the third level leaves the machine's face so it cannot be mistaken for a section.
 - **Lead** (Inter 400, 18px/1.65): the one paragraph under each front-page heading (`text-lead`) and the hero's tagline (`text-reading`) and the ledger's list items (white). Measures: 62ch for the paragraph, 36rem for the tagline.
@@ -232,7 +232,7 @@ One column of Starlight content on black, 50rem wide in the docs and 76rem on th
 
 **Rows.** A ledger item is 0.6875rem of padding above and below a hairline at 18px/1.5. A hosted row is 1.125rem above, 1.25rem below. A facts cell is 1.25rem above, 1.5rem below.
 
-**Breakpoints** (min-width unless noted): 30rem (max: hide the film's commit, 404 title to 22px), 40rem (heading scale steps up), 50rem (inline code stops wrapping; ledger and facts go two-up), 64rem (hero, take, hosted, runs, setup go two-up; beat intervals widen), 80rem (display to 55px). Touch (`hover: none`) hides the section link and pads code so it scrolls out from under the copy button.
+**Breakpoints** (min-width unless noted): 30rem (max: hide the film's commit, 404 title to 22px), 40rem (heading scale steps up), 50rem (inline code stops wrapping; ledger and facts go two-up), 64rem (hero, take, hosted, runs, setup go two-up; beat intervals widen), 80rem (the hero's copy column widens). Touch (`hover: none`) hides the section link and pads code so it scrolls out from under the copy button.
 
 ## Elevation & Depth
 
@@ -278,7 +278,7 @@ There are no cards. The containers that exist are instruments:
 The site has one input of its own, the take's scrubber (`.vc-scrub`): a native range made transparent over a 2px track that is `hairline` with the played portion painted white, a 1px `dim` tick 12px tall at every frame a script step began on, and a 3x18px white thumb. Starlight's search is left as shipped. Caret and selection are white on black; focus is the 2px white outline everywhere.
 
 ### Navigation
-Starlight's chrome on black: the lockup (`public/brand/lockup-dark-bg.svg`) replaces the title; the theme switch is removed and the site is dark only (`DarkOnly.astro`, `NoThemeSelect.astro`). After the GitHub mark, "Sign in" (`.vc-signin`, `SocialIcons.astro`): label type in white inside a hairline that turns white on hover, linking to app.version.cam. It rides in the header's right group, which Starlight hides under 50rem and repeats in the mobile menu, so a docs page keeps it on a phone; the front page has no menu, and its hero's note carries the link there. Sidebar group labels and "On this page" are label type in `dim`; the current page is Inter 500 white; groups stay collapsed unless they hold the page. Pagination links are square with hairline borders that turn white on hover. The section link beside a heading is a `#` in the machine's face (Inter for `h3`), `dim` until hovered, no underline, hidden on touch. The skip link, when focused, is a white block with black label type.
+Starlight's chrome on black: the lockup (`public/brand/lockup-dark-bg.svg`) replaces the title at 19.5px tall, so each pixel of its letters is 1.5 CSS pixels and the name stands about as tall as the search box's text; beside it the "private beta" badge (`SiteTitle.astro`), label type in `dim` inside a hairline box of the same 19px height, linking to the front page's beta note; the theme switch is removed and the site is dark only (`DarkOnly.astro`, `NoThemeSelect.astro`). After the GitHub mark, "Sign in" (`.vc-signin`, `SocialIcons.astro`): label type in white inside a hairline that turns white on hover, linking to app.version.cam. It rides in the header's right group, which Starlight hides under 50rem and repeats in the mobile menu, so a docs page keeps it on a phone; the front page has no menu, and its hero's note carries the link there. Sidebar group labels and "On this page" are label type in `dim`; the current page is Inter 500 white; groups stay collapsed unless they hold the page. Pagination links are square with hairline borders that turn white on hover. The section link beside a heading is a `#` in the machine's face (Inter for `h3`), `dim` until hovered, no underline, hidden on touch. The skip link, when focused, is a white block with black label type.
 
 ### The Take (signature)
 A hairline box with three rows: file tabs (readout type in `dim`, `padding: 0.8125rem 1rem`, hairline right edge; the selected tab is white on `panel` with a 2px white top line), a body that is the script beside the viewfinder (5fr to 7fr at 64rem, the picture first on a phone), and a transport bar (icon button, scrubber, amber frame counter over `dim` total). Script lines are 13px/20px in the code face with right-aligned tabular numbers in `#7a7f89` on a 2.75rem gutter; comments `dim`, strings and numbers `text-reading`, keywords and calls white; the running line's ground lifts to `#16191e` and its number goes to reverse video. Steps are buttons that seek the video. A caption row below pairs a `small` hint with readout metadata (FRAMES, CAPTURED, FPS, RECORDED) whose terms are `dim` uppercase and whose values keep their case.
