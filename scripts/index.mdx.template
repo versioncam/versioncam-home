@@ -93,7 +93,7 @@ import HowItWorks from "../../components/HowItWorks.astro";
 
 ## How it works
 
-The first four steps are the same for every repository. What happens after your first push depends on whether the repository is public or private.
+These four steps are the same for every repository. What happens after your first push depends on whether the repository is public or private.
 
 <HowItWorks />
 
