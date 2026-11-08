@@ -51,6 +51,11 @@ export default defineConfig({
         { tag: "link", attrs: { rel: "icon", href: "/favicon.ico", sizes: "32x32" } },
         { tag: "link", attrs: { rel: "apple-touch-icon", href: "/apple-touch-icon.png" } },
         { tag: "meta", attrs: { name: "theme-color", content: "#000000" } },
+        // The plain-text summary for coding agents, findable from any page.
+        {
+          tag: "link",
+          attrs: { rel: "alternate", type: "text/plain", href: "/llms.txt", title: "llms.txt" },
+        },
         { tag: "meta", attrs: { property: "og:image", content: OG } },
         { tag: "meta", attrs: { property: "og:image:width", content: "1200" } },
         { tag: "meta", attrs: { property: "og:image:height", content: "630" } },
