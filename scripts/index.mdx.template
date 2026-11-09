@@ -87,7 +87,7 @@ hero:
     - text: The source
       link: https://github.com/versioncam/versioncam
       variant: minimal
-note: 'version.cam hosts the recordings after CI has made them. It is in private beta, and the first ten people who ask get Pro for free until the beta ends. <a href="https://app.version.cam/">Sign in with GitHub</a>, or first see <a href="#after-ci-versioncam">what version.cam adds</a>.'
+note: 'version.cam hosts the recordings after CI has made them. It is in private beta, and the first ten people who ask get Pro free for a year. <a href="https://app.version.cam/">Sign in with GitHub</a>, or first see <a href="#after-ci-versioncam">what version.cam adds</a>.'
 ---
 
 import Take from "../../components/Take.astro";
