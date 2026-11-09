@@ -71,13 +71,19 @@ head:
       }
 install: {{install}}
 ask: {{ask}}
+prompt: {{prompt}}
 clips: "{{clips}}"
 hero:
-  tagline: A clip is a script in your repository. On every push, CI starts your app, records the clip again and renders the video. When the app only looks different, you get a new video. When a control the clip needs is gone, the build fails and tells you which one.
+  tagline: A clip is a script in your repository, and your coding agent writes it from one sentence of yours. On every push, CI starts your app, records the clip again and renders the video. When the app only looks different, you get a new video. When a control the clip needs is gone, the build fails and tells you which one.
+  # The first action is the hero's own button, which copies the setup prompt
+  # (Hero.astro). These follow it. "Install by hand" goes to the docs' Install
+  # page, as "Get started" did: the header has no docs link, so this is the
+  # hero's way into them, and that page has what the card under Set up leaves
+  # out (doctor, ffmpeg, Windows).
   actions:
-    - text: Get started
+    - text: Install by hand
       link: /start/install/
-      icon: right-arrow
+      variant: minimal
     - text: The source
       link: https://github.com/versioncam/versioncam
       variant: minimal
@@ -97,9 +103,17 @@ These four steps are the same for every repository. What happens after your firs
 
 <HowItWorks />
 
+## Set up
+
+Paste the setup prompt into your coding agent, or run the three commands yourself and give Claude Code one sentence. The first time the skill runs, it writes the config from what it finds in the repository, checks that the app records the same way twice, and writes the first clip. On the example app, that first run took [six to twelve minutes and one or two review rounds](/start/authoring/).
+
+We test the skill with Claude Code. It is plain Markdown, so another agent that can run commands in your repository can follow it, but we have not run one end to end yet.
+
+<Setup />
+
 ## The script is the clip
 
-Each clip is a TypeScript file in the repository. The video beside it is what CI recorded from that file on the last push to `main`, and the highlighted line is the one running.
+Each clip is a TypeScript file in the repository. Your agent writes it, and you can read it, change it and review it in a pull request like any other code. Recording it needs no agent and no model: CI runs the file as it is. The video beside this one is what CI recorded from it on the last push to `main`, and the highlighted line is the one running.
 
 <Take base="{{clips}}" />
 
@@ -137,11 +151,5 @@ Every push to `main` runs `npx versioncam check` against the example app. The le
 The recorder and the GitHub Action are free. They run in your CI, which already has your app and your secrets. version.cam is where the recordings go after CI has made them.
 
 <Hosted />
-
-## Set up
-
-You run three commands, then give Claude Code one sentence. The first time the skill runs, it writes the config from what it finds in the repository, checks that the app records the same way twice, and writes the first clip. On the example app, that first run took [six to twelve minutes and one or two review rounds](/start/authoring/).
-
-<Setup />
 
 <p class="colophon">versioncam <span class="vc-num">{{version}}</span> on npm · <a href="/about/licence/">FSL-1.1-ALv2</a> · <a href="/legal/imprint/">Imprint</a> · The source is public at <a href="https://github.com/versioncam/versioncam">github.com/versioncam/versioncam</a>, and so is <a href="https://github.com/versioncam/versioncam-home">this site's</a>.</p>

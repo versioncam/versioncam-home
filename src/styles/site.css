@@ -500,6 +500,17 @@ h1#_top {
 .vc-hero-actions .sl-link-button.primary {
   padding: 1rem 1.25rem;
 }
+/* Where the copied prompt goes: one sentence under the actions, in the
+   tagline's grey and the note's size, so it reads as part of the button
+   and not as a second tagline. */
+.vc-hero-how {
+  margin: 1rem 0 0;
+  max-width: 36rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--sl-color-gray-2);
+  text-wrap: pretty;
+}
 /* The note under the actions: small and dim, as the plans note is, with its
    links in white, as the sign-in block's are. It says what is true of the service
    today and where to sign in, which the header also says, except on a phone,
@@ -1622,18 +1633,6 @@ button.vc-src:focus-visible {
   color: var(--vc-white);
   background: var(--sl-color-bg-inline-code);
 }
-.vc-how-code {
-  margin: 0.875rem 0 0;
-  padding: 0.625rem 0.75rem;
-  font-family: var(--sl-font-mono);
-  font-size: 13px;
-  line-height: 1.7;
-  color: #e6e8eb;
-  white-space: pre;
-  overflow-x: auto;
-  background: var(--sl-color-gray-6);
-  border: 1px solid var(--vc-line);
-}
 @media (min-width: 64rem) {
   .vc-how-steps {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1747,6 +1746,7 @@ button.vc-src:focus-visible {
   color: var(--sl-color-gray-2);
   text-wrap: pretty;
 }
+.vc-how-text a,
 .vc-switch a {
   color: var(--vc-white);
   text-underline-offset: 0.2em;

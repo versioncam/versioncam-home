@@ -89,11 +89,17 @@ function slugify(title) {
 // Where each README section goes, and a sidebar label where the title alone
 // would read oddly in its group. A section the README gains later lands in
 // `more/` under its own name, so a release never loses a page to this table.
+//
+// Getting started runs in the order a person goes through it: install, then
+// the agent writes a clip, which is how nearly every clip gets written. The
+// clip's format and the config follow, for reading and changing what the
+// agent wrote. The two labels say which page is which, since "Authoring" and
+// "Write a clip" alone do not.
 const PLACES = {
   Install: ["start", "install", 1],
-  Configure: ["start", "configure", 2],
-  "Write a clip": ["start", "write-a-clip", 3],
-  Authoring: ["start", "authoring", 4],
+  Authoring: ["start", "authoring", 2, "Write a clip with your agent"],
+  "Write a clip": ["start", "write-a-clip", 3, "Write a clip by hand"],
+  Configure: ["start", "configure", 4],
   Commands: ["reference", "commands", 1],
   "What a recording leaves behind": ["reference", "recordings", 3],
   Glossary: ["reference", "glossary", 4],
@@ -187,11 +193,14 @@ function link(body, self) {
 }
 
 /**
- * Code blocks that are a message to the skill rather than a shell command
- * are labelled as such, so nobody pastes `/versioncam "..."` into a terminal.
+ * Code blocks that are a message to an agent rather than a shell command
+ * are labelled as such, so nobody pastes `/versioncam "..."` or the setup
+ * prompt into a terminal.
  */
 function label(body) {
-  return body.replace(/^```[a-z]*\n(\/versioncam\b)/gm, '```text title="Claude Code"\n$1');
+  return body
+    .replace(/^```[a-z]*\n(\/versioncam\b)/gm, '```text title="Claude Code"\n$1')
+    .replace(/^```text\n(Set up versioncam\b)/gm, '```text title="Paste into your coding agent"\n$1');
 }
 
 const pages = [];
@@ -294,7 +303,9 @@ writeFileSync(
 );
 
 // The front page: the README's first line as its description, and its setup
-// as the README gives it: the shell commands without their comments, and the
+// as the README gives it: the setup prompt for a coding agent (from 0.7.7;
+// an older README has none, and the page then builds one from the commands,
+// src/lib/setup.ts), the shell commands without their comments, and the
 // sentence to say to Claude Code after. The example app's takes come from
 // where CI publishes them, read by the page's own components.
 const [tagline] = lede.lines
@@ -308,6 +319,12 @@ const commands = (install.match(/```bash\n([\s\S]*?)```/)?.[1] ?? "npm i -D vers
   .map((line) => line.replace(/\s+#.*$/, "").trim())
   .filter(Boolean);
 const ask = install.match(/```\n(\/versioncam [^\n]*)\n```/)?.[1] ?? null;
+// One line, however the README wraps it: it is pasted, not read as code.
+const setupPrompt =
+  install
+    .match(/```text\n(Set up versioncam[\s\S]*?)\n```/)?.[1]
+    ?.replace(/\s+/g, " ")
+    .trim() ?? null;
 const template = readFileSync(join(ROOT, "scripts", "index.mdx.template"), "utf8");
 writeFileSync(
   join(DOCS, "index.mdx"),
@@ -316,6 +333,7 @@ writeFileSync(
     .replaceAll("{{tagline}}", JSON.stringify(tagline.replace(/\s+/g, " ").trim()))
     .replaceAll("{{install}}", JSON.stringify(commands))
     .replaceAll("{{ask}}", JSON.stringify(ask))
+    .replaceAll("{{prompt}}", JSON.stringify(setupPrompt))
     .replaceAll("{{clips}}", process.env.CLIPS_BASE ?? "https://clips.version.cam/example"),
 );
 

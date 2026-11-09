@@ -12,6 +12,9 @@ export const collections = {
 			extend: z.object({
 				install: z.array(z.string()).optional(),
 				ask: z.string().nullish(),
+				// The setup prompt for a coding agent, as the README writes it; absent
+				// before 0.7.7, when the page builds it from `install`.
+				prompt: z.string().nullish(),
 				// Where CI publishes the example's takes, for the hero's film.
 				clips: z.string().optional(),
 				// One line under the hero's actions, in HTML: what is true of the

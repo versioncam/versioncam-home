@@ -1,13 +1,16 @@
 ---
 // The whole setup, where a developer can copy it, two ways. A setup prompt
-// for a coding agent, for whoever would rather hand the job over; and the
-// shell commands as the README gives them, with the one sentence to say to
-// Claude Code after, for whoever types. The commands come from the package's
-// README through the importer, and the prompt is built from the same lines
-// (src/lib/setup.ts), so the page never shows a command the published
-// version does not have, and the two never disagree.
+// for a coding agent, which is the way most people will take; and the shell
+// commands as the README gives them, with the one sentence to say to Claude
+// Code after, for whoever types. The commands and the prompt come from the
+// package's README through the importer (src/lib/setup.ts builds the prompt
+// for a README older than 0.7.7), so the page never shows a command the
+// published version does not have, and the two never disagree.
+//
+// The head says which agent the prompt is tested with, and no more: it named
+// Codex and "any agent" until 2026-11-09, when nobody had run either.
 import { escape } from '../lib/take';
-import { PLACEHOLDER, setupPrompt } from '../lib/setup';
+import { PLACEHOLDER, promptFor } from '../lib/setup';
 
 const { data } = Astro.locals.starlightRoute.entry;
 const install: string[] = data.install ?? [];
@@ -17,7 +20,7 @@ const ask: string | null | undefined = data.ask;
 const prompt = (sign: string) => `<span class="vc-prompt" aria-hidden="true">${sign} </span>`;
 const terminal = install.map((line) => prompt('$') + escape(line)).join('\n');
 const request = ask ? prompt('&gt;') + escape(ask) : '';
-const setup = setupPrompt(install);
+const setup = promptFor(data);
 // The one part the reader fills in, lit so it is easy to find after pasting.
 const preview = escape(setup).replace(
 	escape(PLACEHOLDER),
@@ -30,19 +33,18 @@ const preview = escape(setup).replace(
 		<div class="vc-install-head">
 			<span>Setup prompt</span>
 			<span class="vc-marks">
-				<span>Claude Code</span>
-				<span>Codex</span>
 				<span>
-					<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 2.5h13v11h-13zM4.5 6l2 2-2 2M8.5 10.5h3" /></svg>
-					Any agent
+					<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.5 3.5L13 4.5" /></svg>
+					Tested with Claude Code
 				</span>
 			</span>
 		</div>
 		<div class="vc-setup-prompt-body">
 			<h3>Use a setup prompt</h3>
 			<p>
-				Copy this prompt into a coding agent on your computer. It installs versioncam in your
-				repository and records the first clip.
+				Copy this prompt into a coding agent on your computer, and put one sentence about your first
+				clip in place of the part in angle brackets. The agent installs versioncam in your repository
+				and records the clip.
 			</p>
 			<button type="button" class="vc-copy-prompt" data-copy={setup} data-done-label="Copied">
 				<span class="vc-copy-label">Copy prompt</span>
@@ -56,7 +58,7 @@ const preview = escape(setup).replace(
 	<div class="vc-setup-type">
 		<div class="vc-install-block">
 			<div class="vc-install-head">
-				<span>Terminal</span>
+				<span>By hand, in a terminal</span>
 				<button
 					type="button"
 					class="vc-copy"
@@ -96,27 +98,6 @@ const preview = escape(setup).replace(
 </div>
 
 <script>
-	// Every copy button in Set up: the icon buttons swap to a tick, the prompt's
-	// button to its "Copied" label, for 1.6 seconds; the live region says it
-	// either way, for a screen reader.
-	for (const button of document.querySelectorAll<HTMLButtonElement>('.vc-copy, .vc-copy-prompt')) {
-		const label = button.querySelector('.vc-copy-label');
-		const resting = label?.textContent ?? '';
-		button.addEventListener('click', async () => {
-			const status = button.closest('.vc-install')?.querySelector('.vc-copied');
-			try {
-				await navigator.clipboard.writeText(button.dataset.copy ?? '');
-				button.dataset.done = '';
-				if (label && button.dataset.doneLabel) label.textContent = button.dataset.doneLabel;
-				if (status) status.textContent = 'Copied.';
-				setTimeout(() => {
-					delete button.dataset.done;
-					if (label) label.textContent = resting;
-					if (status) status.textContent = '';
-				}, 1600);
-			} catch {
-				if (status) status.textContent = 'Copying is blocked here; select the text instead.';
-			}
-		});
-	}
+	import { wireCopyButtons } from '../lib/copy';
+	wireCopyButtons();
 </script>

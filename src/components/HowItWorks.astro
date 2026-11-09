@@ -2,8 +2,11 @@
 // How it works, before any detail: four steps that are the same for every
 // repository, then a switch between what happens next in a public one and in
 // a private one, because that is where a reader's path splits (Free covers
-// public repositories only). The install line is the importer's, as in Set up,
-// so this section can never name a command the published version lacks.
+// public repositories only). The steps are told as they go with a coding
+// agent, which is how nearly every clip gets written; the first one points
+// to Set up, the next section, for the commands by hand. Step four says that
+// CI needs no agent, so nobody reads the first three as "a model makes the
+// video".
 //
 // The icons live here and nowhere else: one per step, drawn on the site's
 // 16-unit grid in the same square-ended 1.5 stroke as the copy and play
@@ -13,11 +16,8 @@
 // label, side by side where there is room. The script turns the two labels
 // into tabs and shows one panel at a time.
 
-const { data } = Astro.locals.starlightRoute.entry;
-const install: string[] = data.install ?? [];
-
 const ICONS = {
-	// A terminal: the frame and a prompt.
+	// A terminal: the frame and a prompt, where the setup prompt is pasted.
 	install: 'M1.5 2.5h13v11h-13zM4.5 6l2 2-2 2M8.5 10.5h3',
 	// A page being written: the script.
 	write: 'M3.5 1.5h6l3 3v10h-9zM9.5 1.5v3h3M5.5 8.5h5M5.5 11h3',
@@ -30,24 +30,23 @@ const ICONS = {
 const steps = [
 	{
 		icon: ICONS.install,
-		label: 'Install',
-		text: "Run three commands in the directory that holds your app's package.json.",
-		code: install,
+		label: 'Paste the setup prompt',
+		text: 'Paste the setup prompt into your coding agent, with one sentence about what the first clip should show. The agent installs versioncam in your repository. You can also <a href="#set-up">run the three commands yourself</a>.',
 	},
 	{
 		icon: ICONS.write,
-		label: 'Write a clip',
-		text: 'Tell your coding agent in one sentence what the clip should show. It writes the clip, records it and has a reviewer check the frames.',
+		label: 'The agent writes the clip',
+		text: 'It writes the clip as a script, records it and has a separate reviewer check the frames. For the next clip, you give it one more sentence.',
 	},
 	{
 		icon: ICONS.publish,
 		label: 'Put it on version.cam',
-		text: 'When you want the clip hosted, run <code>npx versioncam ci</code>. It writes the GitHub workflow; you commit it and push.',
+		text: 'When the clip passes, the agent asks whether to host it. On yes, it runs <code>npx versioncam ci</code>, which writes the GitHub workflow. You commit it and push.',
 	},
 	{
 		icon: ICONS.every,
 		label: 'Every push',
-		text: 'CI records the clips again on every push. When a clip no longer matches the app, the build fails.',
+		text: 'CI records the clips again on every push, with no agent and no model. When a clip no longer matches the app, the build fails.',
 	},
 ];
 ---
@@ -68,9 +67,6 @@ const steps = [
 							{step.label}
 						</p>
 						<p class="vc-how-text" set:html={step.text} />
-						{step.code && step.code.length > 0 && (
-							<pre class="vc-how-code"><code>{step.code.join('\n')}</code></pre>
-						)}
 					</div>
 				</li>
 			))

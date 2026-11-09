@@ -1,16 +1,24 @@
 ---
-// The front page's first screen: what versioncam is, in three sentences, and
+// The front page's first screen: what versioncam is, in a few sentences, and
 // beside them the example's first clip as CI recorded it, at a desktop's size
 // and at a phone's (Film.astro). A page without `clips` in its
 // frontmatter (the 404) keeps Starlight's hero.
+//
+// The first action copies the setup prompt, because a coding agent is how a
+// clip gets written and the prompt is the whole way in: one paste installs
+// the package and records a first clip. The sentence under the actions says
+// where the prompt goes, since a button that copies something unnamed gets
+// pasted nowhere. Doing it by hand is the second action, and leads to the docs.
 import Default from '@astrojs/starlight/components/Hero.astro';
 import { LinkButton } from '@astrojs/starlight/components';
 import Film from './Film.astro';
+import { promptFor } from '../lib/setup';
 
 const { data } = Astro.locals.starlightRoute.entry;
 const clips = data.clips;
 const note = data.note;
 const { title = data.title, tagline, actions = [] } = data.hero ?? {};
+const setup = promptFor(data);
 ---
 
 {
@@ -20,12 +28,20 @@ const { title = data.title, tagline, actions = [] } = data.hero ?? {};
 				<h1 id="_top" data-page-title set:html={title} />
 				{tagline && <p class="vc-hero-tagline" set:html={tagline} />}
 				<div class="vc-hero-actions">
+					<button type="button" class="vc-copy-prompt" data-copy={setup} data-done-label="Copied">
+						<span class="vc-copy-label">Copy setup prompt</span>
+					</button>
 					{actions.map(({ link, text, variant, icon }) => (
 						<LinkButton href={link} variant={variant} icon={icon?.name}>
 							{text}
 						</LinkButton>
 					))}
 				</div>
+				<p class="vc-hero-how">
+					Paste the prompt into Claude Code or another coding agent, with one sentence about what your first
+					clip should show. The agent installs versioncam in your repository and records the clip.
+				</p>
+				<p class="vc-copied" role="status" aria-live="polite" />
 				{note && <p class="vc-hero-note" set:html={note} />}
 			</div>
 			<Film base={clips} />
@@ -34,3 +50,8 @@ const { title = data.title, tagline, actions = [] } = data.hero ?? {};
 		<Default />
 	)
 }
+
+<script>
+	import { wireCopyButtons } from '../lib/copy';
+	wireCopyButtons();
+</script>
