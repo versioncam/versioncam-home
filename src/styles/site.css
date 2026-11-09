@@ -1859,12 +1859,6 @@ button.vc-src:focus-visible {
   font-size: 13px;
   line-height: 1.65;
 }
-.vc-fill {
-  color: var(--vc-white);
-  text-decoration: underline;
-  text-decoration-color: var(--vc-dim);
-  text-underline-offset: 0.2em;
-}
 .sl-markdown-content > p.colophon {
   margin-top: 5rem;
 }

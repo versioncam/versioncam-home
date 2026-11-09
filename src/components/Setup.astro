@@ -10,7 +10,7 @@
 // The head says which agent the prompt is tested with, and no more: it named
 // Codex and "any agent" until 2026-11-09, when nobody had run either.
 import { escape } from '../lib/take';
-import { PLACEHOLDER, promptFor } from '../lib/setup';
+import { promptFor } from '../lib/setup';
 
 const { data } = Astro.locals.starlightRoute.entry;
 const install: string[] = data.install ?? [];
@@ -21,11 +21,8 @@ const prompt = (sign: string) => `<span class="vc-prompt" aria-hidden="true">${s
 const terminal = install.map((line) => prompt('$') + escape(line)).join('\n');
 const request = ask ? prompt('&gt;') + escape(ask) : '';
 const setup = promptFor(data);
-// The one part the reader fills in, lit so it is easy to find after pasting.
-const preview = escape(setup).replace(
-	escape(PLACEHOLDER),
-	`<span class="vc-fill">${escape(PLACEHOLDER)}</span>`,
-);
+// Shown on request, so a reader can check what they are about to paste.
+const preview = escape(setup);
 ---
 
 <div class="vc-install vc-setup not-content">
@@ -42,9 +39,8 @@ const preview = escape(setup).replace(
 		<div class="vc-setup-prompt-body">
 			<h3>Use a setup prompt</h3>
 			<p>
-				Copy this prompt into a coding agent on your computer, and put one sentence about your first
-				clip in place of the part in angle brackets. The agent installs versioncam in your repository
-				and records the clip.
+				Copy this prompt into a coding agent on your computer and send it as it is. The agent installs
+				versioncam in your repository, asks what your first clip should show, and records it.
 			</p>
 			<button type="button" class="vc-copy-prompt" data-copy={setup} data-done-label="Copied">
 				<span class="vc-copy-label">Copy prompt</span>
