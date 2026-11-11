@@ -1550,7 +1550,7 @@ button.vc-src:focus-visible {
 
 /* ---- Where it plays: the iframe as pasted, and the tested platforms -----
    The hosted layer's two ruled columns again: on the left the clip's own
-   iframe, untouched, so the stamp under its video is ours and not drawn by
+   iframe, untouched, so the line in its corner is ours and not drawn by
    this page; on the right a ruled list, the platform in the machine's
    voice, what to paste in the person's, the day it was tested in `dim`. */
 .sl-markdown-content > .vc-plays {

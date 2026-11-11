@@ -118,7 +118,7 @@ A screen recording or a click-through demo is made by hand, once. A clip is made
   </div>
   <div>
     <dt>It says what it shows</dt>
-    <dd>Our player shows a stamp with the branch, the commit and when the clip last passed its check. A reader can see which version of your product they are watching. <a href="#where-it-plays">Where it plays</a></dd>
+    <dd>Our player names the branch, the commit and when the clip last passed its check, in the corner of the video. A reader can see which version of your product they are watching. <a href="#where-it-plays">Where it plays</a></dd>
   </div>
   <div>
     <dt>You paste it once</dt>
