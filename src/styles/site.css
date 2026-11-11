@@ -1114,11 +1114,9 @@ button.vc-src:focus-visible {
   border-bottom: 1px solid var(--vc-line);
 }
 .vc-facts dt {
-  font-family: var(--vc-font-machine);
-  font-size: 11px;
-  line-height: 22px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
   color: var(--vc-white);
 }
 .vc-facts dd {
@@ -1139,6 +1137,72 @@ button.vc-src:focus-visible {
   color: var(--vc-white);
   background: var(--sl-color-bg-inline-code);
   white-space: nowrap;
+}
+
+/* ---- More, under a receipt: a disclosure for the reader who asks why -----
+   The take answers what a clip is; how it comes out the same every time is
+   for the engineer who wants the mechanism, so it waits behind one line in
+   the machine's voice with a plus that turns to a minus when open. */
+.sl-markdown-content > .vc-more {
+  max-inline-size: none;
+  padding: 0;
+  border-inline-start: 0;
+}
+.vc-more {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--vc-line);
+  border-bottom: 1px solid var(--vc-line);
+}
+.vc-more summary {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-block: 0.875rem;
+  font-family: var(--vc-font-machine);
+  font-size: 11px;
+  line-height: 22px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--vc-white);
+  cursor: pointer;
+  list-style: none;
+}
+.vc-more summary::-webkit-details-marker {
+  display: none;
+}
+.vc-more summary svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: square;
+}
+.vc-more[open] .vc-more-v {
+  display: none;
+}
+.vc-more summary:hover {
+  color: var(--vc-white);
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+  text-decoration-thickness: 1px;
+}
+.vc-more .vc-facts {
+  margin: 0 0 0.5rem;
+}
+@media (min-width: 64rem) {
+  .vc-more .vc-facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.vc-more .vc-facts > div:last-child {
+  border-bottom: 0;
+}
+@media (min-width: 50rem) {
+  .vc-more .vc-facts > div {
+    border-bottom: 0;
+  }
 }
 
 /* Two sentences are for reading, so the person's face, a step down; only the
@@ -1232,7 +1296,8 @@ button.vc-src:focus-visible {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .vc-rec i {
+  .vc-rec i,
+  .vc-film-rec i {
     animation: none;
   }
 }
@@ -1486,6 +1551,34 @@ button.vc-src:focus-visible {
   color: var(--sl-color-gray-2);
   text-wrap: pretty;
 }
+.vc-hosted-what > div {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  column-gap: 1rem;
+}
+.vc-hosted-what svg {
+  grid-row: 1 / span 2;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  fill: none;
+  stroke: var(--vc-white);
+  stroke-width: 1.5;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+.vc-hosted .vc-hosted-what dt {
+  grid-column: 2;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.vc-hosted-what dd {
+  grid-column: 2;
+}
 .vc-hosted-what code {
   font-family: var(--sl-font-mono);
   font-size: 0.875em;
@@ -1497,7 +1590,7 @@ button.vc-src:focus-visible {
 .vc-badge {
   display: block;
   width: fit-content;
-  margin: 0.25rem 0 0.75rem;
+  margin: 0.5rem 0 0;
   line-height: 0;
 }
 .vc-badge img {
@@ -1523,6 +1616,9 @@ button.vc-src:focus-visible {
   font-size: 0.875rem;
   line-height: 1.6;
   color: var(--vc-dim);
+}
+.vc-plans-note a {
+  color: var(--vc-white);
 }
 .vc-door {
   display: flex;
@@ -1593,7 +1689,7 @@ button.vc-src:focus-visible {
   border-bottom: 1px solid var(--vc-line);
 }
 .vc-plays-list > div {
-  padding-block: 0.875rem 1rem;
+  padding-block: 0.6875rem 0.75rem;
   border-top: 1px solid var(--vc-line);
 }
 .vc-plays-list dt {
@@ -1605,15 +1701,28 @@ button.vc-src:focus-visible {
   color: var(--vc-white);
 }
 .vc-plays-list dd {
-  margin: 0.25rem 0 0;
-  max-width: 52ch;
+  margin: 0.125rem 0 0;
   line-height: 1.6;
   color: var(--sl-color-gray-2);
   text-wrap: pretty;
 }
-.vc-plays-date {
-  color: var(--vc-dim);
-  white-space: nowrap;
+@media (min-width: 40rem) {
+  .vc-plays-list > div {
+    display: grid;
+    grid-template-columns: 15rem minmax(0, 1fr);
+    column-gap: 1.5rem;
+    align-items: baseline;
+  }
+  .vc-plays-list dd {
+    margin: 0;
+  }
+}
+.vc-plays-list code {
+  font-family: var(--sl-font-mono);
+  font-size: 0.875em;
+  padding: 0.1em 0.35em;
+  color: var(--vc-white);
+  background: var(--sl-color-bg-inline-code);
 }
 .vc-plays-note {
   margin: 1rem 0 0;
@@ -1659,14 +1768,19 @@ button.vc-src:focus-visible {
   color: var(--sl-color-gray-2);
   text-wrap: pretty;
 }
-.vc-compare thead th,
-.vc-compare tbody th {
+.vc-compare thead th {
   font-family: var(--vc-font-machine);
   font-size: 11px;
   line-height: 22px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 400;
+  color: var(--vc-white);
+}
+.vc-compare tbody th {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
   color: var(--vc-white);
 }
 .vc-compare thead th,
@@ -1681,7 +1795,26 @@ button.vc-src:focus-visible {
 }
 .vc-compare tbody th {
   width: 22%;
+}
+.vc-mark {
+  display: inline-flex;
+  vertical-align: -3px;
+}
+.vc-mark svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+.vc-compare td.is-unknown .vc-mark {
   color: var(--vc-dim);
+}
+.vc-mark-note {
+  margin-inline-start: 0.5rem;
+  font-size: 0.875rem;
 }
 /* Ours is the last column: its answers in white, the only emphasis. */
 .vc-compare td:last-child {
@@ -1702,6 +1835,7 @@ button.vc-src:focus-visible {
 .vc-compare-sources th,
 .vc-compare-sources td {
   font-size: 0.875rem;
+  font-weight: 400;
   color: var(--vc-dim);
 }
 @media (max-width: 49.99rem) {
@@ -1717,8 +1851,15 @@ button.vc-src:focus-visible {
     display: none;
   }
   .vc-compare tbody tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1rem;
+    row-gap: 0.5rem;
     padding-block: 1rem 1.125rem;
     border-top: 1px solid var(--vc-line);
+  }
+  .vc-compare tbody tr > th {
+    grid-column: 1 / -1;
   }
   .vc-compare tbody tr:last-child {
     border-bottom: 1px solid var(--vc-line);
@@ -1744,12 +1885,12 @@ button.vc-src:focus-visible {
   }
 }
 
-/* ---- How it works: four steps, then the switch ---------------------------
+/* ---- Set up's four steps ------------------------------------------------
    The steps are a rail, the way a timeline in an editor is: each step's icon
    sits on a hairline that runs on to the next step, across on a wide screen
-   and down on a phone. The step's number is amber, the label the machine's,
-   the sentence the person's. The switch is the take's tab bar over two ruled
-   lists; without a script both lists show, each under its own label. */
+   and down on a phone. The step's number is `dim` (an ordinal, not a number
+   read from an artifact), the label the machine's, the sentence the
+   person's. */
 .sl-markdown-content > .vc-how {
   max-inline-size: none;
 }
@@ -1812,7 +1953,7 @@ button.vc-src:focus-visible {
   font-size: 22px;
   line-height: 22px;
   letter-spacing: 0;
-  color: var(--vc-amber);
+  color: var(--vc-dim);
   font-variant-numeric: tabular-nums;
 }
 .vc-how-text {
@@ -1822,8 +1963,7 @@ button.vc-src:focus-visible {
   color: var(--sl-color-gray-2);
   text-wrap: pretty;
 }
-.vc-how-text code,
-.vc-switch code {
+.vc-how-text code {
   font-family: var(--sl-font-mono);
   font-size: 0.875em;
   padding: 0.1em 0.35em;
@@ -1854,97 +1994,7 @@ button.vc-src:focus-visible {
   }
 }
 
-.vc-switch {
-  margin-top: 1.5rem;
-  border: 1px solid var(--vc-line);
-}
-.vc-switch-tabs {
-  display: flex;
-  border-bottom: 1px solid var(--vc-line);
-}
-.vc-switch-tabs[hidden] {
-  display: none;
-}
-.vc-switch-tabs .vc-take-tab {
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.vc-switch-panels {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-}
-@media (min-width: 64rem) {
-  .vc-switch:not([data-tabbed]) .vc-switch-panels {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .vc-switch:not([data-tabbed]) .vc-switch-panel + .vc-switch-panel {
-    border-left: 1px solid var(--vc-line);
-  }
-}
-.vc-switch:not([data-tabbed]) .vc-switch-panel + .vc-switch-panel {
-  border-top: 1px solid var(--vc-line);
-}
-@media (min-width: 64rem) {
-  .vc-switch:not([data-tabbed]) .vc-switch-panel + .vc-switch-panel {
-    border-top: 0;
-  }
-}
-.vc-switch-panel[hidden] {
-  display: none;
-}
-.vc-switch-panel {
-  padding: 0.25rem 1rem 0.5rem;
-  background: var(--sl-color-gray-6);
-}
-.vc-switch .vc-switch-head {
-  margin: 0.75rem 0 0;
-  font-family: var(--vc-font-machine);
-  font-size: 11px;
-  font-weight: 400;
-  line-height: 22px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--vc-dim);
-}
-.vc-switch[data-tabbed] .vc-switch-panel .vc-switch-head {
-  display: none;
-}
-.vc-switch dl {
-  margin: 0;
-}
-.vc-switch dl > div {
-  padding-block: 1rem;
-  border-bottom: 1px solid var(--vc-line);
-}
-.vc-switch dl > div:last-child {
-  border-bottom: 0;
-}
-@media (min-width: 50rem) {
-  .vc-switch[data-tabbed] dl > div {
-    display: grid;
-    grid-template-columns: 12rem minmax(0, 1fr);
-    column-gap: 2rem;
-    align-items: baseline;
-  }
-}
-.vc-switch dt {
-  font-family: var(--vc-font-machine);
-  font-size: 11px;
-  line-height: 22px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--vc-white);
-}
-.vc-switch dd {
-  margin: 0.25rem 0 0;
-  max-width: 62ch;
-  line-height: 1.65;
-  color: var(--sl-color-gray-2);
-  text-wrap: pretty;
-}
-.vc-how-text a,
-.vc-switch a {
+.vc-how-text a {
   color: var(--vc-white);
   text-underline-offset: 0.2em;
   text-decoration-thickness: 1px;

@@ -2,15 +2,27 @@
 // Compared with what people use instead: for someone choosing a way to show
 // a product in a video, not the README's table of developer tools. Every
 // cell of the other columns comes from that tool's own pages, read on the
-// day in `READ`, and the last row links them; where a page doesn't say, the
-// cell says "Not stated". No adjective about anyone, ours included, and the
-// two rows a clip loses (clicking through, a voice) stay in.
+// day in `READ`, and the last row links them. A cell is a mark and a few
+// words: a tick, a cross, or a dash where the tool's pages don't say, which
+// the paragraph above the table explains. No adjective about anyone, ours
+// included, and the two rows a clip loses (clicking through, a voice) stay in.
+//
+// The marks are drawn like every icon on the site, on the 16-unit grid in a
+// square-ended stroke, in the cell's own colour: no green and no red, since
+// red means recording here. Each carries its word for a screen reader.
 //
 // A row is a question and a column a way of doing it, so on a phone each
 // row folds into a block with every answer labelled by its column, rather
 // than a table wider than the screen.
 
 const READ = '2026-11-11';
+
+type Mark = 'yes' | 'no' | 'unknown';
+const MARKS: Record<Mark, { path: string; word: string }> = {
+	yes: { path: 'M3 8.5l3.5 3.5L13 4.5', word: 'Yes' },
+	no: { path: 'M4 4l8 8M12 4l-8 8', word: 'No' },
+	unknown: { path: 'M4 8h8', word: 'Not stated' },
+};
 
 const columns = [
 	{ name: 'A screen recording', examples: 'Loom, Screen Studio' },
@@ -19,63 +31,50 @@ const columns = [
 	{ name: 'versioncam', examples: 'a clip' },
 ];
 
-const rows: { question: string; answers: string[] }[] = [
+const rows: { question: string; answers: [Mark, string][] }[] = [
 	{
-		question: 'Who makes it',
+		question: 'Made again when the app changes',
 		answers: [
-			'A person, recording the screen with a desktop app or a browser extension.',
-			'A person, clicking through the product with a browser extension or a desktop app.',
-			'The test runner, when a test runs with <code>video</code> on.',
-			'CI, from a script in your repository. Your coding agent writes the script.',
+			['no', 'By hand'],
+			['no', 'By hand, or edited'],
+			['yes', 'On every test run'],
+			['yes', 'On every push'],
 		],
 	},
 	{
-		question: 'When it is made again',
+		question: 'Tells you when the flow breaks',
 		answers: [
-			'When someone records it again.',
-			'When someone captures it again. Both let you edit the demo without capturing it again.',
-			'On every test run, as a file in the test output.',
-			'On every push. CI records the clip again.',
+			['unknown', ''],
+			['unknown', ''],
+			['yes', 'The test fails'],
+			['yes', 'Names the control'],
 		],
 	},
 	{
-		question: 'When the flow it shows breaks',
+		question: 'Names the version of the product',
 		answers: [
-			'Not stated.',
-			'Not stated.',
-			'The test fails, and <code>retain-on-failure</code> keeps the video of the failed test.',
-			'The build fails and names the control it couldn\'t find. The link keeps playing the last version that passed.',
-		],
-	},
-	{
-		question: 'Says which version of the product it shows',
-		answers: [
-			'Not stated.',
-			'Not stated. Supademo keeps versions of the demo itself.',
-			'Not stated.',
-			'Yes. Our player names the branch and the commit.',
-		],
-	},
-	{
-		question: 'Where it plays',
-		answers: [
-			'Loom names Notion, Confluence, Intercom, Zendesk and web pages. Screen Studio gives a link and exports a GIF.',
-			'Arcade names websites, help centers and your product. Supademo names Notion, Intercom, Zendesk and GitBook.',
-			'In the test output folder.',
-			'Notion, Confluence, GitBook, docs sites, and a README as a GIF.',
+			['unknown', ''],
+			['unknown', 'Supademo versions the demo'],
+			['unknown', ''],
+			['yes', 'Branch and commit'],
 		],
 	},
 	{
 		question: 'A viewer can click through it',
-		answers: ['No, it is a video.', 'Yes, step by step, with branches.', 'No, it is a video.', 'No, it is a video.'],
+		answers: [
+			['no', 'A video'],
+			['yes', 'Step by step'],
+			['no', 'A video'],
+			['no', 'A video'],
+		],
 	},
 	{
 		question: 'A voice',
 		answers: [
-			'Yes. You record it, and Screen Studio can also make one from a script you type.',
-			'Yes. Both offer a generated voiceover, and Supademo also takes a recording.',
-			'Not stated.',
-			'No. A clip is silent.',
+			['yes', 'Recorded, or from a script'],
+			['yes', 'Generated or recorded'],
+			['unknown', ''],
+			['no', 'Silent'],
 		],
 	},
 ];
@@ -116,8 +115,16 @@ const sources = [
 				rows.map((row) => (
 					<tr>
 						<th scope="row">{row.question}</th>
-						{row.answers.map((answer, i) => (
-							<td data-column={columns[i].name} set:html={answer} />
+						{row.answers.map(([mark, note], i) => (
+							<td data-column={columns[i].name} class={`is-${mark}`}>
+								<span class="vc-mark">
+									<svg viewBox="0 0 16 16" aria-hidden="true">
+										<path d={MARKS[mark].path} />
+									</svg>
+									<span class="sr-only">{MARKS[mark].word}{note ? ':' : ''}</span>
+								</span>
+								{note && <span class="vc-mark-note">{note}</span>}
+							</td>
 						))}
 					</tr>
 				))

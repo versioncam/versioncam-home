@@ -76,9 +76,10 @@ ask: {{ask}}
 prompt: {{prompt}}
 clips: "{{clips}}"
 hero:
-  # Until a README's GIF follows the app (it does once version.cam answers
-  # the GIF itself, not a redirect GitHub keeps), this names docs only.
-  tagline: A clip is a script in your repository, and your coding agent writes it from one sentence of yours. On every push, CI starts your app and records the clip again. The link in your docs plays the newest recording that passed, and our player names the commit it shows. When a control the clip needs is gone, the build fails and tells you which one.
+  # Two sentences: what a clip is and who writes it, then what CI does with
+  # it, ending on the failure that names the control, which is the point.
+  # Where a clip plays and what version.cam adds have their own sections.
+  tagline: A clip is a script in your repository, and your coding agent writes it from one sentence of yours. CI records it again on every push, and when a control the clip needs is gone, the build fails and names it.
   # The first action is the hero's own button, which copies the setup prompt
   # (Hero.astro). These follow it. "Install by hand" goes to the docs' Install
   # page, as "Get started" did: the header has no docs link, so this is the
@@ -91,7 +92,7 @@ hero:
     - text: The source
       link: https://github.com/versioncam/versioncam
       variant: minimal
-note: 'version.cam hosts the recordings after CI has made them. It is in private beta, and the first ten people who ask get Pro free for a year. <a href="https://app.version.cam/">Sign in with GitHub</a>, or first see <a href="#after-ci-versioncam">what version.cam adds</a>.'
+note: 'version.cam keeps your clips after CI. It is in private beta, and the first ten people who ask get Pro free for a year: <a href="https://app.version.cam/">sign in with GitHub</a>.'
 ---
 
 import Take from "../../components/Take.astro";
@@ -103,94 +104,62 @@ import HowItWorks from "../../components/HowItWorks.astro";
 import Plays from "../../components/Plays.astro";
 import Compare from "../../components/Compare.astro";
 
-## What is different
-
-A screen recording or a click-through demo is made by hand, once. A clip is made by your CI on every push, from a script in your repository.
-
-<dl class="vc-facts not-content">
-  <div>
-    <dt>It records itself again</dt>
-    <dd>A screen recording shows your app on the day someone recorded it. A clip is a script, and CI runs it on every push, so the video follows the app. <a href="#the-script-is-the-clip">The script is the clip</a></dd>
-  </div>
-  <div>
-    <dt>It fails when the demo is wrong</dt>
-    <dd>When the app only looks different, you get a new video. When the flow a clip shows no longer works, the build fails and names the control it couldn't find, so you hear it from CI and not from a customer. <a href="#what-happens-when-you-change-the-app">What happens when you change the app</a></dd>
-  </div>
-  <div>
-    <dt>It says what it shows</dt>
-    <dd>Our player names the branch, the commit and when the clip last passed its check, in the corner of the video. A reader can see which version of your product they are watching. <a href="#where-it-plays">Where it plays</a></dd>
-  </div>
-  <div>
-    <dt>You paste it once</dt>
-    <dd>A clip has one link. Put it in your docs once, and from then on it plays the newest recording that passed. Nobody uploads a new file. <a href="#where-it-plays">Where it plays</a></dd>
-  </div>
-</dl>
-
-## How it works
-
-These four steps are the same for every repository. What happens after your first push depends on whether the repository is public or private.
-
-<HowItWorks />
-
-## Set up
-
-Paste the setup prompt into your coding agent, or run the three commands yourself and give Claude Code one sentence. The first time the skill runs, it writes the config from what it finds in the repository, checks that the app records the same way twice, and writes the first clip. On the example app, that first run took [six to twelve minutes and one or two review rounds](/start/authoring/).
-
-We test the skill with Claude Code. It is plain Markdown, so another agent that can run commands in your repository can follow it, but we have not run one end to end yet.
-
-<Setup />
-
-## The script is the clip
-
-Each clip is a TypeScript file in the repository. Your agent writes it, and you can read it, change it and review it in a pull request like any other code. Recording it needs no agent and no model: CI runs the file as it is. The video beside this one is what CI recorded from it on the last push to `main`, and the highlighted line is the one running.
-
-<Take base="{{clips}}" />
-
-## What happens when you change the app
+## When you change the app
 
 <Ledger />
 
-Every push to `main` runs `npx versioncam check` against the example app. The left panel shows the latest run. For the right panel, we renamed one button's test id, changed nothing else, and ran the same check once.
+Every push to `main` checks the example app. On the left, the latest check. On the right, the same check after we renamed one button's test id.
 
 <Runs base="{{clips}}" />
 
-## Why a recording comes out the same every time
+## The script is the clip
 
-<dl class="vc-facts not-content">
-  <div>
-    <dt>Authored time</dt>
-    <dd>The recorder controls the page's clock and moves it one frame at a time. While a query is slow or a spinner is showing, the recorder waits with the clock stopped, so the wait never appears in the video. <a href="/how-it-works/overview/">How it works</a></dd>
-  </div>
-  <div>
-    <dt>Real input</dt>
-    <dd>The recorder moves a real mouse along a planned path, generated from a seed, so hover and press states fire as they would for a person. The cursor you see in the video is drawn afterwards, at the output resolution. <a href="/reference/dsl/">The clip DSL</a></dd>
-  </div>
-  <div>
-    <dt>Same bytes</dt>
-    <dd>Record a clip twice on one machine and you get the same file, byte for byte. Before the Claude Code skill writes a clip for your app, it runs <code>versioncam stability</code>, which records a three-second clip twice and checks that both come out the same. <a href="/how-it-works/determinism/">Determinism</a></dd>
-  </div>
-  <div>
-    <dt>Write a clip with one sentence</dt>
-    <dd>In Claude Code, <code>/versioncam "…"</code> writes the clip and records it. Then a separate reviewer agent checks the frames. When the clip needs another try, a new reviewer checks it. You don't need an API key: it uses the Claude Code session you already have. <a href="/start/authoring/">Authoring</a></dd>
-  </div>
-</dl>
+Each clip is a TypeScript file. Your agent writes it, you review it like any other code, and CI runs it as it is, with no model. The video is what CI recorded on the last push to `main`, and the lit line is the one running.
+
+<Take base="{{clips}}" />
+
+<details class="vc-more not-content">
+  <summary><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10" /><path class="vc-more-v" d="M8 3v10" /></svg>Why it comes out the same every time</summary>
+  <dl class="vc-facts">
+    <div>
+      <dt>Authored time</dt>
+      <dd>The recorder moves the page's clock one frame at a time and stops it while the app waits, so no spinner reaches the video. <a href="/how-it-works/overview/">How it works</a></dd>
+    </div>
+    <div>
+      <dt>Real input</dt>
+      <dd>A real mouse moves on a planned path, so hover and press states fire. The cursor you see is drawn afterwards. <a href="/reference/dsl/">The clip DSL</a></dd>
+    </div>
+    <div>
+      <dt>Same bytes</dt>
+      <dd>Record a clip twice on one machine and you get the same file. Setup checks that before it writes your first clip. <a href="/how-it-works/determinism/">Determinism</a></dd>
+    </div>
+  </dl>
+</details>
 
 ## Where it plays
 
-Every clip on version.cam has one link. Paste it where links turn into previews, and everywhere else put it in the tag your platform takes. Here is the iframe from a clip's page, pasted as you would paste it, and the platforms we have tested.
+A clip has one link. Paste it in your docs once, and it plays the newest recording that passed.
 
 <Plays />
 
 ## Compared with what people use instead
 
-These are the usual ways to show a product in a video. We read each tool's own pages on 11 November 2026, and where a page doesn't say, the table says so. A clip is a silent video: if your viewers should click through a demo or hear a voice, another tool does that and a clip doesn't.
+We read each tool's own pages on 11 November 2026. A dash means the page doesn't say.
 
 <Compare />
 
 ## After CI: version.cam
 
-The recorder and the GitHub Action are free. They run in your CI, which already has your app and your secrets. version.cam is where the recordings go after CI has made them.
+The recorder and the GitHub Action are free and run in your CI. version.cam keeps the recordings after CI has made them.
 
 <Hosted />
+
+## Set up
+
+Paste the setup prompt into your coding agent, or run three commands and give Claude Code one sentence. On the example app, a first clip took [six to twelve minutes](/start/authoring/).
+
+<HowItWorks />
+
+<Setup />
 
 <p class="colophon">versioncam <span class="vc-num">{{version}}</span> on npm · <a href="/about/licence/">FSL-1.1-ALv2</a> · <a href="/legal/imprint/">Imprint</a> · The source is public at <a href="https://github.com/versioncam/versioncam">github.com/versioncam/versioncam</a>, and so is <a href="https://github.com/versioncam/versioncam-home">this site's</a>.</p>

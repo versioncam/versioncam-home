@@ -4,8 +4,8 @@
 // character, so a reader sees what a customer's docs page shows, the line
 // in the video's corner that names the commit included. On the right, the
 // platforms as the package README's table found them, each with what to
-// paste and the day it was tested. Two ruled columns, as After CI:
-// version.cam has them.
+// paste in a few words, and one line for when they were tested; every
+// snippet and what each platform does with it are in the docs.
 //
 // The clip is the example's third, so the page doesn't play the hero's
 // footage again. The list says only what a test on a real page showed;
@@ -15,21 +15,13 @@
 const CLIP = 'https://clips.version.cam/versioncam/versioncam/03-cancel-a-shipment';
 
 const platforms = [
-	{ name: 'Notion', paste: 'Paste the link and choose Create embed.', tested: '2026-11-11' },
-	{ name: 'Confluence Cloud', paste: 'Type /embed and paste the link.', tested: '2026-11-11' },
-	{
-		name: 'GitBook',
-		paste: 'Install <a href="https://app.gitbook.com/integrations/versioncam">our integration</a> on the space, then paste the link.',
-		tested: '2026-11-10',
-	},
-	{ name: 'Mintlify, MkDocs, Starlight', paste: 'Paste the iframe.', tested: '2026-11-10' },
-	{ name: 'Docusaurus', paste: 'Paste the iframe written as JSX. The clip\'s page gives you both.', tested: '2026-11-10' },
-	{ name: 'A GitHub README', paste: 'Paste the GIF in Markdown. It links to the clip\'s page.', tested: '2026-11-10' },
-	{
-		name: 'Zendesk Guide',
-		paste: 'Paste the iframe and turn on Display unsafe content. We tested it in the article editor only.',
-		tested: '2026-11-11',
-	},
+	{ name: 'Notion', paste: 'The link, then Create embed' },
+	{ name: 'Confluence Cloud', paste: '<code>/embed</code>, then the link' },
+	{ name: 'GitBook', paste: '<a href="https://app.gitbook.com/integrations/versioncam">Our integration</a>, then the link' },
+	{ name: 'Mintlify, MkDocs, Starlight', paste: 'The iframe' },
+	{ name: 'Docusaurus', paste: 'The iframe, as JSX' },
+	{ name: 'A GitHub README', paste: 'The GIF, in Markdown' },
+	{ name: 'Zendesk Guide', paste: 'The iframe, in the article editor' },
 ];
 ---
 
@@ -43,28 +35,26 @@ const platforms = [
 			loading="lazy"
 			title="Cancel a shipment"></iframe>
 		<p class="vc-plays-note">
-			The line in the corner of the video names the branch, the commit and when the clip last passed
-			its check. It links to <a href={CLIP}>the clip's page</a>, which lists its versions.
+			The line in the corner names the branch, the commit and when the clip last passed its check. It
+			links to <a href={CLIP}>the clip's page</a>.
 		</p>
 	</section>
 
 	<section class="vc-plays-col">
-		<h3>Tested on real pages</h3>
+		<h3>What to paste</h3>
 		<dl class="vc-plays-list">
 			{
 				platforms.map((p) => (
 					<div>
 						<dt>{p.name}</dt>
-						<dd>
-							<span set:html={p.paste} /> <span class="vc-plays-date">Tested {p.tested}</span>
-						</dd>
+						<dd set:html={p.paste} />
 					</div>
 				))
 			}
 		</dl>
 		<p class="vc-plays-note">
-			<a href="/more/version-cam/#embed-a-clip">Embed a clip</a> in the docs has every snippet and what each
-			platform does with it.
+			Tested on real pages on 10 and 11 November 2026. <a href="/more/version-cam/#embed-a-clip">Embed a
+			clip</a> in the docs has every snippet.
 		</p>
 	</section>
 </div>
