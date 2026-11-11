@@ -13,9 +13,10 @@
 // run; the note under the panel says so. Nothing here is drawn by the page.
 //
 // One panel beside the picture holds the three things a reader compares: the
-// diff, the clip's line that needs the button, and CI's verdict. The
-// picture's display is a band under it, as the film's was, so nothing covers
-// the app. Without a
+// diff, the clip's line that needs the button, and what the check printed;
+// it holds only output, so the sentence that says what happened is a caption
+// under the instrument, in the person's face. The picture's display is a band
+// under it, as the film's was, so nothing covers the app. Without a
 // script the page shows the app as it is and the buttons do nothing.
 
 const RECORDED_WITH = '0.8.1';
@@ -149,17 +150,16 @@ const src = (name: string) => `/change/${name}`;
 			</h3>
 			<pre class="vc-change-code"><code><span class="vc-change-line" data-line>{SCRIPT_LINE}</span></code></pre>
 		</section>
-		<section class="vc-change-part" aria-live="polite">
-			<h3 class="vc-change-head">CI</h3>
+		<section class="vc-change-part is-ci" aria-live="polite">
 			<pre class="vc-change-code" data-ci><code><span class="vc-prompt">$ </span>npx versioncam check
 <span class="vc-verdict is-pass">PASS</span>  {CLIP}
 
 <span class="vc-num">1/1</span> clips still match the app.</code></pre>
-			<p class="vc-change-note" data-note>The app as it is. Pick a change above.</p>
 		</section>
 	</div>
 	</div>
 
+	<p class="vc-change-says" data-note aria-live="polite">The app as it is. Pick a change above.</p>
 	<p class="vc-change-about">
 		Each video was recorded by versioncam {RECORDED_WITH} from the change shown, and the output is what the
 		check printed. This page replays them.

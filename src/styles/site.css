@@ -365,6 +365,22 @@ h1#_top {
 
 :root[data-has-hero] {
   --sl-content-width: 76rem;
+  /* The front page's side gutter grows with the window, so the instrument
+     and the rules never run to the screen's edge between 64 and 80rem. */
+  --sl-content-pad-x: clamp(1rem, 4vw, 3rem);
+}
+/* The spacing scale, on a 4px base (DESIGN.md, Layout). Every interval the
+   front page sets is one of these. */
+:root {
+  --vc-s-hair: 4px;
+  --vc-s-tight: 8px;
+  --vc-s-snug: 12px;
+  --vc-s-inset: 16px;
+  --vc-s-near: 24px;
+  --vc-s-group: 32px;
+  --vc-s-apart: 48px;
+  --vc-s-region: 64px;
+  --vc-s-beat: 96px;
 }
 :root[data-has-hero] .sl-markdown-content > p {
   max-inline-size: 62ch;
@@ -383,25 +399,27 @@ h1#_top {
    heading would otherwise inherit. */
 :root[data-has-hero] .sl-markdown-content .sl-heading-wrapper.level-h2 {
   max-inline-size: none;
-  margin-top: 3.5rem;
-  padding-top: 2rem;
+  margin-top: var(--vc-s-region);
+  padding-top: var(--vc-s-group);
   border-top: 1px solid var(--vc-line);
 }
-/* Air enough to tell one beat from the next, and no more: at 6rem and 3.5rem
-   every boundary was a 152px band of black, and the page read as slabs. */
+/* Air between beats: 96 above the rule and 48 under it on a wide screen.
+   With nine beats, 152px bands made the page read as slabs; with two or
+   four, the beats need the room to stand apart (2026-11-11). */
 @media (min-width: 64rem) {
   :root[data-has-hero] .sl-markdown-content .sl-heading-wrapper.level-h2 {
-    margin-top: 5rem;
-    padding-top: 3rem;
+    margin-top: var(--vc-s-beat);
+    padding-top: var(--vc-s-apart);
   }
 }
-/* The first beat follows the hero's own air, not a full interval on top of it. */
+/* The first beat follows the hero, which ends without air of its own, so it
+   takes the same interval as the others. */
 :root[data-has-hero] .sl-markdown-content > .sl-heading-wrapper.level-h2:first-child {
-  margin-top: 1rem;
+  margin-top: var(--vc-s-region);
 }
 @media (min-width: 64rem) {
   :root[data-has-hero] .sl-markdown-content > .sl-heading-wrapper.level-h2:first-child {
-    margin-top: 1.5rem;
+    margin-top: var(--vc-s-beat);
   }
 }
 /* The sentence under a heading: the beat's one paragraph, a step up from
@@ -409,8 +427,8 @@ h1#_top {
    tagline and competed with the heading above it. On a phone it is body
    size: at 18px on a 358px column every paragraph ran twice as long. */
 :root[data-has-hero] .sl-markdown-content .sl-heading-wrapper.level-h2 + p {
-  margin-top: 1.25rem;
-  margin-bottom: 2.25rem;
+  margin-top: var(--vc-s-near);
+  margin-bottom: var(--vc-s-apart);
   max-inline-size: 62ch;
   font-size: 1rem;
   line-height: 1.65;
@@ -549,22 +567,25 @@ h1#_top {
 .vc-hero.is-change {
   display: block;
   min-height: 0;
-  padding-block: 1.25rem 2.5rem;
+  padding-block: var(--vc-s-group) 0;
 }
 .vc-hero.is-change .vc-hero-tagline {
-  margin-top: 1rem;
+  margin-top: var(--vc-s-near);
 }
 .vc-hero-act {
   max-width: 36rem;
-  margin-top: 1.5rem;
+  margin-top: var(--vc-s-near);
 }
 .vc-hero.is-change .vc-hero-how {
-  margin-top: 0.625rem;
+  margin-top: var(--vc-s-snug);
   color: var(--vc-dim);
+}
+.vc-hero.is-change .vc-hero-note {
+  margin-top: var(--vc-s-near);
 }
 @media (min-width: 64rem) {
   .vc-hero.is-change {
-    padding-block: 1rem 2.5rem;
+    padding-block: var(--vc-s-region) 0;
   }
   .vc-hero.is-change h1#_top {
     max-inline-size: none;
@@ -574,9 +595,9 @@ h1#_top {
     display: grid;
     grid-template-columns: minmax(0, 40rem) auto;
     justify-content: space-between;
-    gap: 3rem;
+    gap: var(--vc-s-apart);
     align-items: start;
-    margin-top: 1.25rem;
+    margin-top: var(--vc-s-near);
   }
   .vc-hero.is-change .vc-hero-tagline {
     margin-top: 0;
@@ -594,15 +615,20 @@ h1#_top {
 }
 
 .vc-change {
-  margin-top: 2.5rem;
+  margin-top: var(--vc-s-apart);
   min-width: 0;
+}
+@media (min-width: 64rem) {
+  .vc-change {
+    margin-top: var(--vc-s-region);
+  }
 }
 .vc-change-choices {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: var(--vc-s-snug) var(--vc-s-tight);
+  margin-bottom: var(--vc-s-near);
 }
 .vc-change-ask {
   flex-basis: 100%;
@@ -616,7 +642,7 @@ h1#_top {
 @media (min-width: 50rem) {
   .vc-change-ask {
     flex-basis: auto;
-    margin-inline-end: 0.75rem;
+    margin-inline-end: var(--vc-s-inset);
   }
 }
 .vc-change-choice {
@@ -633,6 +659,13 @@ h1#_top {
 .vc-change-choice:hover {
   border-color: var(--vc-white);
 }
+/* A finger's target where there is no pointer. */
+@media (hover: none) {
+  .vc-change-choice {
+    min-height: 44px;
+    padding-block: var(--vc-s-inset);
+  }
+}
 /* The change on the panel: the selected tab's look, the panel's ground with
    the 2px white line on top, so the hero's one filled button stays the copy
    button. */
@@ -641,17 +674,22 @@ h1#_top {
   background: var(--sl-color-gray-6);
   box-shadow: inset 0 2px 0 var(--vc-white);
 }
+/* The picture keeps its own height whatever the panel holds: a check that
+   fails prints more than one that passes, and the frame must not stretch to
+   match. The panel fills the row, its last part taking what is left. Side by
+   side from 72rem; under that the panel follows the picture. */
 .vc-change-body {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
 }
-@media (min-width: 64rem) {
+@media (min-width: 72rem) {
   .vc-change-body {
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   }
 }
 .vc-change-frame {
   margin: 0;
+  align-self: start;
 }
 .vc-change:not([data-playing]) .vc-film-rec i {
   animation: none;
@@ -679,11 +717,16 @@ h1#_top {
   display: none;
 }
 .vc-change-panel {
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--vc-line);
   border-top: 0;
   background: var(--sl-color-gray-6);
 }
-@media (min-width: 64rem) {
+.vc-change-part.is-ci {
+  flex: 1;
+}
+@media (min-width: 72rem) {
   .vc-change-panel {
     border-top: 1px solid var(--vc-line);
     border-left: 0;
@@ -695,9 +738,9 @@ h1#_top {
 .vc-change-head {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 0.75rem;
+  gap: var(--vc-s-hair) var(--vc-s-snug);
   margin: 0;
-  padding: 0.625rem 0.875rem;
+  padding: var(--vc-s-snug) var(--vc-s-inset);
   border-bottom: 1px solid var(--vc-line);
   font-family: var(--vc-font-machine);
   font-size: 11px;
@@ -709,10 +752,10 @@ h1#_top {
 }
 .vc-change-code {
   margin: 0;
-  padding: 0.625rem 0.875rem;
+  padding: var(--vc-s-inset);
   font-family: var(--sl-font-mono);
   font-size: 0.8125rem;
-  line-height: 1.6;
+  line-height: 22px;
   color: var(--sl-color-gray-2);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
@@ -734,11 +777,15 @@ h1#_top {
   color: var(--vc-black);
   background: var(--vc-white);
 }
-.vc-change-note {
-  margin: 0;
-  padding: 0 0.875rem 0.875rem;
-  font-size: 0.875rem;
-  line-height: 1.55;
+/* What happened, in the person's face, under the instrument: the panel
+   holds only what the machine printed. Two lines' height, so a longer
+   sentence never moves the page. */
+.vc-change-says {
+  margin: var(--vc-s-near) 0 0;
+  min-height: 3.3em;
+  max-width: 62ch;
+  font-size: 1rem;
+  line-height: 1.65;
   color: var(--vc-white);
   text-wrap: pretty;
 }
@@ -750,13 +797,13 @@ h1#_top {
 .vc-next {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  margin-top: 4rem;
+  margin-top: var(--vc-s-beat);
   border-top: 1px solid var(--vc-line);
   border-bottom: 1px solid var(--vc-line);
 }
 .vc-next a {
   display: block;
-  padding: 1.125rem 0 1.25rem;
+  padding: var(--vc-s-near) 0;
   color: var(--vc-white);
   text-decoration: none;
 }
@@ -768,10 +815,10 @@ h1#_top {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .vc-next a {
-    padding-inline-end: 1.5rem;
+    padding-inline-end: var(--vc-s-group);
   }
   .vc-next a + a {
-    padding-inline-start: 1.5rem;
+    padding-inline-start: var(--vc-s-group);
     border-top: 0;
     border-left: 1px solid var(--vc-line);
   }
@@ -789,14 +836,14 @@ h1#_top {
 }
 .vc-next span {
   display: block;
-  margin-top: 0.375rem;
+  margin-top: var(--vc-s-tight);
   font-size: 0.875rem;
   line-height: 1.55;
   color: var(--vc-dim);
   text-wrap: pretty;
 }
 .vc-change-about {
-  margin: 0.75rem 0 0;
+  margin: var(--vc-s-tight) 0 0;
   max-width: 62ch;
   font-size: 0.875rem;
   line-height: 1.6;
@@ -866,7 +913,7 @@ h1#_top {
 
 .vc-install {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--vc-s-inset);
 }
 .vc-install-block {
   border: 1px solid var(--vc-line);
@@ -877,7 +924,7 @@ h1#_top {
   align-items: center;
   justify-content: space-between;
   min-height: 2.5rem;
-  padding: 0.25rem 0.25rem 0.25rem 0.875rem;
+  padding: var(--vc-s-hair) var(--vc-s-hair) var(--vc-s-hair) var(--vc-s-inset);
   border-bottom: 1px solid var(--vc-line);
   font-family: var(--vc-font-machine);
   font-size: 11px;
@@ -888,7 +935,7 @@ h1#_top {
 }
 .vc-install pre {
   margin: 0;
-  padding: 0.875rem;
+  padding: var(--vc-s-inset);
   font-family: var(--sl-font-mono);
   font-size: 0.875rem;
   line-height: 1.7;
@@ -1788,7 +1835,7 @@ button.vc-src:focus-visible {
   border-bottom: 1px solid var(--vc-line);
 }
 .vc-hosted dl > div {
-  padding-block: 1.125rem 1.25rem;
+  padding-block: var(--vc-s-near);
   border-top: 1px solid var(--vc-line);
 }
 .vc-hosted dt {
@@ -1800,7 +1847,7 @@ button.vc-src:focus-visible {
   color: var(--vc-white);
 }
 .vc-hosted dd {
-  margin: 0.375rem 0 0;
+  margin: var(--vc-s-tight) 0 0;
   max-width: 52ch;
   line-height: 1.65;
   color: var(--sl-color-gray-2);
@@ -1879,8 +1926,8 @@ button.vc-src:focus-visible {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1rem 1.75rem;
-  margin-top: 2.5rem;
+  gap: var(--vc-s-inset) var(--vc-s-group);
+  margin-top: var(--vc-s-apart);
 }
 .vc-door .sl-link-button {
   font-size: 11px;
@@ -2225,14 +2272,36 @@ button.vc-src:focus-visible {
   color: var(--vc-white);
   background: var(--sl-color-bg-inline-code);
 }
-@media (min-width: 64rem) {
+/* Two by two where four would wrap their labels, without the rail, which
+   has nowhere to run from the second column; four across, on the rail,
+   from 72rem. */
+@media (min-width: 50rem) and (max-width: 71.99rem) {
   .vc-how-steps {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    column-gap: 2rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--vc-s-apart) var(--vc-s-group);
   }
   .vc-how-steps > li {
     grid-template-columns: minmax(0, 1fr);
-    row-gap: 1.25rem;
+    row-gap: var(--vc-s-near);
+  }
+  .vc-how-body {
+    padding-bottom: 0;
+  }
+  .vc-how-rail::after {
+    display: none;
+  }
+}
+@media (min-width: 72rem) {
+  .vc-how-steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: var(--vc-s-group);
+  }
+  .vc-how-steps > li {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--vc-s-near);
+  }
+  .vc-how-body {
+    padding-bottom: 0;
   }
   /* The rail on a wide screen: across from the icon to the next column. */
   .vc-how-rail::after {
@@ -2260,18 +2329,23 @@ button.vc-src:focus-visible {
   max-inline-size: none;
 }
 .vc-setup {
-  margin-top: 2.25rem;
+  margin-top: var(--vc-s-near);
+}
+@media (min-width: 50rem) {
+  .vc-setup {
+    margin-top: var(--vc-s-apart);
+  }
 }
 @media (min-width: 64rem) {
   .vc-setup {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: start;
-    gap: 1.5rem;
+    gap: var(--vc-s-group);
   }
 }
 .vc-setup-type {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--vc-s-inset);
   min-width: 0;
 }
 
@@ -2310,7 +2384,7 @@ button.vc-src:focus-visible {
   stroke-linecap: square;
 }
 .vc-setup-prompt-body {
-  padding: 1.25rem 0.875rem 1rem;
+  padding: var(--vc-s-near);
 }
 .vc-setup-prompt-body h3 {
   margin: 0;
@@ -2321,7 +2395,7 @@ button.vc-src:focus-visible {
   color: var(--vc-white);
 }
 .vc-setup-prompt-body p {
-  margin: 0.5rem 0 1.25rem;
+  margin: var(--vc-s-tight) 0 var(--vc-s-near);
   max-width: 48ch;
   line-height: 1.65;
   color: var(--sl-color-gray-2);

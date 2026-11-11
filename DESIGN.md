@@ -81,13 +81,15 @@ spacing:
   hairline: "1px"
   bracket-inset: "8px"
   osd-inset: "16px"
-  row: "0.6875rem"
-  gutter: "3rem"
-  component-top: "2.25rem"
-  beat-gap: "4rem"
-  beat-pad: "2.5rem"
-  beat-gap-wide: "6rem"
-  beat-pad-wide: "3.5rem"
+  hair: "4px"
+  tight: "8px"
+  snug: "12px"
+  inset: "16px"
+  near: "24px"
+  group: "32px"
+  apart: "48px"
+  region: "64px"
+  beat: "96px"
 components:
   button-primary:
     backgroundColor: "{colors.white}"
@@ -230,7 +232,9 @@ A monochrome instrument panel with two lamps on it.
 
 One column of Starlight content on black, 50rem wide in the docs and 76rem on the front page (`data-has-hero`). Prose keeps its measure (52ch docs, 62ch front page) while code, tables, figures and every front-page receipt take the full column (`max-inline-size: none` on `.vc-facts`, `.vc-ledger`, `.vc-hosted`, `.vc-setup`, and the `h2` wrapper, so the rule above a heading is the receipt's width, not the paragraph's).
 
-**The beat.** Every front-page `h2` wrapper carries `border-top: 1px solid hairline`, `margin-top: 3.5rem; padding-top: 2rem` (5rem and 3rem at 64rem and up). The first beat after the hero drops its top margin to 1rem (1.5rem wide) so it follows the hero's own air. The paragraph under the heading is the lead: `margin: 1.25rem 0 2.25rem`. The ledger, which has no paragraph above it, starts 1rem under its heading. A component follows at `margin-top: 2.25rem`. A paragraph after the ledger takes 3.5rem above and 1.75rem below. The colophon sits 5rem under the last beat.
+**The spacing scale.** Since 2026-11-11 every interval on the front page is a step of one 4px-based scale, set as `--vc-s-*` on `:root`: `hair` 4 (inside chips), `tight` 8 (a label to its list, a name to its sentence, a button row's gaps), `snug` 12 (a button to its helper line, a panel head's block inset), `inset` 16 (every panel's and band's inset, gaps between stacked blocks), `near` 24 (title to tagline, buttons to picture, heading to lead, ruled-row padding, the setup prompt's padding), `group` 32 (column gaps, the links row's inset, rule to heading on a phone), `apart` 48 (lead to receipt, rule to heading wide, steps to setup blocks, the sign-in block), `region` 64 (header to title, hero copy to instrument, beats on a phone), `beat` 96 (beats from 64rem, above the links row). The front page's side gutter is `clamp(1rem, 4vw, 3rem)`. The page asked for breathing room after the hero had been squeezed to fit 900px: now only the title, the line, the button and the instrument's picture have to fit the first screen.
+
+**The beat.** Every front-page `h2` wrapper carries `border-top: 1px solid hairline`, with `region` above and `group` below on a phone, `beat` and `apart` from 64rem; the first beat takes the same, since the hero ends without air of its own. The paragraph under the heading is the lead: `near` above, `apart` below. A paragraph after the ledger takes 3.5rem above and 1.75rem below. The colophon sits 5rem under the last beat.
 
 **The hero.** On the front page (`.vc-hero.is-change`): the title, on one line at 64rem and up (`text-wrap: balance` where it can't be), then a row with the two sentences on the left and on the right the actions, the copy-prompt button first, and the sentence that says where the prompt goes; the beta note shows only under 50rem, where the header hides its badge and Sign in. Under them, 2.5rem down, the instrument across the page (The instrument, below). On a phone everything stacks in that order. The 404 and How a clip works keep Starlight's hero.
 

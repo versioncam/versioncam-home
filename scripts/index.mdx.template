@@ -76,6 +76,9 @@ ask: {{ask}}
 prompt: {{prompt}}
 clips: "{{clips}}"
 hero:
+  # The title as the hero sets it: a hyphen that doesn't break, so "re-record"
+  # never splits across two lines. The page's own title, above, stays plain.
+  title: Demo videos that re&#8209;record themselves.
   # One line: who writes a clip and what CI does with it. The instrument
   # under it shows the rest, and the button beside it is the way in.
   tagline: Your coding agent writes the clip. CI re&#8209;records it on every push, and fails the build when the flow breaks.
