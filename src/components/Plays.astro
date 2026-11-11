@@ -1,0 +1,69 @@
+---
+// Where a clip plays: on the left, a clip of the recorder's own repository
+// embedded with the iframe its page on version.cam gives, character for
+// character, so a reader sees what a customer's docs page shows, the stamp
+// in the video's corner included. On the right, the platforms as the package
+// README's table found them, each with what to paste and the day it was
+// tested. Two ruled columns, as After CI: version.cam has them.
+//
+// The clip is the example's third, so the page doesn't play the hero's
+// footage again. The list says only what a test on a real page showed;
+// Zendesk's row says it was the editor, because that test had no public
+// help center to read.
+
+const CLIP = 'https://clips.version.cam/versioncam/versioncam/03-cancel-a-shipment';
+
+const platforms = [
+	{ name: 'Notion', paste: 'Paste the link and choose Create embed.', tested: '2026-11-11' },
+	{ name: 'Confluence Cloud', paste: 'Type /embed and paste the link.', tested: '2026-11-11' },
+	{
+		name: 'GitBook',
+		paste: 'Install <a href="https://app.gitbook.com/integrations/versioncam">our integration</a> on the space, then paste the link.',
+		tested: '2026-11-10',
+	},
+	{ name: 'Mintlify, MkDocs, Starlight', paste: 'Paste the iframe.', tested: '2026-11-10' },
+	{ name: 'Docusaurus', paste: 'Paste the iframe written as JSX. The clip\'s page gives you both.', tested: '2026-11-10' },
+	{ name: 'A GitHub README', paste: 'Paste the GIF in Markdown. It links to the clip\'s page.', tested: '2026-11-10' },
+	{
+		name: 'Zendesk Guide',
+		paste: 'Paste the iframe and turn on Display unsafe content. We tested it in the article editor only.',
+		tested: '2026-11-11',
+	},
+];
+---
+
+<div class="vc-plays not-content">
+	<section class="vc-plays-col">
+		<h3>The iframe, pasted</h3>
+		<iframe
+			src={`${CLIP}/embed`}
+			style="width:100%;aspect-ratio:1280/800;border:0"
+			allow="fullscreen"
+			loading="lazy"
+			title="Cancel a shipment"></iframe>
+		<p class="vc-plays-note">
+			The line in the corner of the video is the stamp: the branch, the commit and when the clip last
+			passed its check. It links to <a href={CLIP}>the clip's page</a>, which lists its versions.
+		</p>
+	</section>
+
+	<section class="vc-plays-col">
+		<h3>Tested on real pages</h3>
+		<dl class="vc-plays-list">
+			{
+				platforms.map((p) => (
+					<div>
+						<dt>{p.name}</dt>
+						<dd>
+							<span set:html={p.paste} /> <span class="vc-plays-date">Tested {p.tested}</span>
+						</dd>
+					</div>
+				))
+			}
+		</dl>
+		<p class="vc-plays-note">
+			<a href="/more/version-cam/#embed-a-clip">Embed a clip</a> in the docs has every snippet and what each
+			platform does with it.
+		</p>
+	</section>
+</div>

@@ -1,15 +1,17 @@
 ---
-title: Your app, recorded from main.
-description: {{tagline}}
+title: Demo videos that re-record themselves.
+# The page's own description rather than the README's lede: it says what
+# sets a clip apart from a video someone recorded once.
+description: "A clip is a script in your repository. CI records it again on every push and fails the build when the flow breaks, and your docs play the newest recording that passed."
 template: splash
 # What the browser tab and a search result show, and what a link unfurls as:
 # the product's name first, then the title. Starlight would print the title
 # and then the site's name, and call the page an article.
 head:
   - tag: title
-    content: "Versioncam: your app, recorded from main"
+    content: "Versioncam: demo videos that re-record themselves"
   - tag: meta
-    attrs: { property: "og:title", content: "Versioncam: your app, recorded from main" }
+    attrs: { property: "og:title", content: "Versioncam: demo videos that re-record themselves" }
   - tag: meta
     attrs: { property: "og:type", content: website }
   # What a search engine reads about the product. The prices are the ones on
@@ -25,7 +27,7 @@ head:
             "@type": "SoftwareApplication",
             "name": "Versioncam",
             "url": "https://version.cam/",
-            "description": {{tagline}},
+            "description": "A clip is a script in your repository. CI records it again on every push and fails the build when the flow breaks, and your docs play the newest recording that passed.",
             "applicationCategory": "DeveloperApplication",
             "operatingSystem": "macOS, Linux, Windows",
             "downloadUrl": "https://www.npmjs.com/package/versioncam",
@@ -74,7 +76,9 @@ ask: {{ask}}
 prompt: {{prompt}}
 clips: "{{clips}}"
 hero:
-  tagline: A clip is a script in your repository, and your coding agent writes it from one sentence of yours. On every push, CI starts your app, records the clip again and renders the video. When the app only looks different, you get a new video. When a control the clip needs is gone, the build fails and tells you which one.
+  # Until a README's GIF follows the app (it does once version.cam answers
+  # the GIF itself, not a redirect GitHub keeps), this names docs only.
+  tagline: A clip is a script in your repository, and your coding agent writes it from one sentence of yours. On every push, CI starts your app and records the clip again. The link in your docs plays the newest recording that passed, and our player names the commit it shows. When a control the clip needs is gone, the build fails and tells you which one.
   # The first action is the hero's own button, which copies the setup prompt
   # (Hero.astro). These follow it. "Install by hand" goes to the docs' Install
   # page, as "Get started" did: the header has no docs link, so this is the
@@ -96,6 +100,31 @@ import Ledger from "../../components/Ledger.astro";
 import Hosted from "../../components/Hosted.astro";
 import Setup from "../../components/Setup.astro";
 import HowItWorks from "../../components/HowItWorks.astro";
+import Plays from "../../components/Plays.astro";
+import Compare from "../../components/Compare.astro";
+
+## What is different
+
+A screen recording or a click-through demo is made by hand, once. A clip is made by your CI on every push, from a script in your repository.
+
+<dl class="vc-facts not-content">
+  <div>
+    <dt>It records itself again</dt>
+    <dd>A screen recording shows your app on the day someone recorded it. A clip is a script, and CI runs it on every push, so the video follows the app. <a href="#the-script-is-the-clip">The script is the clip</a></dd>
+  </div>
+  <div>
+    <dt>It fails when the demo is wrong</dt>
+    <dd>When the app only looks different, you get a new video. When the flow a clip shows no longer works, the build fails and names the control it couldn't find, so you hear it from CI and not from a customer. <a href="#what-happens-when-you-change-the-app">What happens when you change the app</a></dd>
+  </div>
+  <div>
+    <dt>It says what it shows</dt>
+    <dd>Our player shows a stamp with the branch, the commit and when the clip last passed its check. A reader can see which version of your product they are watching. <a href="#where-it-plays">Where it plays</a></dd>
+  </div>
+  <div>
+    <dt>You paste it once</dt>
+    <dd>A clip has one link. Put it in your docs once, and from then on it plays the newest recording that passed. Nobody uploads a new file. <a href="#where-it-plays">Where it plays</a></dd>
+  </div>
+</dl>
 
 ## How it works
 
@@ -145,6 +174,18 @@ Every push to `main` runs `npx versioncam check` against the example app. The le
     <dd>In Claude Code, <code>/versioncam "…"</code> writes the clip and records it. Then a separate reviewer agent checks the frames. When the clip needs another try, a new reviewer checks it. You don't need an API key: it uses the Claude Code session you already have. <a href="/start/authoring/">Authoring</a></dd>
   </div>
 </dl>
+
+## Where it plays
+
+Every clip on version.cam has one link. Paste it where links turn into previews, and everywhere else put it in the tag your platform takes. Here is the iframe from a clip's page, pasted as you would paste it, and the platforms we have tested.
+
+<Plays />
+
+## Compared with what people use instead
+
+These are the usual ways to show a product in a video. We read each tool's own pages on 11 November 2026, and where a page doesn't say, the table says so. A clip is a silent video: if your viewers should click through a demo or hear a voice, another tool does that and a clip doesn't.
+
+<Compare />
 
 ## After CI: version.cam
 

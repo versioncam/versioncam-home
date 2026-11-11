@@ -1,0 +1,142 @@
+---
+// Compared with what people use instead: for someone choosing a way to show
+// a product in a video, not the README's table of developer tools. Every
+// cell of the other columns comes from that tool's own pages, read on the
+// day in `READ`, and the last row links them; where a page doesn't say, the
+// cell says "Not stated". No adjective about anyone, ours included, and the
+// two rows a clip loses (clicking through, a voice) stay in.
+//
+// A row is a question and a column a way of doing it, so on a phone each
+// row folds into a block with every answer labelled by its column, rather
+// than a table wider than the screen.
+
+const READ = '2026-11-11';
+
+const columns = [
+	{ name: 'A screen recording', examples: 'Loom, Screen Studio' },
+	{ name: 'A click-through demo', examples: 'Arcade, Supademo' },
+	{ name: "Playwright's video", examples: 'a test artifact' },
+	{ name: 'versioncam', examples: 'a clip' },
+];
+
+const rows: { question: string; answers: string[] }[] = [
+	{
+		question: 'Who makes it',
+		answers: [
+			'A person, recording the screen with a desktop app or a browser extension.',
+			'A person, clicking through the product with a browser extension or a desktop app.',
+			'The test runner, when a test runs with <code>video</code> on.',
+			'CI, from a script in your repository. Your coding agent writes the script.',
+		],
+	},
+	{
+		question: 'When it is made again',
+		answers: [
+			'When someone records it again.',
+			'When someone captures it again. Both let you edit the demo without capturing it again.',
+			'On every test run, as a file in the test output.',
+			'On every push. CI records the clip again.',
+		],
+	},
+	{
+		question: 'When the flow it shows breaks',
+		answers: [
+			'Not stated.',
+			'Not stated.',
+			'The test fails, and <code>retain-on-failure</code> keeps the video of the failed test.',
+			'The build fails and names the control it couldn\'t find. The link keeps playing the last version that passed.',
+		],
+	},
+	{
+		question: 'Says which version of the product it shows',
+		answers: [
+			'Not stated.',
+			'Not stated. Supademo keeps versions of the demo itself.',
+			'Not stated.',
+			'Yes. Our player\'s stamp names the branch and the commit.',
+		],
+	},
+	{
+		question: 'Where it plays',
+		answers: [
+			'Loom names Notion, Confluence, Intercom, Zendesk and web pages. Screen Studio gives a link and exports a GIF.',
+			'Arcade names websites, help centers and your product. Supademo names Notion, Intercom, Zendesk and GitBook.',
+			'In the test output folder.',
+			'Notion, Confluence, GitBook, docs sites, and a README as a GIF.',
+		],
+	},
+	{
+		question: 'A viewer can click through it',
+		answers: ['No, it is a video.', 'Yes, step by step, with branches.', 'No, it is a video.', 'No, it is a video.'],
+	},
+	{
+		question: 'A voice',
+		answers: [
+			'Yes. You record it, and Screen Studio can also make one from a script you type.',
+			'Yes. Both offer a generated voiceover, and Supademo also takes a recording.',
+			'Not stated.',
+			'No. A clip is silent.',
+		],
+	},
+];
+
+const sources = [
+	[
+		{ text: 'Loom', href: 'https://www.loom.com/pricing' },
+		{ text: 'Loom help', href: 'https://support.atlassian.com/loom/' },
+		{ text: 'Screen Studio', href: 'https://screen.studio/' },
+	],
+	[
+		{ text: 'Arcade', href: 'https://www.arcade.software/product/interactive-demo' },
+		{ text: 'Supademo', href: 'https://supademo.com/features/guided-demos' },
+		{ text: 'Supademo docs', href: 'https://docs.supademo.com/' },
+	],
+	[{ text: 'Playwright: Videos', href: 'https://playwright.dev/docs/videos' }],
+	[{ text: 'The docs', href: '/more/version-cam/' }],
+];
+---
+
+<div class="vc-compare not-content">
+	<table>
+		<thead>
+			<tr>
+				<td></td>
+				{
+					columns.map((c) => (
+						<th scope="col">
+							{c.name}
+							<span class="vc-compare-examples">{c.examples}</span>
+						</th>
+					))
+				}
+			</tr>
+		</thead>
+		<tbody>
+			{
+				rows.map((row) => (
+					<tr>
+						<th scope="row">{row.question}</th>
+						{row.answers.map((answer, i) => (
+							<td data-column={columns[i].name} set:html={answer} />
+						))}
+					</tr>
+				))
+			}
+			<tr class="vc-compare-sources">
+				<th scope="row">Read on {READ} from</th>
+				{
+					sources.map((links, i) => (
+						<td data-column={columns[i].name}>
+							{links.map((link, j) => (
+								<>
+									{j > 0 && ', '}
+									<a href={link.href}>{link.text}</a>
+								</>
+							))}
+						</td>
+					))
+				}
+			</tr>
+		</tbody>
+	</table>
+</div>
