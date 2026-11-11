@@ -92,7 +92,7 @@ hero:
     - text: The source
       link: https://github.com/versioncam/versioncam
       variant: minimal
-note: 'version.cam keeps your clips after CI. It is in private beta, and the first ten people who ask get Pro free for a year: <a href="https://app.version.cam/">sign in with GitHub</a>.'
+note: 'version.cam is in private beta. <a href="https://app.version.cam/">Sign in with GitHub</a>, or <a href="#private-beta">ask for Pro</a>.'
 ---
 
 import Take from "../../components/Take.astro";

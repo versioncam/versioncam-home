@@ -527,15 +527,40 @@ h1#_top {
 .vc-hero-note a {
   color: var(--vc-white);
 }
-/* On a phone the picture comes first, as it does on the wide screen's right. */
+/* The right-hand block: the film, and under it the same clip failing. On a
+   phone the block dissolves into the hero's grid, so the picture comes first,
+   as it does on the wide screen's right, and the failure comes last, after
+   the sentences it proves. */
+.vc-hero-side {
+  display: contents;
+}
 .vc-film {
   order: -1;
   margin: 0;
 }
+.vc-hero-proof {
+  order: 1;
+}
 @media (min-width: 64rem) {
-  .vc-film {
-    order: 0;
+  .vc-hero-side {
+    display: block;
   }
+  .vc-hero-proof {
+    margin-top: 1.25rem;
+  }
+}
+.vc-hero-proof .vc-run-out {
+  font-size: 0.8125rem;
+}
+.vc-hero-proof-note {
+  margin: 0.75rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--vc-dim);
+  text-wrap: pretty;
+}
+.vc-hero-proof-note a {
+  color: var(--vc-white);
 }
 .vc-film-frame {
   margin: 0;
@@ -557,16 +582,6 @@ h1#_top {
   cursor: pointer;
 }
 /* The line under the pair, in the take hint's small dim type. */
-.vc-film-caption {
-  margin: 0.75rem 0 0;
-  font-size: 0.875rem;
-  line-height: 1.6;
-  color: var(--vc-dim);
-  text-wrap: pretty;
-}
-.vc-film-caption a {
-  color: var(--vc-white);
-}
 .vc-film-osd {
   display: flex;
   align-items: center;

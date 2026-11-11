@@ -1,8 +1,16 @@
 ---
-// The front page's first screen: what versioncam is, in a few sentences, and
-// beside them the example's first clip as CI recorded it, at a desktop's size
-// and at a phone's (Film.astro). A page without `clips` in its
+// The front page's first screen: what versioncam is, in two sentences, and
+// beside them both halves of the claim. Above, the example's first clip as CI
+// recorded it, at a desktop's size and at a phone's (Film.astro). Under it,
+// the same clip's check failing, as it printed, after one button's test id
+// was renamed: the failure is the feature, so the first screen shows it
+// rather than only a clip that passed. A page without `clips` in its
 // frontmatter (the 404) keeps Starlight's hero.
+//
+// On a wide screen the film and the failure stand together on the right. On a
+// phone the right-hand block dissolves, so the film comes first, as it always
+// has there, and the failure follows the actions, after the sentence it
+// proves rather than before the title.
 //
 // The first action copies the setup prompt, because a coding agent is how a
 // clip gets written and the prompt is the whole way in: one paste installs
@@ -13,12 +21,19 @@ import Default from '@astrojs/starlight/components/Hero.astro';
 import { LinkButton } from '@astrojs/starlight/components';
 import Film from './Film.astro';
 import { promptFor } from '../lib/setup';
+import { formatCheck } from '../lib/take';
 
 const { data } = Astro.locals.starlightRoute.entry;
 const clips = data.clips;
 const note = data.note;
 const { title = data.title, tagline, actions = [] } = data.hero ?? {};
 const setup = promptFor(data);
+
+// The failing clip's lines from the run Runs.astro shows whole, captured once
+// by hand with `create-shipment` renamed to `submit-shipment` and nothing else
+// changed. The other two clips' PASS lines and the tally are left to that run.
+const FAILURE = `FAIL  01-create-a-shipment
+  Nothing matched getByTestId('create-shipment') within 15000ms at t=3.71s (frame 222). The clip expected it to be on screen by this point.`;
 ---
 
 {
@@ -44,7 +59,28 @@ const setup = promptFor(data);
 				<p class="vc-copied" role="status" aria-live="polite" />
 				{note && <p class="vc-hero-note" set:html={note} />}
 			</div>
-			<Film base={clips} />
+			<div class="vc-hero-side">
+				<Film base={clips} />
+				<div class="vc-hero-proof">
+					<figure class="vc-run is-failure">
+						<figcaption class="vc-run-head">
+							<span class="vc-run-mode">Captured once</span>
+							<span>
+								<span class="vc-id">create-shipment</span> renamed
+							</span>
+							<span class="vc-run-exit">
+								exit <span class="vc-num">1</span>
+							</span>
+						</figcaption>
+						<pre class="vc-run-out"><code><span class="vc-prompt">$ </span>npx versioncam check
+<Fragment set:html={formatCheck(FAILURE)} /></code></pre>
+					</figure>
+					<p class="vc-hero-proof-note">
+						The same clip, after we renamed one button's test id. <a href="#when-you-change-the-app">What
+						fails, and what makes a new video</a>
+					</p>
+				</div>
+			</div>
 		</div>
 	) : (
 		<Default />

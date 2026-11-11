@@ -2,10 +2,10 @@
 // The first screen's viewfinder: the example app's first clip as CI recorded
 // it on the last push to main, and beside it the same clip recorded at a
 // phone's viewport, both playing muted and looping. The pair is what a
-// version.cam link does that nothing else on the page shows: one link, and
-// the phone clip plays on a phone and the desktop clip on a desktop. The
-// line under them links to that page. The script section further down plays
-// the desktop clips with their scripts.
+// version.cam link does: one link, and the phone clip plays on a phone and
+// the desktop clip on a desktop, which After CI says in words. Under the
+// film, Hero.astro puts the same clip's check failing. The script section
+// further down plays the desktop clips with their scripts.
 //
 // The phone clip is the take's own when it has one; the take CI publishes
 // lists desktop clips only, so it is otherwise the one CI published to
@@ -31,7 +31,6 @@ type Picture = { src: string; poster: string; ratio: number; label: string };
 
 let commit: string | null = null;
 let recorder = '';
-let page = '';
 const pictures: Picture[] = [];
 try {
 	const manifest = await loadManifest(base);
@@ -48,7 +47,6 @@ try {
 		});
 		const phone = await heroPhone(base, manifest);
 		if (phone) {
-			page = phone.page;
 			pictures.push({
 				src: phone.src,
 				poster: phone.poster,
@@ -93,14 +91,6 @@ const columns = pictures.map((p) => `minmax(0, ${(p.ratio * 1000).toFixed(0)}fr)
 			<span class="vc-film-tc" data-tc>{timecode(0, 60)}</span>
 		</div>
 	</figure>
-	{
-		pair && (
-			<p class="vc-film-caption" data-caption>
-				<a href={page}>One version.cam link</a> shows the phone clip on a phone and the desktop clip on a
-				desktop.
-			</p>
-		)
-	}
 </div>
 
 <script>
@@ -166,7 +156,6 @@ const columns = pictures.map((p) => `minmax(0, ${(p.ratio * 1000).toFixed(0)}fr)
 					if (!main.paused) video.play().catch(() => {});
 				} else {
 					video.remove();
-					film.querySelector('[data-caption]')?.remove();
 					film.querySelector<HTMLElement>('.vc-film-pictures')!.style.gridTemplateColumns = '';
 				}
 			})
