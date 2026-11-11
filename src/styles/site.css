@@ -559,8 +559,9 @@ h1#_top {
 }
 
 /* ---- The front page's hero since 2026-11-11 ------------------------------
-   The title on one line where it fits, the two sentences beside the button,
-   and under them the instrument across the page: the picture on the left,
+   The title on one line where it fits, the line under it and the button
+   under that, all on the left edge, and under them the instrument across the
+   page: the picture on the left,
    on the right one panel with the change, the clip's line and CI's verdict.
    A reader changes the app and watches what CI does, instead of reading
    about it. On a phone it stacks in that order. */
@@ -591,20 +592,7 @@ h1#_top {
     max-inline-size: none;
     text-wrap: balance;
   }
-  .vc-hero-row {
-    display: grid;
-    grid-template-columns: minmax(0, 40rem) auto;
-    justify-content: space-between;
-    gap: var(--vc-s-apart);
-    align-items: start;
-    margin-top: var(--vc-s-near);
-  }
-  .vc-hero.is-change .vc-hero-tagline {
-    margin-top: 0;
-  }
-  .vc-hero.is-change .vc-hero-act {
-    margin-top: 0;
-  }
+
 }
 /* Where the header shows its beta badge and Sign in, the note would say it
    twice; on a phone the front page has no menu, and the note carries both. */
