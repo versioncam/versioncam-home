@@ -1,16 +1,13 @@
 ---
 // The front page's first screen: what versioncam is, in two sentences, and
-// beside them both halves of the claim. Above, the example's first clip as CI
-// recorded it, at a desktop's size and at a phone's (Film.astro). Under it,
-// the same clip's check failing, as it printed, after one button's test id
-// was renamed: the failure is the feature, so the first screen shows it
-// rather than only a clip that passed. A page without `clips` in its
-// frontmatter (the 404) keeps Starlight's hero.
+// beside them the instrument that shows it (ChangeTheApp.astro): change the
+// example app three ways and watch what CI does with its demo. A page without
+// `clips` in its frontmatter (the 404, How a clip works) keeps Starlight's
+// hero.
 //
-// On a wide screen the film and the failure stand together on the right. On a
-// phone the right-hand block dissolves, so the film comes first, as it always
-// has there, and the failure follows the actions, after the sentence it
-// proves rather than before the title.
+// The title and the two sentences come first, the button beside them, and the
+// instrument across the page under them: it needs the width for the picture
+// and the panel beside it. On a phone everything stacks in that order.
 //
 // The first action copies the setup prompt, because a coding agent is how a
 // clip gets written and the prompt is the whole way in: one paste installs
@@ -19,68 +16,44 @@
 // pasted nowhere. Doing it by hand is the second action, and leads to the docs.
 import Default from '@astrojs/starlight/components/Hero.astro';
 import { LinkButton } from '@astrojs/starlight/components';
-import Film from './Film.astro';
+import ChangeTheApp from './ChangeTheApp.astro';
 import { promptFor } from '../lib/setup';
-import { formatCheck } from '../lib/take';
 
 const { data } = Astro.locals.starlightRoute.entry;
 const clips = data.clips;
 const note = data.note;
 const { title = data.title, tagline, actions = [] } = data.hero ?? {};
 const setup = promptFor(data);
-
-// The failing clip's lines from the run Runs.astro shows whole, captured once
-// by hand with `create-shipment` renamed to `submit-shipment` and nothing else
-// changed. The other two clips' PASS lines and the tally are left to that run.
-const FAILURE = `FAIL  01-create-a-shipment
-  Nothing matched getByTestId('create-shipment') within 15000ms at t=3.71s (frame 222). The clip expected it to be on screen by this point.`;
 ---
 
 {
 	clips ? (
-		<div class="vc-hero">
+		<div class="vc-hero is-change">
 			<div class="vc-hero-copy">
 				<h1 id="_top" data-page-title set:html={title} />
-				{tagline && <p class="vc-hero-tagline" set:html={tagline} />}
-				<div class="vc-hero-actions">
-					<button type="button" class="vc-copy-prompt" data-copy={setup} data-done-label="Copied">
-						<span class="vc-copy-label">Copy setup prompt</span>
-					</button>
-					{actions.map(({ link, text, variant, icon }) => (
-						<LinkButton href={link} variant={variant} icon={icon?.name}>
-							{text}
-						</LinkButton>
-					))}
-				</div>
-				<p class="vc-hero-how">
-					Paste it into Claude Code or another coding agent. It installs versioncam and records your first
-					clip.
-				</p>
-				<p class="vc-copied" role="status" aria-live="polite" />
-				{note && <p class="vc-hero-note" set:html={note} />}
-			</div>
-			<div class="vc-hero-side">
-				<Film base={clips} />
-				<div class="vc-hero-proof">
-					<figure class="vc-run is-failure">
-						<figcaption class="vc-run-head">
-							<span class="vc-run-mode">Captured once</span>
-							<span>
-								<span class="vc-id">create-shipment</span> renamed
-							</span>
-							<span class="vc-run-exit">
-								exit <span class="vc-num">1</span>
-							</span>
-						</figcaption>
-						<pre class="vc-run-out"><code><span class="vc-prompt">$ </span>npx versioncam check
-<Fragment set:html={formatCheck(FAILURE)} /></code></pre>
-					</figure>
-					<p class="vc-hero-proof-note">
-						The same clip, after we renamed one button's test id. <a href="#when-you-change-the-app">What
-						fails, and what makes a new video</a>
-					</p>
+				<div class="vc-hero-row">
+					{tagline && <p class="vc-hero-tagline" set:html={tagline} />}
+					<div class="vc-hero-act">
+						<div class="vc-hero-actions">
+							<button type="button" class="vc-copy-prompt" data-copy={setup} data-done-label="Copied">
+								<span class="vc-copy-label">Copy setup prompt</span>
+							</button>
+							{actions.map(({ link, text, variant, icon }) => (
+								<LinkButton href={link} variant={variant} icon={icon?.name}>
+									{text}
+								</LinkButton>
+							))}
+						</div>
+						<p class="vc-hero-how">
+							Paste it into Claude Code or another coding agent. It installs versioncam and records your
+							first clip.
+						</p>
+						<p class="vc-copied" role="status" aria-live="polite" />
+						{note && <p class="vc-hero-note" set:html={note} />}
+					</div>
 				</div>
 			</div>
+			<ChangeTheApp />
 		</div>
 	) : (
 		<Default />

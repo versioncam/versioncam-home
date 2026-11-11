@@ -1,0 +1,64 @@
+---
+title: How a clip works
+# The front page shows what a clip does in three clicks; this page shows how,
+# with the receipts: the script beside what CI recorded from it, the check as
+# it printed, where a clip plays, and what else people use.
+description: "The script beside the video CI recorded from it, the check that fails when the flow breaks, where a clip plays, and how it compares with a screen recording, a click-through demo and Playwright's video."
+template: splash
+editUrl: false
+hero:
+  title: How a clip works
+  tagline: The script, the video CI recorded from it on the last push to main, and the check that fails when the app no longer matches.
+---
+
+import Take from "../../components/Take.astro";
+import Runs from "../../components/Runs.astro";
+import Ledger from "../../components/Ledger.astro";
+import Plays from "../../components/Plays.astro";
+import Compare from "../../components/Compare.astro";
+
+## The script is the clip
+
+Each clip is a TypeScript file. Your agent writes it, you review it like any other code, and CI runs it as it is, with no model. The video is what CI recorded on the last push to `main`, and the lit line is the one running.
+
+<Take base="{{clips}}" />
+
+<details class="vc-more not-content">
+  <summary><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10" /><path class="vc-more-v" d="M8 3v10" /></svg>Why it comes out the same every time</summary>
+  <dl class="vc-facts">
+    <div>
+      <dt>Authored time</dt>
+      <dd>The recorder moves the page's clock one frame at a time and stops it while the app waits, so no spinner reaches the video. <a href="/how-it-works/overview/">How it works</a></dd>
+    </div>
+    <div>
+      <dt>Real input</dt>
+      <dd>A real mouse moves on a planned path, so hover and press states fire. The cursor you see is drawn afterwards. <a href="/reference/dsl/">The clip DSL</a></dd>
+    </div>
+    <div>
+      <dt>Same bytes</dt>
+      <dd>Record a clip twice on one machine and you get the same file. Setup checks that before it writes your first clip. <a href="/how-it-works/determinism/">Determinism</a></dd>
+    </div>
+  </dl>
+</details>
+
+## When you change the app
+
+<Ledger />
+
+Every push to `main` checks the example app. On the left, the latest check. On the right, the same check after we renamed one button's test id.
+
+<Runs base="{{clips}}" />
+
+## Where it plays
+
+A clip has one link. Paste it in your docs once, and it plays the newest recording that passed.
+
+<Plays />
+
+## Compared with what people use instead
+
+We read each tool's own pages on 11 November 2026. A dash means the page doesn't say.
+
+<Compare />
+
+<p class="colophon">versioncam <span class="vc-num">{{version}}</span> on npm · <a href="/about/licence/">FSL-1.1-ALv2</a> · <a href="/legal/imprint/">Imprint</a> · The source is public at <a href="https://github.com/versioncam/versioncam">github.com/versioncam/versioncam</a>, and so is <a href="https://github.com/versioncam/versioncam-home">this site's</a>.</p>

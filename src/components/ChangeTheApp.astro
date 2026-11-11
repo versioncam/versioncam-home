@@ -1,0 +1,273 @@
+---
+// The front page's instrument: change the app, and watch what CI does with
+// the demo. Three changes, each one a real edit to the example app, and each
+// outcome the real one: for the two that only change how the app looks, the
+// video versioncam recorded from the changed app; for the renamed test id,
+// the check's own output, after which the demo keeps playing the last version
+// that passed. A reader gets the product in three clicks: the demo follows
+// the code, and it can't show a flow that no longer works.
+//
+// The videos were recorded on one machine with versioncam RECORDED_WITH, from
+// the example app at the release's commit with only the diff shown applied,
+// so the four differ by the change and nothing else. The click replays that
+// run; the note under the panel says so. Nothing here is drawn by the page.
+//
+// One panel beside the picture holds the three things a reader compares: the
+// diff, the clip's line that needs the button, and CI's verdict. The
+// picture's display is a band under it, as the film's was, so nothing covers
+// the app. Without a
+// script the page shows the app as it is and the buttons do nothing.
+
+const RECORDED_WITH = '0.8.1';
+const CLIP = '01-create-a-shipment';
+
+type Line = [sign: '-' | '+', text: string];
+type Choice = {
+	id: string;
+	label: string;
+	file: string;
+	diff: Line[];
+	pass: boolean;
+	/** How many frames the run records before it ends or gives up, and of how many. */
+	frames: number;
+	length: number;
+	/** What `versioncam check` printed after its verdict line, as it printed it. */
+	output: string;
+	note: string;
+	video: string;
+};
+
+// The diffs are the changed lines of `git diff` on the example app, and the
+// output is `versioncam check`'s for the clip after each change, run on the
+// same machine as the recordings. The renamed test id's run gives up at
+// frame 222, where the clip clicks the button.
+const choices: Choice[] = [
+	{
+		id: 'green',
+		label: 'Make the button green',
+		file: 'src/style.css',
+		diff: [
+			['-', '  --accent: #2f6fed;'],
+			['+', '  --accent: #16a34a;'],
+		],
+		pass: true,
+		frames: 425,
+		length: 425,
+		output: '1/1 clips still match the app.',
+		note: 'The app looks different, so CI recorded a new video.',
+		video: 'green',
+	},
+	{
+		id: 'moved',
+		label: 'Move the form',
+		file: 'src/style.css',
+		diff: [
+			['-', '  grid-template-columns: 340px 1fr;'],
+			['+', '  grid-template-columns: 1fr 340px;'],
+			['+', '  grid-auto-flow: dense;'],
+			['+', 'main > .panel:first-child {'],
+			['+', '  grid-column: 2;'],
+			['+', '}'],
+		],
+		pass: true,
+		frames: 411,
+		length: 411,
+		output: '1/1 clips still match the app.',
+		note: 'The layout changed, so CI recorded a new video.',
+		video: 'moved',
+	},
+	{
+		id: 'renamed',
+		label: "Rename the button's test id",
+		file: 'index.html',
+		diff: [
+			['-', '<button type="submit" data-testid="create-shipment">Create shipment</button>'],
+			['+', '<button type="submit" data-testid="submit-shipment">Create shipment</button>'],
+		],
+		pass: false,
+		frames: 222,
+		length: 425,
+		output:
+			"0/1 clips still match the app.\n\n01-create-a-shipment\n  Nothing matched getByTestId('create-shipment') within 15000ms at t=3.71s (frame 222). The clip expected it to be on screen by this point.",
+		note: "The build fails, and the clip's link keeps playing the last version that passed.",
+		video: 'base',
+	},
+];
+
+const SCRIPT_LINE = 'await s.click(s.byTestId("create-shipment"));';
+const src = (name: string) => `/change/${name}`;
+---
+
+<div class="vc-change" data-change data-recorded-with={RECORDED_WITH}>
+	<div class="vc-change-choices" role="group" aria-label="Change the app">
+		<span class="vc-change-ask" aria-hidden="true">Change the app</span>
+		{
+			choices.map((c) => (
+				<button
+					type="button"
+					class="vc-change-choice"
+					data-choice={c.id}
+					data-spec={JSON.stringify(c)}
+					aria-pressed="false"
+				>
+					{c.label}
+				</button>
+			))
+		}
+	</div>
+
+	<div class="vc-change-body">
+	<figure class="vc-viewfinder vc-change-frame">
+		<video
+			src={`${src('base')}.mp4`}
+			poster={`${src('base')}-poster.png`}
+			muted
+			loop
+			playsinline
+			autoplay
+			preload="metadata"
+			aria-label="Create a shipment, the example app's first clip, recorded by versioncam"
+			data-video></video>
+		<div class="vc-film-osd" aria-hidden="true">
+			<span class="vc-film-rec"><i></i>REC</span>
+			<span class="vc-film-ver">v{RECORDED_WITH}</span>
+			<span class="vc-change-kept" hidden data-kept>Last version that passed</span>
+			<span class="vc-film-tc" data-tc>00:00:00:00</span>
+		</div>
+	</figure>
+
+	<div class="vc-change-panel">
+		<section class="vc-change-part">
+			<h3 class="vc-change-head">
+				Your change <span class="vc-id" data-file>main</span>
+			</h3>
+			<pre class="vc-change-code" data-diff><code><span class="vc-change-dim">No changes yet. Pick one above.</span></code></pre>
+		</section>
+		<section class="vc-change-part">
+			<h3 class="vc-change-head">
+				The clip <span class="vc-id">{CLIP}.clip.ts</span>
+			</h3>
+			<pre class="vc-change-code"><code><span class="vc-change-line" data-line>{SCRIPT_LINE}</span></code></pre>
+		</section>
+		<section class="vc-change-part" aria-live="polite">
+			<h3 class="vc-change-head">CI</h3>
+			<pre class="vc-change-code" data-ci><code><span class="vc-prompt">$ </span>npx versioncam check
+<span class="vc-verdict is-pass">PASS</span>  {CLIP}
+
+<span class="vc-num">1/1</span> clips still match the app.</code></pre>
+			<p class="vc-change-note" data-note>The app as it is. Pick a change above.</p>
+		</section>
+	</div>
+	</div>
+
+	<p class="vc-change-about">
+		Each video was recorded by versioncam {RECORDED_WITH} from the change shown, and the output is what the
+		check printed. This page replays them.
+	</p>
+</div>
+
+<script>
+	// One run at a time: a click shows the diff and marks the clip's line,
+	// counts the frames the way the recorder does, then prints what the check
+	// printed and plays what CI made, or, when the check fails, the last
+	// version that passed. Under reduced motion the count is skipped and the
+	// picture holds its poster.
+	type Choice = {
+		id: string;
+		file: string;
+		diff: [string, string][];
+		pass: boolean;
+		frames: number;
+		length: number;
+		output: string;
+		note: string;
+		video: string;
+	};
+	const CLIP = '01-create-a-shipment';
+	const escape = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+	const tc = (frame: number) => {
+		const s = Math.floor(frame / 60);
+		const f = frame % 60;
+		return `00:00:${String(s).padStart(2, '0')}:${String(f).padStart(2, '0')}`;
+	};
+	const PROMPT = '<span class="vc-prompt">$ </span>npx versioncam check';
+	// The check's lines, with the verdict in reverse video and the tally's
+	// numbers in amber, as the runs on How a clip works print them.
+	const printed = (choice: Choice) => {
+		const word = choice.pass ? 'PASS' : 'FAIL';
+		const rest = escape(choice.output).replace(/^(\d+\/\d+)/, '<span class="vc-num">$1</span>');
+		return `<code>${PROMPT}\n<span class="vc-verdict is-${word.toLowerCase()}">${word}</span>  ${CLIP}\n\n${rest}</code>`;
+	};
+
+	for (const root of document.querySelectorAll<HTMLElement>('[data-change]')) {
+		const video = root.querySelector<HTMLVideoElement>('[data-video]')!;
+		const diff = root.querySelector<HTMLElement>('[data-diff]')!;
+		const file = root.querySelector<HTMLElement>('[data-file]')!;
+		const line = root.querySelector<HTMLElement>('[data-line]')!;
+		const ci = root.querySelector<HTMLElement>('[data-ci]')!;
+		const note = root.querySelector<HTMLElement>('[data-note]')!;
+		const kept = root.querySelector<HTMLElement>('[data-kept]')!;
+		const clock = root.querySelector<HTMLElement>('[data-tc]')!;
+		const buttons = [...root.querySelectorAll<HTMLButtonElement>('[data-choice]')];
+		const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		let run = 0;
+
+		if (still) {
+			video.removeAttribute('autoplay');
+			video.pause();
+		}
+		video.addEventListener('play', () => root.setAttribute('data-playing', ''));
+		video.addEventListener('pause', () => root.removeAttribute('data-playing'));
+		video.addEventListener('timeupdate', () => {
+			clock.textContent = tc(Math.floor(video.currentTime * 60));
+		});
+
+		const play = (name: string) => {
+			const base = `/change/${name}`;
+			if (video.getAttribute('src') !== `${base}.mp4`) {
+				video.poster = `${base}-poster.png`;
+				video.src = `${base}.mp4`;
+			}
+			video.currentTime = 0;
+			if (!still) video.play().catch(() => {});
+		};
+
+		const show = async (choice: Choice) => {
+			const mine = ++run;
+			for (const b of buttons) b.setAttribute('aria-pressed', String(b.dataset.choice === choice.id));
+			root.dataset.state = 'running';
+			file.textContent = choice.file;
+			diff.innerHTML = `<code>${choice.diff
+				.map(([sign, text]) => `<span class="vc-change-${sign === '-' ? 'del' : 'add'}">${sign} ${escape(text)}</span>`)
+				.join('\n')}</code>`;
+			line.classList.toggle('is-missing', !choice.pass);
+			kept.hidden = true;
+			note.textContent = '';
+			if (!still) {
+				// The count is the run, shortened to about a second.
+				const start = performance.now();
+				const total = String(choice.length);
+				await new Promise<void>((done) => {
+					const tick = (now: number) => {
+						if (mine !== run) return done();
+						const frame = Math.min(choice.frames, Math.round(((now - start) / 1000) * choice.length));
+						ci.innerHTML = `<code>${PROMPT}\n<span class="vc-change-dim">recording frame </span><span class="vc-num">${String(frame).padStart(total.length, '0')}</span><span class="vc-change-dim">/${total}</span></code>`;
+						if (frame < choice.frames) requestAnimationFrame(tick);
+						else done();
+					};
+					requestAnimationFrame(tick);
+				});
+				if (mine !== run) return;
+			}
+			ci.innerHTML = printed(choice);
+			note.textContent = choice.note;
+			root.dataset.state = choice.pass ? 'pass' : 'fail';
+			kept.hidden = choice.pass;
+			play(choice.video);
+		};
+
+		for (const button of buttons) {
+			button.addEventListener('click', () => show(JSON.parse(button.dataset.spec!) as Choice));
+		}
+	}
+</script>

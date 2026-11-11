@@ -325,17 +325,25 @@ const setupPrompt =
     .match(/```text\n(Set up versioncam[\s\S]*?)\n```/)?.[1]
     ?.replace(/\s+/g, " ")
     .trim() ?? null;
-const template = readFileSync(join(ROOT, "scripts", "index.mdx.template"), "utf8");
-writeFileSync(
-  join(DOCS, "index.mdx"),
-  template
-    .replaceAll("{{version}}", version)
-    .replaceAll("{{tagline}}", JSON.stringify(tagline.replace(/\s+/g, " ").trim()))
-    .replaceAll("{{install}}", JSON.stringify(commands))
-    .replaceAll("{{ask}}", JSON.stringify(ask))
-    .replaceAll("{{prompt}}", JSON.stringify(setupPrompt))
-    .replaceAll("{{clips}}", process.env.CLIPS_BASE ?? "https://clips.version.cam/example"),
-);
+// The front page and "How a clip works", which holds the receipts the front
+// page leaves out (the take, the runs, where a clip plays, the comparison):
+// two templates filled the same way.
+for (const [name, out] of [
+  ["index.mdx.template", "index.mdx"],
+  ["how-a-clip-works.mdx.template", "how-a-clip-works.mdx"],
+]) {
+  const template = readFileSync(join(ROOT, "scripts", name), "utf8");
+  writeFileSync(
+    join(DOCS, out),
+    template
+      .replaceAll("{{version}}", version)
+      .replaceAll("{{tagline}}", JSON.stringify(tagline.replace(/\s+/g, " ").trim()))
+      .replaceAll("{{install}}", JSON.stringify(commands))
+      .replaceAll("{{ask}}", JSON.stringify(ask))
+      .replaceAll("{{prompt}}", JSON.stringify(setupPrompt))
+      .replaceAll("{{clips}}", process.env.CLIPS_BASE ?? "https://clips.version.cam/example"),
+  );
+}
 
 console.log(
   `docs from versioncam ${version}: ${parts.length} README sections, the DSL, the skill, the changelog` +

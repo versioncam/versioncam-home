@@ -95,64 +95,9 @@ hero:
 note: 'version.cam is in private beta. <a href="https://app.version.cam/">Sign in with GitHub</a>, or <a href="#private-beta">ask for Pro</a>.'
 ---
 
-import Take from "../../components/Take.astro";
-import Runs from "../../components/Runs.astro";
-import Ledger from "../../components/Ledger.astro";
 import Hosted from "../../components/Hosted.astro";
 import Setup from "../../components/Setup.astro";
 import HowItWorks from "../../components/HowItWorks.astro";
-import Plays from "../../components/Plays.astro";
-import Compare from "../../components/Compare.astro";
-
-## When you change the app
-
-<Ledger />
-
-Every push to `main` checks the example app. On the left, the latest check. On the right, the same check after we renamed one button's test id.
-
-<Runs base="{{clips}}" />
-
-## The script is the clip
-
-Each clip is a TypeScript file. Your agent writes it, you review it like any other code, and CI runs it as it is, with no model. The video is what CI recorded on the last push to `main`, and the lit line is the one running.
-
-<Take base="{{clips}}" />
-
-<details class="vc-more not-content">
-  <summary><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10" /><path class="vc-more-v" d="M8 3v10" /></svg>Why it comes out the same every time</summary>
-  <dl class="vc-facts">
-    <div>
-      <dt>Authored time</dt>
-      <dd>The recorder moves the page's clock one frame at a time and stops it while the app waits, so no spinner reaches the video. <a href="/how-it-works/overview/">How it works</a></dd>
-    </div>
-    <div>
-      <dt>Real input</dt>
-      <dd>A real mouse moves on a planned path, so hover and press states fire. The cursor you see is drawn afterwards. <a href="/reference/dsl/">The clip DSL</a></dd>
-    </div>
-    <div>
-      <dt>Same bytes</dt>
-      <dd>Record a clip twice on one machine and you get the same file. Setup checks that before it writes your first clip. <a href="/how-it-works/determinism/">Determinism</a></dd>
-    </div>
-  </dl>
-</details>
-
-## Where it plays
-
-A clip has one link. Paste it in your docs once, and it plays the newest recording that passed.
-
-<Plays />
-
-## Compared with what people use instead
-
-We read each tool's own pages on 11 November 2026. A dash means the page doesn't say.
-
-<Compare />
-
-## After CI: version.cam
-
-The recorder and the GitHub Action are free and run in your CI. version.cam keeps the recordings after CI has made them.
-
-<Hosted />
 
 ## Set up
 
@@ -161,5 +106,17 @@ Paste the setup prompt into your coding agent, or run three commands and give Cl
 <HowItWorks />
 
 <Setup />
+
+## After CI: version.cam
+
+The recorder and the GitHub Action are free and run in your CI. version.cam keeps the recordings after CI has made them.
+
+<Hosted />
+
+<nav class="vc-next not-content" aria-label="More">
+  <a href="/how-a-clip-works/"><strong>How a clip works</strong><span>The script beside its video, the check as it printed, where a clip plays, and what else people use.</span></a>
+  <a href="/start/install/"><strong>The docs</strong><span>Install, configure, write clips and run them in CI.</span></a>
+  <a href="https://github.com/versioncam/versioncam"><strong>The source</strong><span>The recorder, the skill and the example app.</span></a>
+</nav>
 
 <p class="colophon">versioncam <span class="vc-num">{{version}}</span> on npm · <a href="/about/licence/">FSL-1.1-ALv2</a> · <a href="/legal/imprint/">Imprint</a> · The source is public at <a href="https://github.com/versioncam/versioncam">github.com/versioncam/versioncam</a>, and so is <a href="https://github.com/versioncam/versioncam-home">this site's</a>.</p>
