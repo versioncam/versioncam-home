@@ -76,22 +76,9 @@ ask: {{ask}}
 prompt: {{prompt}}
 clips: "{{clips}}"
 hero:
-  # Two sentences: what a clip is and who writes it, then what CI does with
-  # it, ending on the failure that names the control, which is the point.
-  # Where a clip plays and what version.cam adds have their own sections.
-  tagline: A clip is a script in your repository, and your coding agent writes it from one sentence of yours. CI records it again on every push, and when a control the clip needs is gone, the build fails and names it.
-  # The first action is the hero's own button, which copies the setup prompt
-  # (Hero.astro). These follow it. "Install by hand" goes to the docs' Install
-  # page, as "Get started" did: the header has no docs link, so this is the
-  # hero's way into them, and that page has what the card under Set up leaves
-  # out (doctor, ffmpeg, Windows).
-  actions:
-    - text: Install by hand
-      link: /start/install/
-      variant: minimal
-    - text: The source
-      link: https://github.com/versioncam/versioncam
-      variant: minimal
+  # One line: who writes a clip and what CI does with it. The instrument
+  # under it shows the rest, and the button beside it is the way in.
+  tagline: Your coding agent writes the clip. CI re&#8209;records it on every push, and fails the build when the flow breaks.
 note: 'version.cam is in private beta. <a href="https://app.version.cam/">Sign in with GitHub</a>, or <a href="#private-beta">ask for Pro</a>.'
 ---
 

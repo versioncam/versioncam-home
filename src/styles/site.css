@@ -556,10 +556,15 @@ h1#_top {
 }
 .vc-hero-act {
   max-width: 36rem;
+  margin-top: 1.5rem;
+}
+.vc-hero.is-change .vc-hero-how {
+  margin-top: 0.625rem;
+  color: var(--vc-dim);
 }
 @media (min-width: 64rem) {
   .vc-hero.is-change {
-    padding-block: 2.5rem 3rem;
+    padding-block: 1rem 2.5rem;
   }
   .vc-hero.is-change h1#_top {
     max-inline-size: none;
@@ -567,13 +572,16 @@ h1#_top {
   }
   .vc-hero-row {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 30rem);
+    grid-template-columns: minmax(0, 40rem) auto;
+    justify-content: space-between;
     gap: 3rem;
     align-items: start;
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
   }
-  .vc-hero.is-change .vc-hero-tagline,
-  .vc-hero.is-change .vc-hero-actions {
+  .vc-hero.is-change .vc-hero-tagline {
+    margin-top: 0;
+  }
+  .vc-hero.is-change .vc-hero-act {
     margin-top: 0;
   }
 }

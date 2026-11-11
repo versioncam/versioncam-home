@@ -5,24 +5,25 @@
 // `clips` in its frontmatter (the 404, How a clip works) keeps Starlight's
 // hero.
 //
-// The title and the two sentences come first, the button beside them, and the
-// instrument across the page under them: it needs the width for the picture
-// and the panel beside it. On a phone everything stacks in that order.
+// The title, one line under it with the one button beside it, and the
+// instrument across the page under them: a reader plays it rather than
+// reads it. The docs and the source are in the links at the foot of the page
+// and the header; the beta note shows only on a phone, where the header's
+// badge and Sign in are hidden.
 //
-// The first action copies the setup prompt, because a coding agent is how a
-// clip gets written and the prompt is the whole way in: one paste installs
-// the package and records a first clip. The sentence under the actions says
-// where the prompt goes, since a button that copies something unnamed gets
-// pasted nowhere. Doing it by hand is the second action, and leads to the docs.
+// The button copies the setup prompt, because a coding agent is how a clip
+// gets written and the prompt is the whole way in: one paste installs the
+// package and records a first clip. The four words under it say where the
+// prompt goes, since a button that copies something unnamed gets pasted
+// nowhere.
 import Default from '@astrojs/starlight/components/Hero.astro';
-import { LinkButton } from '@astrojs/starlight/components';
 import ChangeTheApp from './ChangeTheApp.astro';
 import { promptFor } from '../lib/setup';
 
 const { data } = Astro.locals.starlightRoute.entry;
 const clips = data.clips;
 const note = data.note;
-const { title = data.title, tagline, actions = [] } = data.hero ?? {};
+const { title = data.title, tagline } = data.hero ?? {};
 const setup = promptFor(data);
 ---
 
@@ -34,20 +35,10 @@ const setup = promptFor(data);
 				<div class="vc-hero-row">
 					{tagline && <p class="vc-hero-tagline" set:html={tagline} />}
 					<div class="vc-hero-act">
-						<div class="vc-hero-actions">
-							<button type="button" class="vc-copy-prompt" data-copy={setup} data-done-label="Copied">
-								<span class="vc-copy-label">Copy setup prompt</span>
-							</button>
-							{actions.map(({ link, text, variant, icon }) => (
-								<LinkButton href={link} variant={variant} icon={icon?.name}>
-									{text}
-								</LinkButton>
-							))}
-						</div>
-						<p class="vc-hero-how">
-							Paste it into Claude Code or another coding agent. It installs versioncam and records your
-							first clip.
-						</p>
+						<button type="button" class="vc-copy-prompt" data-copy={setup} data-done-label="Copied">
+							<span class="vc-copy-label">Copy setup prompt</span>
+						</button>
+						<p class="vc-hero-how">Then paste it into Claude Code.</p>
 						<p class="vc-copied" role="status" aria-live="polite" />
 						{note && <p class="vc-hero-note" set:html={note} />}
 					</div>
